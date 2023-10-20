@@ -171,15 +171,30 @@ create table PAIRE_MUSIQUE(
 
 DROP FUNCTION getNbArtisteGroupe;
 DELIMITER |
+
+-- Fonction qui permet de récupérer le nombre d'artiste d'un groupe
 create function getNbArtisteGroupe(idG int(10)) returns int(10) 
 READS SQL DATA
 DETERMINISTIC
-    
-    begin
-        declare nbArtiste int(10);
-        select count(*) into nbArtiste from FAIT_PARTIE where idGroupe = idG;
-        return nbArtiste;
-    end|
+begin
+    declare nbArtiste int(10);
+    select count(*) into nbArtiste from FAIT_PARTIE where idGroupe = idG;
+    return nbArtiste;
+end|
+DELIMITER ;
+
+DELIMITER |
+
+-- Fonction qui permet de récupérer le nom d'un type d'événement en fonction de son id
+CREATE function getNomTypeEvenement(idE int(10)) returns varchar(50)
+READS SQL DATA
+DETERMINISTIC
+begin
+    declare nomTypeEvenement varchar(50);
+    select nomTypeEvenement into nomTypeEvenement from TYPE_EVENEMENT where idTypeEvenement = idE;
+    return nomTypeEvenement;
+end|
+
 DELIMITER ;
 
 DELIMITER |
@@ -200,6 +215,8 @@ DELIMITER ;
 
 DELIMITER |
 
+
+-- Trigger qui permet de vérifier qu'il n'y a pas de conflit de date entre deux réservations
 CREATE trigger conflitDateReservation BEFORE INSERT ON A_RESERVE for each row
 begin 
     declare nombreReservation int(10);
