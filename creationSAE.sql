@@ -1,3 +1,14 @@
+drop table PAIRE_MUSIQUE;
+drop table CHANTE;
+drop table TYPE_MUSIQUE;
+drop table A_RESERVE;
+drop table HEBERGEMENT;
+drop table JOUE;
+drop table INSTRUMENT;
+drop table FAIT_PARTIE;
+drop table ARTISTE;
+drop table PRE_INSCRIT;
+drop table EST_FAVORIE;
 drop table EVENEMENT;
 drop table GROUPE;
 drop table LIEU;
@@ -99,23 +110,22 @@ create table FAIT_PARTIE (
     idGroupe int(10),
     idArtiste int(10),
     constraint PKfaitParte PRIMARY KEY (idGroupe, idArtiste),
-    constraint FKfaitPartie_groupe FOREIGN KEY (idGroupe) GROUPE(idGroupe),
-    constraint FKfaitPartie_artiste FOREIGN KEY (idArtiste) ARTISTE(idArtiste)
+    constraint FKfaitPartie_groupe FOREIGN KEY (idGroupe) references GROUPE(idGroupe),
+    constraint FKfaitPartie_artiste FOREIGN KEY (idArtiste) references ARTISTE(idArtiste)
 );
 
 create table INSTRUMENT (
-    idInstrument int(10),
+    idInstrument int(10) PRIMARY KEY,
     nomInstrument varchar(50),
     descriptionInstrument varchar2 (1000),
-    constraint PKinstrument PRIMARY KEY (idInstrument)
 );
 
 create table JOUE(
     idGroupe int(10),
     idInstrument int(10),
     constraint PKjoue PRIMARY KEY (idGroupe,idInstrument),
-    constraint FKjoue_groupe FOREIGN KEY (idGroupe) GROUPE(idGroupe),
-    constraint FKjoue_instrument FOREIGN KEY (idInstrument) INSTRUMENT(idInstrument)
+    constraint FKjoue_groupe FOREIGN KEY (idGroupe) references GROUPE(idGroupe),
+    constraint FKjoue_instrument FOREIGN KEY (idInstrument) references INSTRUMENT(idInstrument)
 );
 
 create table HEBERGEMENT(
@@ -132,8 +142,8 @@ create table A_RESERVE(
     dateAReserve date,
     dureeHebergement int(10),
     constraint PKaReserve PRIMARY KEY (idArtiste, idHebergement),
-    constraint FKaReserve_Artiste FOREIGN KEY (idArtiste) ARTISTE(idArtiste),
-    constraint FKaReserve_Hebergement FOREIGN KEY (idHebergement) HEBERGEMENT(idHebergement)
+    constraint FKaReserve_Artiste FOREIGN KEY (idArtiste) references ARTISTE(idArtiste),
+    constraint FKaReserve_Hebergement FOREIGN KEY (idHebergement) references HEBERGEMENT(idHebergement)
 );
 
 create table TYPE_MUSIQUE(
@@ -147,14 +157,14 @@ create table CHANTE(
     idGroupe int(10),
     idTypeMusique int(10),
     constraint PKchante PRIMARY KEY (idGroupe,idTypeMusique),
-    constraint FKchante_Groupe FOREIGN KEY (idGroupe) GROUPE(idGroupe),
-    constraint FKchante_TypeMusique FOREIGN KEY (idTypeMusique) TYPE_MUSIQUE(idTypeMusique)
+    constraint FKchante_Groupe FOREIGN KEY (idGroupe) references GROUPE(idGroupe),
+    constraint FKchante_TypeMusique FOREIGN KEY (idTypeMusique) references TYPE_MUSIQUE(idTypeMusique)
 );
 
-create table MUSIQUE(
+create table PAIRE_MUSIQUE(
     musique1 int(10),
     musique2 int(10),
     constraint PKmusique PRIMARY KEY (musique1,musique2),
-    constraint FKmusique_typeMusique FOREIGN KEY (musique1) TYPE_MUSIQUE(idTypeMusique),
-    constraint FKmusique_typeMusique FOREIGN KEY (musique2) TYPE_MUSIQUE(idTypeMusique)
+    constraint FKmusique1_typeMusique FOREIGN KEY (musique1) references TYPE_MUSIQUE(idTypeMusique),
+    constraint FKmusique2_typeMusique FOREIGN KEY (musique2) references TYPE_MUSIQUE(idTypeMusique)
 );
