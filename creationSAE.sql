@@ -169,6 +169,7 @@ create table PAIRE_MUSIQUE(
     constraint FKmusique2_typeMusique FOREIGN KEY (musique2) references TYPE_MUSIQUE(idTypeMusique)
 );
 
+DROP FUNCTION getNbArtisteGroupe;
 DELIMITER |
 create function getNbArtisteGroupe(idG int(10)) returns int(10) 
 READS SQL DATA
@@ -181,7 +182,9 @@ DETERMINISTIC
 DELIMITER ;
 
 DELIMITER |
-create trigger maxCapacite BEFORE INSERT into A_RESERVE for each row
+
+-- Trigger qui permet de vérifier que le nombre d'artiste est inférieur à la capacité de l'hébergement
+create trigger maxCapacite BEFORE INSERT ON A_RESERVE for each row
 begin
     declare nbArtiste int(10);
     declare capa int(10);
@@ -191,3 +194,5 @@ begin
         signal sqlstate '45000' set message_text = 'Le nombre d''artiste est supérieur à la capacité de l''hébergement';
     end if;
 end|
+
+DELIMITER ;
