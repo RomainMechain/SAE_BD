@@ -174,6 +174,7 @@ DELIMITER |
 create function getNbArtisteGroupe(idG int(10)) returns int(10) 
 READS SQL DATA
 DETERMINISTIC
+    
     begin
         declare nbArtiste int(10);
         select count(*) into nbArtiste from FAIT_PARTIE where idGroupe = idG;
@@ -196,3 +197,20 @@ begin
 end|
 
 DELIMITER ;
+
+DELIMITER |
+
+CREATE trigger conflitDateReservation BEFORE INSERT ON A_RESERVE for each row
+begin 
+    declare nombreReservation int(10);
+    select count(*) into nombreReservation from A_RESERVE 
+    where idHebergement = NEW.idHebergement 
+    AND dateAReserve <= NEW.dateAReserve + INTERVAL NEW.dureeHebergement DAY 
+    AND dateAReserve + INTERVAL dureeHebergement DAY >= NEW.dateAReserve;
+    if nombreReservation > 0 then
+        signal sqlstate '45000' set message_text = 'Il y a un conflit de date avec une autre réservation';
+    end if;
+end|
+
+DELIMITER ;
+
