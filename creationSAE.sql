@@ -137,12 +137,12 @@ create table HEBERGEMENT(
 );
 
 create table A_RESERVE(
-    idArtiste int(10),
+    idGroupe int(10),
     idHebergement int(10),
     dateAReserve date,
     dureeHebergement int(10),
-    constraint PKaReserve PRIMARY KEY (idArtiste, idHebergement),
-    constraint FKaReserve_Artiste FOREIGN KEY (idArtiste) references ARTISTE(idArtiste),
+    constraint PKaReserve PRIMARY KEY (idGroupe, idHebergement),
+    constraint FKaReserve_Groupe FOREIGN KEY (idGroupe) references GROUPE(idGroupe),
     constraint FKaReserve_Hebergement FOREIGN KEY (idHebergement) references HEBERGEMENT(idHebergement)
 );
 
@@ -168,3 +168,14 @@ create table PAIRE_MUSIQUE(
     constraint FKmusique1_typeMusique FOREIGN KEY (musique1) references TYPE_MUSIQUE(idTypeMusique),
     constraint FKmusique2_typeMusique FOREIGN KEY (musique2) references TYPE_MUSIQUE(idTypeMusique)
 );
+
+DELIMITER |
+create function getNbArtisteGroupe(idG int(10)) returns int(10) 
+READS SQL DATA
+DETERMINISTIC
+    begin
+        declare nbArtiste int(10);
+        select count(*) into nbArtiste from FAIT_PARTIE where idGroupe = idG;
+        return nbArtiste;
+    end|
+DELIMITER ;
