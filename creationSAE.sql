@@ -102,3 +102,58 @@ create table FAIT_PARTIE (
     constraint FKfaitPartie_groupe FOREIGN KEY (idGroupe) GROUPE(idGroupe),
     constraint FKfaitPartie_artiste FOREIGN KEY (idArtiste) ARTISTE(idArtiste)
 )
+
+create table INSTRUMENT (
+    idInstrument int(10),
+    nomInstrument varchar(50),
+    descriptionInstrument varchar2 (1000),
+    constraint PKinstrument PRIMARY KEY (idInstrument)
+)
+
+create table JOUE(
+    idGroupe int(10),
+    idInstrument int(10),
+    constraint PKjoue PRIMARY KEY (idGroupe,idInstrument),
+    constraint FKjoue_groupe FOREIGN KEY (idGroupe) GROUPE(idGroupe),
+    constraint FKjoue_instrument FOREIGN KEY (idInstrument) INSTRUMENT(idInstrument)
+)
+
+create table HEBERGEMENT(
+    idHebergement int(10),
+    nomInstrumentHebergement varchar(50),
+    descriptionHebergement varchar2(1000),
+    constraint PKhebergement PRIMARY KEY (idHebergement)
+)
+
+create table A_RESERVE(
+    idArtiste int(10),
+    idHebergement int(10),
+    dateAReserve date,
+    dureeHebergement int(10),
+    constraint PKaReserve PRIMARY KEY (idArtiste, idHebergement),
+    constraint FKaReserve_Artiste FOREIGN KEY (idArtiste) ARTISTE(idArtiste),
+    constraint FKaReserve_Hebergement FOREIGN KEY (idHebergement) HEBERGEMENT(idHebergement)
+)
+
+create table TYPE_MUSIQUE(
+    idTypeMusique int(10),
+    nomTypeMusique varchar(50),
+    caracteristiqueTypeMusique varchar(200),
+    constraint PKtypeMusique PRIMARY KEY idTypeMusique,
+)
+
+create table CHANTE(
+    idGroupe int(10),
+    idTypeMusique int(10),
+    constraint PKchante PRIMARY KEY (idGroupe,idTypeMusique),
+    constraint FKchante_Groupe FOREIGN KEY (idGroupe) GROUPE(idGroupe),
+    constraint FKchante_TypeMusique FOREIGN KEY (idTypeMusique) TYPE_MUSIQUE(idTypeMusique)
+)
+
+create table MUSIQUE(
+    musique1 int(10),
+    musique2 int(10),
+    constraint PKmusique PRIMARY KEY (musique1,musique2),
+    constraint FKmusique_typeMusique FOREIGN KEY (musique1) TYPE_MUSIQUE(idTypeMusique),
+    constraint FKmusique_typeMusique FOREIGN KEY (musique2) TYPE_MUSIQUE(idTypeMusique)
+)
