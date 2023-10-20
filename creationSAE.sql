@@ -117,7 +117,7 @@ create table FAIT_PARTIE (
 create table INSTRUMENT (
     idInstrument int(10) PRIMARY KEY,
     nomInstrument varchar(50),
-    descriptionInstrument varchar2 (1000),
+    descriptionInstrument varchar(200)
 );
 
 create table JOUE(
@@ -132,7 +132,7 @@ create table HEBERGEMENT(
     idHebergement int(10),
     capacite int(10),
     nomInstrumentHebergement varchar(50),
-    descriptionHebergement varchar2(1000),
+    descriptionHebergement varchar(200),
     constraint PKhebergement PRIMARY KEY (idHebergement)
 );
 
@@ -150,7 +150,7 @@ create table TYPE_MUSIQUE(
     idTypeMusique int(10),
     nomTypeMusique varchar(50),
     caracteristiqueTypeMusique varchar(200),
-    constraint PKtypeMusique PRIMARY KEY idTypeMusique,
+    constraint PKtypeMusique PRIMARY KEY (idTypeMusique)
 );
 
 create table CHANTE(
