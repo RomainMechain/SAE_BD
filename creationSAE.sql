@@ -173,6 +173,7 @@ create table PAIRE_MUSIQUE(
 
 DROP FUNCTION getNbArtisteGroupe;
 DROP FUNCTION getNomTypeEvenement;
+DROP FUNCTION EvenementEstGratuit;
 
 DELIMITER |
 
@@ -201,6 +202,18 @@ end|
 
 DELIMITER ;
 
+DELIMITER |
+
+CREATE Function EvenementEstGratuit(idE int(10)) returns boolean
+READS SQL DATA
+DETERMINISTIC
+begin
+    declare estG boolean;
+    select estGratuit into estG from EVENEMENT where idEvenement = idE;
+    return estG;
+end|
+
+DELIMITER ;
 DELIMITER |
 
 -- Trigger qui permet de vérifier que le nombre d'artiste est inférieur à la capacité de l'hébergement
