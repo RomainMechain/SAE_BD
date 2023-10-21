@@ -2,21 +2,21 @@ INSERT INTO SPECTATEUR (idSpectateur, nomSpectateur, prenomSpectateur, mdpSpecta
 INSERT INTO SPECTATEUR (idSpectateur, nomSpectateur, prenomSpectateur, mdpSpectateur, numTelSpectateur, emailSpectateur) VALUES (2, 'Martin', 'Pierre', 'mdp456', '0687654321', 'pierre.martin@gmail.com');
 INSERT INTO SPECTATEUR (idSpectateur, nomSpectateur, prenomSpectateur, mdpSpectateur, numTelSpectateur, emailSpectateur) VALUES (3, 'Durant', 'Sophie', 'mdp789', '0698765432', 'sophie.durant@gmail.com');
 
-INSERT INTO TYPE_BILLET (idBillet, nomBillet, estGratuitBillet, caracteristiqueBillet, prixBillet) VALUES (1, 'Billet normal', false, 'Aucun avantage particulier', 10);
-INSERT INTO TYPE_BILLET (idBillet, nomBillet, estGratuitBillet, caracteristiqueBillet, prixBillet) VALUES (2, 'Billet VIP', false, 'Accès à la zone VIP', 20);
-INSERT INTO TYPE_BILLET (idBillet, nomBillet, estGratuitBillet, caracteristiqueBillet, prixBillet) VALUES (3, 'Billet enfant', false, 'Tarif réduit pour les enfants de moins de 12 ans', 5);
+INSERT INTO TYPE_BILLET (idBillet, nomBillet, estGratuitBillet, caracteristiqueBillet, prixBillet) VALUES (1, 'Billet normal', 'Aucun avantage particulier', 10);
+INSERT INTO TYPE_BILLET (idBillet, nomBillet, estGratuitBillet, caracteristiqueBillet, prixBillet) VALUES (2, 'Billet VIP', 'Accès à la zone VIP', 20);
+INSERT INTO TYPE_BILLET (idBillet, nomBillet, estGratuitBillet, caracteristiqueBillet, prixBillet) VALUES (3, 'Billet enfant', 'Tarif réduit pour les enfants de moins de 12 ans', 5);
 
 INSERT INTO EST_INSCRIT (idSpectateur, idBillet, dateInscription) VALUES (1, 1, '2023-10-21');
 INSERT INTO EST_INSCRIT (idSpectateur, idBillet, dateInscription) VALUES (2, 2, '2023-10-21');
 INSERT INTO EST_INSCRIT (idSpectateur, idBillet, dateInscription) VALUES (3, 3, '2023-10-21');
 
-INSERT INTO TYPE_EVENEMENT (idTypeEvenement, nomTypeEvenement, caracteristiqueTypeEvenement) VALUES (1, 'Concert', 'Événement musical');
-INSERT INTO TYPE_EVENEMENT (idTypeEvenement, nomTypeEvenement, caracteristiqueTypeEvenement) VALUES (2, 'Festival', 'Événement musical de grande envergure');
-INSERT INTO TYPE_EVENEMENT (idTypeEvenement, nomTypeEvenement, caracteristiqueTypeEvenement) VALUES (3, 'Spectacle', 'Événement artistique');
+INSERT INTO TYPE_EVENEMENT (idTypeEvenement, nomTypeEvenement, caracteristiqueTypeEvenement,estGratuitTypeEvenement) VALUES (1, 'Concert', 'Événement musical',false);
+INSERT INTO TYPE_EVENEMENT (idTypeEvenement, nomTypeEvenement, caracteristiqueTypeEvenement,estGratuitTypeEvenement) VALUES (2, 'Festival', 'Événement musical de grande envergure',false);
+INSERT INTO TYPE_EVENEMENT (idTypeEvenement, nomTypeEvenement, caracteristiqueTypeEvenement,estGratuitTypeEvenement) VALUES (3, 'Spectacle', 'Événement artistique',false);
 
-INSERT INTO LIEU (idLieu, nomLieu, adresse) VALUES (1, 'La Cigale', '12 Rue de Rochechouart, 75009 Paris');
-INSERT INTO LIEU (idLieu, nomLieu, adresse) VALUES (2, 'Olympia', '28 Boulevard des Capucines, 75009 Paris');
-INSERT INTO LIEU (idLieu, nomLieu, adresse) VALUES (3, 'Zénith de Paris', '211 Avenue Jean Jaurès, 75019 Paris');
+INSERT INTO LIEU (idLieu, nomLieu, adresse, capactiteLieu) VALUES (1, 'La Cigale', '12 Rue de Rochechouart, 75009 Paris',200);
+INSERT INTO LIEU (idLieu, nomLieu, adresse, capactiteLieu) VALUES (2, 'Olympia', '28 Boulevard des Capucines, 75009 Paris',2000);
+INSERT INTO LIEU (idLieu, nomLieu, adresse, capactiteLieu) VALUES (3, 'Zénith de Paris', '211 Avenue Jean Jaurès, 75019 Paris',20000);
 
 INSERT INTO GROUPE (idGroupe, nomGroupe, descriptionGroupe, photoGroupe, lienReseauxGroupe, lienVideoGroupe) VALUES
 (1, 'Indochine', 'Groupe de rock français', 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Indochine_logo.svg/220px-Indochine_logo.svg.png', 'https://www.facebook.com/indochineofficiel', 'https://www.youtube.com/channel/UC-5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6'),
