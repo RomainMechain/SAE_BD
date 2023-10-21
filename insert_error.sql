@@ -1,0 +1,11 @@
+insert into HEBERGEMENT values (1, 1, 'rock', 'Hébergement pour les groupes de rock');
+insert into ARTISTE values (1, 'Muse');
+insert into ARTISTE values (2, 'Coldplay');
+insert into GROUPE values (1, 'Groupe1', 'Groupe de rock', "photo", "lien", "lien");
+insert into GROUPE values (2, 'Groupe2', 'Groupe de rock', "photo", "lien", "lien");
+insert into GROUPE VALUES (3, 'Groupe3', 'Groupe de rock', "photo", "lien", "lien");
+insert into FAIT_PARTIE values (1, 1);
+insert into FAIT_PARTIE values (1, 2);
+insert into A_RESERVE values (1, 1, '2019-01-01', 5);
+insert into A_RESERVE values (2, 1, '2019-01-03', 5);
+insert into A_RESERVE values (3, 1, '2019-01-05', 5);
