@@ -30,6 +30,7 @@ create table SPECTATEUR (
 create table TYPE_BILLET (
     idBillet int(10),
     nomBillet varchar(50),
+    estGratuitBillet boolean,
     caracteristiqueBillet varchar(100),
     prixBillet int(10),
     constraint PKtype_billet PRIMARY KEY (idBillet)
@@ -62,9 +63,9 @@ create table GROUPE (
     idGroupe int(10),
     nomGroupe varchar(50),
     descriptionGroupe varchar(100),
-    photoGroupe varchar(100),
-    lienReseauxGroupe varchar(100),
-    lienVideoGroupe varchar(100),
+    photoGroupe varchar(200),
+    lienReseauxGroupe varchar(200),
+    lienVideoGroupe varchar(200),
     constraint PKgroupe PRIMARY KEY (idGroupe)
 );
 

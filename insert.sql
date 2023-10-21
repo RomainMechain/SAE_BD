@@ -1,79 +1,118 @@
-INSERT INTO SPECTATEUR (idSpectateur, nomSpectateur, prenomSpectateur, mdpSpectateur, numTelSpectateur, emailSpectateur)
-VALUES
-(1, 'John Doe', 'John', 'password123', '0123456789', 'john.doe@example.com'),
-(2, 'Jane Doe', 'Jane', 'password456', '9876543210', 'jane.doe@example.com');
+INSERT INTO SPECTATEUR (idSpectateur, nomSpectateur, prenomSpectateur, mdpSpectateur, numTelSpectateur, emailSpectateur) VALUES (1, 'Dupont', 'Jean', 'mdp123', '0612345678', 'jean.dupont@gmail.com');
+INSERT INTO SPECTATEUR (idSpectateur, nomSpectateur, prenomSpectateur, mdpSpectateur, numTelSpectateur, emailSpectateur) VALUES (2, 'Martin', 'Pierre', 'mdp456', '0687654321', 'pierre.martin@gmail.com');
+INSERT INTO SPECTATEUR (idSpectateur, nomSpectateur, prenomSpectateur, mdpSpectateur, numTelSpectateur, emailSpectateur) VALUES (3, 'Durant', 'Sophie', 'mdp789', '0698765432', 'sophie.durant@gmail.com');
 
-INSERT INTO TYPE_BILLET (idBillet, nomBillet, caracteristiqueBillet, prixBillet)
-VALUES
-(1, 'Billet standard', 'Billet pour accéder à l événement', 10),
-(2, 'Billet VIP', 'Billet pour accéder à l événement avec des avantages supplémentaires', 20);
+INSERT INTO TYPE_BILLET (idBillet, nomBillet, estGratuitBillet, caracteristiqueBillet, prixBillet) VALUES (1, 'Billet normal', false, 'Aucun avantage particulier', 10);
+INSERT INTO TYPE_BILLET (idBillet, nomBillet, estGratuitBillet, caracteristiqueBillet, prixBillet) VALUES (2, 'Billet VIP', false, 'Accès à la zone VIP', 20);
+INSERT INTO TYPE_BILLET (idBillet, nomBillet, estGratuitBillet, caracteristiqueBillet, prixBillet) VALUES (3, 'Billet enfant', false, 'Tarif réduit pour les enfants de moins de 12 ans', 5);
 
-INSERT INTO EST_INSCRIT (idSpectateur, idBillet, dateInscription)
-VALUES
-(1, 1, '2023-10-20'),
-(2, 2, '2023-10-20');
+INSERT INTO EST_INSCRIT (idSpectateur, idBillet, dateInscription) VALUES (1, 1, '2023-10-21');
+INSERT INTO EST_INSCRIT (idSpectateur, idBillet, dateInscription) VALUES (2, 2, '2023-10-21');
+INSERT INTO EST_INSCRIT (idSpectateur, idBillet, dateInscription) VALUES (3, 3, '2023-10-21');
 
-INSERT INTO TYPE_EVENEMENT (idTypeEvenement, nomTypeEvenement, caracteristiqueTypeEvenement)
-VALUES
-(1, 'Concert', 'Événement musical'),
-(2, 'Festival', 'Événement musical de grande envergure');
+INSERT INTO TYPE_EVENEMENT (idTypeEvenement, nomTypeEvenement, caracteristiqueTypeEvenement) VALUES (1, 'Concert', 'Événement musical');
+INSERT INTO TYPE_EVENEMENT (idTypeEvenement, nomTypeEvenement, caracteristiqueTypeEvenement) VALUES (2, 'Festival', 'Événement musical de grande envergure');
+INSERT INTO TYPE_EVENEMENT (idTypeEvenement, nomTypeEvenement, caracteristiqueTypeEvenement) VALUES (3, 'Spectacle', 'Événement artistique');
 
-INSERT INTO LIEU (idLieu, nomLieu, adresse)
-VALUES
-(1, 'Salle de concert', '123 Main Street'),
-(2, 'Parc des expositions', '456 Elm Street');
+INSERT INTO LIEU (idLieu, nomLieu, adresse) VALUES (1, 'La Cigale', '12 Rue de Rochechouart, 75009 Paris');
+INSERT INTO LIEU (idLieu, nomLieu, adresse) VALUES (2, 'Olympia', '28 Boulevard des Capucines, 75009 Paris');
+INSERT INTO LIEU (idLieu, nomLieu, adresse) VALUES (3, 'Zénith de Paris', '211 Avenue Jean Jaurès, 75019 Paris');
 
-INSERT INTO GROUPE (idGroupe, nomGroupe, descriptionGroupe, photoGroupe, lienReseauxGroupe, lienVideoGroupe)
-VALUES
-(1, 'AC/DC', 'Groupe de rock australien', 'https://example.com/acdc.jpg', 'https://example.com/acdc-reseaux-sociaux', 'https://example.com/acdc-video');
+INSERT INTO GROUPE (idGroupe, nomGroupe, descriptionGroupe, photoGroupe, lienReseauxGroupe, lienVideoGroupe) VALUES
+(1, 'Indochine', 'Groupe de rock français', 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Indochine_logo.svg/220px-Indochine_logo.svg.png', 'https://www.facebook.com/indochineofficiel', 'https://www.youtube.com/channel/UC-5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6'),
+(2, 'Vianney', 'Auteur-compositeur-interprète français', 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Vianney_2022.jpg/220px-Vianney_2022.jpg', 'https://www.facebook.com/vianneyofficiel', 'https://www.youtube.com/channel/UC-5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6'),
+(3, 'louloucopter', 'Auteur français', 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Vianney_2022.jpg/220px-Vianney_2022.jpg', 'https://www.facebook.com/vianneyofficiel', 'https://www.youtube.com/channel/UC-5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6');
 
 INSERT INTO EVENEMENT (idEvenement, dateEvenement, heureEvenement, dureeEvenement, dureeMontageEvenement, dureeDemontageEvenement, idGroupe, idTypeEvenement, idLieu)
-VALUES
-(1, '2023-11-04', '20:00:00', 120, 60, 30, 1, 1, 1);
+VALUES (1, '2023-10-21', '2023-10-21 12:00:00', 120, 60, 60, 1, 1, 1);
+INSERT INTO EVENEMENT (idEvenement, dateEvenement, heureEvenement, dureeEvenement, dureeMontageEvenement, dureeDemontageEvenement, idGroupe, idTypeEvenement, idLieu)
+VALUES (2, '2023-10-22', '2023-10-22 14:00:00', 180, 90, 90, 2, 2, 2);
+INSERT INTO EVENEMENT (idEvenement, dateEvenement, heureEvenement, dureeEvenement, dureeMontageEvenement, dureeDemontageEvenement, idGroupe, idTypeEvenement, idLieu)
+VALUES (3, '2023-10-23', '2023-10-23 16:00:00', 240, 120, 120, 3, 3, 3);
 
-INSERT INTO EST_FAVORIE (idSpectateur, idGroupe)
-VALUES
+INSERT INTO EST_FAVORIE (idSpectateur, idGroupe) VALUES
 (1, 1),
-(2, 1);
+(2, 2),
+(3, 2);
 
-INSERT INTO PRE_INSCRIT (idSpectateur, idEvenement)
-VALUES
+INSERT INTO PRE_INSCRIT (idSpectateur, idEvenement) VALUES
 (1, 1),
-(2, 1);
+(2, 2),
+(3, 3);
 
 INSERT INTO ARTISTE (idArtiste, nomArtiste)
-VALUES
-(1, 'Angus Young'),
-(2, 'Brian Johnson');
+VALUES (1,'Led Zeppelin'),
+      (2,'The Beatles'),
+      (3,'Pink Floyd'),
+      (4,'The Rolling Stones'),
+      (5,'Queen'),
+      (6,'Michael Jackson'),
+      (7,'Beyoncé'),
+      (8,'Adele'),
+      (9,'Ed Sheeran');
 
-INSERT INTO FAIT_PARTIE (idGroupe, idArtiste)
-VALUES
+INSERT INTO FAIT_PARTIE (idGroupe, idArtiste) VALUES
 (1, 1),
-(1, 2);
+(2, 2);
 
 INSERT INTO INSTRUMENT (idInstrument, nomInstrument, descriptionInstrument)
 VALUES
-(1, 'Guitare électrique', 'Instrument à cordes pincées'),
-(2, 'Batterie', 'Instrument de percussion'),
-(3, 'Basse électrique', 'Instrument à cordes frottées');
+(1, 'Guitare', 'Instrument à cordes pincées'),
+(2, 'Piano', 'Instrument à clavier'),
+(3, 'Batterie', 'Instrument à percussion'),
+(4, 'Violon', 'Instrument à cordes frottées'),
+(5, 'Saxophone', 'Instrument à vent'),
+(6, 'Flûte', 'Instrument à vent'),
+(7, 'Trombone', 'Instrument à vent'),
+(8, 'Trompette', 'Instrument à vent'),
+(9, 'Contrebasse', 'Instrument à cordes frottées');
 
-INSERT INTO JOUE (idGroupe, idInstrument)
-VALUES
+INSERT INTO JOUE (idGroupe, idInstrument) VALUES
 (1, 1),
-(1, 2),
+(2, 2),
 (1, 3);
 
-INSERT INTO HEBERGEMENT (idHebergement, nomHebergementHebergement, descriptionHebergement)
+INSERT INTO HEBERGEMENT (idHebergement, capacite, nomHebergement, descriptionHebergement)
 VALUES
-(1, 'Hôtel Ibis', 'Hôtel 3 étoiles situé à proximité de la salle de concert'),
-(2, 'Hôtel Mercure', 'Hôtel 4 étoiles situé dans le centre-ville');
+(1,2, 'Hôtel', 'Établissement offrant des chambres meublées à louer, généralement pour de courtes durées.'),
+(2,4, 'Appartement', 'Logement indépendant situé dans un immeuble.'),
+(3,6, 'Maison', 'Habitation individuelle.'),
+(4,8, 'Camping', 'Terrain aménagé pour accueillir des campeurs.'),
+(5,10, 'Gîte', 'Maison rurale meublée et équipée, louée à la semaine ou au mois.'),
+(6,12, 'Chambre d hôtes', 'Chambre meublée chez un particulier, louée à la nuitée.'),
+(7,14, 'Auberge de jeunesse', 'Établissement offrant des hébergements collectifs à bas prix.'),
+(8,16, 'Village vacances', 'Ensemble de logements situés dans un même lieu, offrant des services et des animations.'),
+(9,18, 'Résidence de tourisme', 'Ensemble de logements meublés et équipés, situés dans un même lieu, offrant des services hôteliers.');
 
-INSERT INTO A_RESERVE (idArtiste, idHebergement, dateAReserve, dureeHebergement)
-VALUES
-(1, 1, '2023-11-03', 2),
-(2, 2, '2023-11-03', 2);
+
+INSERT INTO A_RESERVE (idGroupe, idHebergement, dateAReserve, dureeHebergement) VALUES
+(1, 1, '2023-10-21', 2),
+(2, 2, '2023-10-22', 3);
 
 INSERT INTO TYPE_MUSIQUE (idTypeMusique, nomTypeMusique, caracteristiqueTypeMusique)
 VALUES
-(1, 'Rock', 'Genre de musique populaire caractérisé par un rythme soutenu et des guitares électriques'),
-(2, 'Pop', 'Genre de musique populaire caractérisée par des mélodies simples et accrocheuses');
+(1, 'Rock', 'Musique caractérisée par des guitares électriques, des batteries et des basses.'),
+(2, 'Pop', 'Musique populaire caractérisée par des mélodies simples et des paroles faciles à retenir.'),
+(3, 'Classique', 'Musique caractérisée par des harmonies complexes et des instruments à cordes.'),
+(4, 'Jazz', 'Musique caractérisée par des improvisations et des rythmes syncopés.'),
+(5, 'Reggae', 'Musique caractérisée par des rythmes lents et des paroles engagées.'),
+(6, 'Hip-hop', 'Musique caractérisée par des paroles rythmées et des samples.'),
+(7, 'Electro', 'Musique caractérisée par des rythmes électroniques et des synthétiseurs.'),
+(8, 'Rap', 'Musique caractérisée par des paroles rythmées et des rimes.'),
+(9, 'Country', 'Musique caractérisée par des guitares acoustiques, des banjos et des mandolines.');
+
+INSERT INTO CHANTE (idGroupe, idTypeMusique) VALUES
+(1, 1),
+(2, 2);
+
+INSERT INTO PAIRE_MUSIQUE (musique1, musique2)
+VALUES
+(1, 2),
+(2, 3),
+(3, 4),
+(4, 5),
+(5, 6),
+(6, 7),
+(7, 8),
+(8, 9),
+(9, 1);
