@@ -226,7 +226,7 @@ begin
     declare nbPreInscris int(10);
     select capactiteLieu into capa from LIEU natural join EVENEMENT where idEvenement = new.idEvenement;
     select count(idSpectateur) into nbPreInscris from PRE_INSCRIT where idEvenement = new.idEvenement;
-    if (nbPreInscris > capa) then
+    if (nbPreInscris >= capa) then
         signal sqlstate '45000' set message_text = 'Le nombre de spectateur se préinscrivant à cet événement est supérieur à la capacité du lieu';
     end if;
 end|
