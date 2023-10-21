@@ -213,7 +213,7 @@ READS SQL DATA
 DETERMINISTIC
 begin
     declare estG boolean;
-    select estGratuit into estG from EVENEMENT where idEvenement = idE;
+    select estGratuitTypeEvenement into estG from TYPE_EVENEMENT natural join EVENEMENT where idEvenement = idE;
     return estG;
 end|
 
@@ -235,7 +235,7 @@ BEGIN
     declare continue handler for not found set fini = true;
     open lesBillets;
     while not fini do
-        fetch lesBillets into idB;
+        fetch lesBillets into idB, dateB;
         if not fini then
             SELECT nbJoursBillet into nbJoursB from TYPE_BILLET where idBillet = idB;
             if dateE BETWEEN dateB AND DATE_ADD(dateB, INTERVAL nbJoursB DAY) then
@@ -294,6 +294,24 @@ begin
     );
     if nombreReservation > 0 then
         signal sqlstate '45000' set message_text = 'Il y a un conflit de date avec une autre réservation';
+    end if;
+end|
+
+DELIMITER ;
+
+DELIMITER |
+
+-- trigger qui verifie que le spectateur peut s'inscrire à un événement, soit il est gratuit soit il a un billet pour cette date
+CREATE Trigger inscriptionEvenement BEFORE INSERT ON PRE_INSCRIT for each row
+begin 
+    DECLARE evnementGratuit boolean;
+    DECLARE dateE date;
+    select EvenementEstGratuit(new.idEvenement) into evnementGratuit;
+    SELECT dateEvenement into dateE from EVENEMENT where idEvenement = new.idEvenement;
+    if (evnementGratuit = false) then
+        if (aBilletDate(new.idSpectateur, dateE) = false) then
+            signal sqlstate '45000' set message_text = 'Le spectateur n''a pas de billet pour cette date';
+        end if;
     end if;
 end|
 
