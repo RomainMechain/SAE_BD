@@ -131,7 +131,7 @@ create table JOUE(
 create table HEBERGEMENT(
     idHebergement int(10),
     capacite int(10),
-    nomInstrumentHebergement varchar(50),
+    nomHebergement varchar(50),
     descriptionHebergement varchar(200),
     constraint PKhebergement PRIMARY KEY (idHebergement)
 );
@@ -170,6 +170,8 @@ create table PAIRE_MUSIQUE(
 );
 
 DROP FUNCTION getNbArtisteGroupe;
+DROP FUNCTION getNomTypeEvenement;
+
 DELIMITER |
 
 -- Fonction qui permet de récupérer le nombre d'artiste d'un groupe
@@ -206,7 +208,7 @@ begin
     declare capa int(10);
     select getNbArtisteGroupe(new.idGroupe) into nbArtiste;
     select capacite into capa from HEBERGEMENT where idHebergement = new.idHebergement;
-    if (nbArtiste > capacite) then
+    if (nbArtiste > capa) then
         signal sqlstate '45000' set message_text = 'Le nombre d''artiste est supérieur à la capacité de l''hébergement';
     end if;
 end|
@@ -220,14 +222,22 @@ DELIMITER |
 CREATE trigger conflitDateReservation BEFORE INSERT ON A_RESERVE for each row
 begin 
     declare nombreReservation int(10);
-    select count(*) into nombreReservation from A_RESERVE 
-    where idHebergement = NEW.idHebergement 
-    AND dateAReserve <= NEW.dateAReserve + INTERVAL NEW.dureeHebergement DAY 
-    AND dateAReserve + INTERVAL dureeHebergement DAY >= NEW.dateAReserve;
+    SELECT COUNT(*) INTO nombreReservation
+    FROM A_RESERVE
+    WHERE idHebergement = NEW.idHebergement
+    AND (
+        (NEW.dateAReserve BETWEEN dateAReserve AND DATE_ADD(dateAReserve, INTERVAL dureeHebergement DAY))
+        OR (DATE_ADD(NEW.dateAReserve, INTERVAL NEW.dureeHebergement DAY) BETWEEN dateAReserve AND DATE_ADD(dateAReserve, INTERVAL dureeHebergement DAY))
+    );
     if nombreReservation > 0 then
         signal sqlstate '45000' set message_text = 'Il y a un conflit de date avec une autre réservation';
     end if;
 end|
 
 DELIMITER ;
+
+
+
+
+
 
