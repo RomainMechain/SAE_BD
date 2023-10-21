@@ -32,6 +32,7 @@ create table TYPE_BILLET (
     nomBillet varchar(50),
     caracteristiqueBillet varchar(100),
     prixBillet int(10),
+    nbJoursBillet int(10),
     constraint PKtype_billet PRIMARY KEY (idBillet)
 );
 
@@ -174,6 +175,7 @@ create table PAIRE_MUSIQUE(
 DROP FUNCTION getNbArtisteGroupe;
 DROP FUNCTION getNomTypeEvenement;
 DROP FUNCTION EvenementEstGratuit;
+DROP FUNCTION aBilletDate;
 
 DELIMITER |
 
@@ -204,6 +206,8 @@ DELIMITER ;
 
 DELIMITER |
 
+-- Fonction qui permet de récupérer si un événement est gratuit ou non en fonction de son id
+
 CREATE Function EvenementEstGratuit(idE int(10)) returns boolean
 READS SQL DATA
 DETERMINISTIC
@@ -211,6 +215,36 @@ begin
     declare estG boolean;
     select estGratuit into estG from EVENEMENT where idEvenement = idE;
     return estG;
+end|
+
+DELIMITER ;
+
+DELIMITER |
+
+-- Fonction qui indique si un spectateur a déjà un billet pour une date donnée
+CREATE function aBilletDate(idS int(10), dateE date) returns boolean
+READS SQL DATA
+DETERMINISTIC
+BEGIN
+    declare idB int(10);
+    declare dateB date;
+    declare nbJoursB int(10);
+    declare fini boolean default false;
+    declare lesBillets cursor for 
+        select idBillet, dateInscription from EST_INSCRIT where idSpectateur = idS;
+    declare continue handler for not found set fini = true;
+    open lesBillets;
+    while not fini do
+        fetch lesBillets into idB;
+        if not fini then
+            SELECT nbJoursBillet into nbJoursB from TYPE_BILLET where idBillet = idB;
+            if dateE BETWEEN dateB AND DATE_ADD(dateB, INTERVAL nbJoursB DAY) then
+                return true;
+            end if;
+        end if;
+    end while;
+    close lesBillets;
+    return false;
 end|
 
 DELIMITER ;
