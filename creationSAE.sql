@@ -251,3 +251,24 @@ begin
 end|
 
 DELIMITER ;
+
+DELIMITER |
+
+CREATE TRIGGER conflitDateGroupeEvenement BEFORE INSERT ON EVENEMENT FOR EACH ROW
+BEGIN
+    DECLARE finEvenement DATE;
+    DECLARE nombreErreur INT;
+
+    SET finEvenement = DATE_ADD(NEW.dateEvenement, INTERVAL NEW.dureeEvenement MINUTE);
+
+    SELECT COUNT(idEvenement) INTO nombreErreur FROM EVENEMENT e WHERE idGroupe = NEW.idGroupe
+    AND (
+        (NEW.dateEvenement BETWEEN e.dateEvenement AND DATE_ADD(e.dateEvenement, INTERVAL e.dureeEvenement MINUTE))
+        OR (NEW.dateEvenement BETWEEN e.dateEvenement AND DATE_ADD(e.dateEvenement, INTERVAL e.dureeEvenement MINUTE))
+    );
+    
+    IF nombreErreur > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Ce groupe participe déjà à un événement se chevauchant dans le temps';
+    END IF;
+END|
+DELIMITER ;
