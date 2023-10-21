@@ -131,18 +131,18 @@ create table JOUE(
 create table HEBERGEMENT(
     idHebergement int(10),
     capacite int(10),
-    nomInstrumentHebergement varchar(50),
+    nomHebergement varchar(50),
     descriptionHebergement varchar(200),
     constraint PKhebergement PRIMARY KEY (idHebergement)
 );
 
 create table A_RESERVE(
-    idArtiste int(10),
+    idGroupe int(10),
     idHebergement int(10),
     dateAReserve date,
     dureeHebergement int(10),
-    constraint PKaReserve PRIMARY KEY (idArtiste, idHebergement),
-    constraint FKaReserve_Artiste FOREIGN KEY (idArtiste) references ARTISTE(idArtiste),
+    constraint PKaReserve PRIMARY KEY (idGroupe, idHebergement),
+    constraint FKaReserve_Groupe FOREIGN KEY (idGroupe) references GROUPE(idGroupe),
     constraint FKaReserve_Hebergement FOREIGN KEY (idHebergement) references HEBERGEMENT(idHebergement)
 );
 
@@ -168,3 +168,76 @@ create table PAIRE_MUSIQUE(
     constraint FKmusique1_typeMusique FOREIGN KEY (musique1) references TYPE_MUSIQUE(idTypeMusique),
     constraint FKmusique2_typeMusique FOREIGN KEY (musique2) references TYPE_MUSIQUE(idTypeMusique)
 );
+
+DROP FUNCTION getNbArtisteGroupe;
+DROP FUNCTION getNomTypeEvenement;
+
+DELIMITER |
+
+-- Fonction qui permet de récupérer le nombre d'artiste d'un groupe
+create function getNbArtisteGroupe(idG int(10)) returns int(10) 
+READS SQL DATA
+DETERMINISTIC
+begin
+    declare nbArtiste int(10);
+    select count(*) into nbArtiste from FAIT_PARTIE where idGroupe = idG;
+    return nbArtiste;
+end|
+DELIMITER ;
+
+DELIMITER |
+
+-- Fonction qui permet de récupérer le nom d'un type d'événement en fonction de son id
+CREATE function getNomTypeEvenement(idE int(10)) returns varchar(50)
+READS SQL DATA
+DETERMINISTIC
+begin
+    declare nomTypeEvenement varchar(50);
+    select nomTypeEvenement into nomTypeEvenement from TYPE_EVENEMENT where idTypeEvenement = idE;
+    return nomTypeEvenement;
+end|
+
+DELIMITER ;
+
+DELIMITER |
+
+-- Trigger qui permet de vérifier que le nombre d'artiste est inférieur à la capacité de l'hébergement
+create trigger maxCapacite BEFORE INSERT ON A_RESERVE for each row
+begin
+    declare nbArtiste int(10);
+    declare capa int(10);
+    select getNbArtisteGroupe(new.idGroupe) into nbArtiste;
+    select capacite into capa from HEBERGEMENT where idHebergement = new.idHebergement;
+    if (nbArtiste > capa) then
+        signal sqlstate '45000' set message_text = 'Le nombre d''artiste est supérieur à la capacité de l''hébergement';
+    end if;
+end|
+
+DELIMITER ;
+
+DELIMITER |
+
+
+-- Trigger qui permet de vérifier qu'il n'y a pas de conflit de date entre deux réservations
+CREATE trigger conflitDateReservation BEFORE INSERT ON A_RESERVE for each row
+begin 
+    declare nombreReservation int(10);
+    SELECT COUNT(*) INTO nombreReservation
+    FROM A_RESERVE
+    WHERE idHebergement = NEW.idHebergement
+    AND (
+        (NEW.dateAReserve BETWEEN dateAReserve AND DATE_ADD(dateAReserve, INTERVAL dureeHebergement DAY))
+        OR (DATE_ADD(NEW.dateAReserve, INTERVAL NEW.dureeHebergement DAY) BETWEEN dateAReserve AND DATE_ADD(dateAReserve, INTERVAL dureeHebergement DAY))
+    );
+    if nombreReservation > 0 then
+        signal sqlstate '45000' set message_text = 'Il y a un conflit de date avec une autre réservation';
+    end if;
+end|
+
+DELIMITER ;
+
+
+
+
+
+
