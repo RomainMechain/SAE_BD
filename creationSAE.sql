@@ -30,7 +30,6 @@ create table SPECTATEUR (
 create table TYPE_BILLET (
     idBillet int(10),
     nomBillet varchar(50),
-    estGratuitBillet boolean,
     caracteristiqueBillet varchar(100),
     prixBillet int(10),
     constraint PKtype_billet PRIMARY KEY (idBillet)
@@ -49,6 +48,7 @@ create table TYPE_EVENEMENT (
     idTypeEvenement int(10),
     nomTypeEvenement varchar(50),
     caracteristiqueTypeEvenement varchar(100),
+    estGratuitTypeEvenement boolean,
     constraint PKtype_evenement PRIMARY KEY (idTypeEvenement)
 );
 
@@ -56,6 +56,7 @@ create table LIEU (
     idLieu int(10),
     nomLieu varchar(50),
     adresse varchar(50),
+    capactiteLieu int(10),
     constraint PKlieu PRIMARY KEY (idLieu)
 );
 
@@ -218,6 +219,20 @@ DELIMITER ;
 
 DELIMITER |
 
+-- Trigger qui permet de ne pas vendre plus de billet en pré-inscirption qu'il n'y a de place dans le lieu de l'événement
+create trigger maxCapaciteLieu BEFORE INSERT ON PRE_INSCRIT for each row
+begin
+    declare capa int(10);
+    declare nbPreInscris int(10);
+    select capactiteLieu into capa from LIEU natural join EVENEMENT where idEvenement = new.idEvenement;
+    select count(idSpectateur) into nbPreInscris from PRE_INSCRIT where idEvenement = new.idEvenement;
+    if (nbPreInscris >= capa) then
+        signal sqlstate '45000' set message_text = 'Le nombre de spectateur se préinscrivant à cet événement est supérieur à la capacité du lieu';
+    end if;
+end|
+DELIMITER ;
+
+DELIMITER |
 
 -- Trigger qui permet de vérifier qu'il n'y a pas de conflit de date entre deux réservations
 CREATE trigger conflitDateReservation BEFORE INSERT ON A_RESERVE for each row
@@ -236,9 +251,3 @@ begin
 end|
 
 DELIMITER ;
-
-
-
-
-
-
