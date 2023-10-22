@@ -65,9 +65,9 @@ create table GROUPE (
     idGroupe int(10),
     nomGroupe varchar(50),
     descriptionGroupe varchar(100),
-    photoGroupe varchar(200),
-    lienReseauxGroupe varchar(200),
-    lienVideoGroupe varchar(200),
+    photoGroupe varchar(500),
+    lienReseauxGroupe varchar(500),
+    lienVideoGroupe varchar(500),
     constraint PKgroupe PRIMARY KEY (idGroupe)
 );
 
@@ -144,7 +144,7 @@ create table A_RESERVE(
     idHebergement int(10),
     dateAReserve date,
     dureeHebergement int(10),
-    constraint PKaReserve PRIMARY KEY (idGroupe, idHebergement),
+    constraint PKaReserve PRIMARY KEY (idGroupe, idHebergement, dateAReserve),
     constraint FKaReserve_Groupe FOREIGN KEY (idGroupe) references GROUPE(idGroupe),
     constraint FKaReserve_Hebergement FOREIGN KEY (idHebergement) references HEBERGEMENT(idHebergement)
 );
