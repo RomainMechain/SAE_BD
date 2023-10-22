@@ -2,9 +2,9 @@ INSERT INTO SPECTATEUR (idSpectateur, nomSpectateur, prenomSpectateur, mdpSpecta
 INSERT INTO SPECTATEUR (idSpectateur, nomSpectateur, prenomSpectateur, mdpSpectateur, numTelSpectateur, emailSpectateur) VALUES (2, 'Martin', 'Pierre', 'mdp456', '0687654321', 'pierre.martin@gmail.com');
 INSERT INTO SPECTATEUR (idSpectateur, nomSpectateur, prenomSpectateur, mdpSpectateur, numTelSpectateur, emailSpectateur) VALUES (3, 'Durant', 'Sophie', 'mdp789', '0698765432', 'sophie.durant@gmail.com');
 
-INSERT INTO TYPE_BILLET (idBillet, nomBillet, estGratuitBillet, caracteristiqueBillet, prixBillet) VALUES (1, 'Billet normal', 'Aucun avantage particulier', 10);
-INSERT INTO TYPE_BILLET (idBillet, nomBillet, estGratuitBillet, caracteristiqueBillet, prixBillet) VALUES (2, 'Billet VIP', 'Accès à la zone VIP', 20);
-INSERT INTO TYPE_BILLET (idBillet, nomBillet, estGratuitBillet, caracteristiqueBillet, prixBillet) VALUES (3, 'Billet enfant', 'Tarif réduit pour les enfants de moins de 12 ans', 5);
+INSERT INTO TYPE_BILLET (idBillet, nomBillet, caracteristiqueBillet, prixBillet, nbJoursBillet) VALUES (1, 'Billet 1 jour', 'Donne accès à l evenement pendant 1 jour', 10, 1);
+INSERT INTO TYPE_BILLET (idBillet, nomBillet, caracteristiqueBillet, prixBillet, nbJoursBillet) VALUES (2, 'Billet VIP', 'Donne accès à l evenemnt pendant 3 jours', 25, 3);
+INSERT INTO TYPE_BILLET (idBillet, nomBillet, caracteristiqueBillet, prixBillet, nbJoursBillet) VALUES (3, 'Billet Premium', 'Acces à l evenemnt pour 5 jours', 35, 5);
 
 INSERT INTO EST_INSCRIT (idSpectateur, idBillet, dateInscription) VALUES (1, 1, '2023-10-21');
 INSERT INTO EST_INSCRIT (idSpectateur, idBillet, dateInscription) VALUES (2, 2, '2023-10-21');
@@ -12,7 +12,7 @@ INSERT INTO EST_INSCRIT (idSpectateur, idBillet, dateInscription) VALUES (3, 3, 
 
 INSERT INTO TYPE_EVENEMENT (idTypeEvenement, nomTypeEvenement, caracteristiqueTypeEvenement,estGratuitTypeEvenement) VALUES (1, 'Concert', 'Événement musical',false);
 INSERT INTO TYPE_EVENEMENT (idTypeEvenement, nomTypeEvenement, caracteristiqueTypeEvenement,estGratuitTypeEvenement) VALUES (2, 'Festival', 'Événement musical de grande envergure',false);
-INSERT INTO TYPE_EVENEMENT (idTypeEvenement, nomTypeEvenement, caracteristiqueTypeEvenement,estGratuitTypeEvenement) VALUES (3, 'Spectacle', 'Événement artistique',false);
+INSERT INTO TYPE_EVENEMENT (idTypeEvenement, nomTypeEvenement, caracteristiqueTypeEvenement,estGratuitTypeEvenement) VALUES (3, 'Spectacle', 'Événement artistique',true);
 
 INSERT INTO LIEU (idLieu, nomLieu, adresse, capactiteLieu) VALUES (1, 'La Cigale', '12 Rue de Rochechouart, 75009 Paris',200);
 INSERT INTO LIEU (idLieu, nomLieu, adresse, capactiteLieu) VALUES (2, 'Olympia', '28 Boulevard des Capucines, 75009 Paris',2000);

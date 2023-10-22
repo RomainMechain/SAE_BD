@@ -32,6 +32,7 @@ create table TYPE_BILLET (
     nomBillet varchar(50),
     caracteristiqueBillet varchar(100),
     prixBillet int(10),
+    nbJoursBillet int(10),
     constraint PKtype_billet PRIMARY KEY (idBillet)
 );
 
@@ -64,9 +65,9 @@ create table GROUPE (
     idGroupe int(10),
     nomGroupe varchar(50),
     descriptionGroupe varchar(100),
-    photoGroupe varchar(200),
-    lienReseauxGroupe varchar(200),
-    lienVideoGroupe varchar(200),
+    photoGroupe varchar(500),
+    lienReseauxGroupe varchar(500),
+    lienVideoGroupe varchar(500),
     constraint PKgroupe PRIMARY KEY (idGroupe)
 );
 
@@ -143,7 +144,7 @@ create table A_RESERVE(
     idHebergement int(10),
     dateAReserve date,
     dureeHebergement int(10),
-    constraint PKaReserve PRIMARY KEY (idGroupe, idHebergement),
+    constraint PKaReserve PRIMARY KEY (idGroupe, idHebergement, dateAReserve),
     constraint FKaReserve_Groupe FOREIGN KEY (idGroupe) references GROUPE(idGroupe),
     constraint FKaReserve_Hebergement FOREIGN KEY (idHebergement) references HEBERGEMENT(idHebergement)
 );
@@ -173,6 +174,8 @@ create table PAIRE_MUSIQUE(
 
 DROP FUNCTION getNbArtisteGroupe;
 DROP FUNCTION getNomTypeEvenement;
+DROP FUNCTION EvenementEstGratuit;
+DROP FUNCTION aBilletDate;
 
 DELIMITER |
 
@@ -194,13 +197,57 @@ CREATE function getNomTypeEvenement(idE int(10)) returns varchar(50)
 READS SQL DATA
 DETERMINISTIC
 begin
-    declare nomTypeEvenement varchar(50);
-    select nomTypeEvenement into nomTypeEvenement from TYPE_EVENEMENT where idTypeEvenement = idE;
-    return nomTypeEvenement;
+    declare nomTypeE varchar(50);
+    select nomTypeEvenement into nomTypeE from TYPE_EVENEMENT natural join EVENEMENT where idTypeEvenement = idE;
+    return nomTypeE;
 end|
 
 DELIMITER ;
 
+DELIMITER |
+
+-- Fonction qui permet de récupérer si un événement est gratuit ou non en fonction de son id
+
+CREATE Function EvenementEstGratuit(idE int(10)) returns boolean
+READS SQL DATA
+DETERMINISTIC
+begin
+    declare estG boolean;
+    select estGratuitTypeEvenement into estG from TYPE_EVENEMENT natural join EVENEMENT where idEvenement = idE;
+    return estG;
+end|
+
+DELIMITER ;
+
+DELIMITER |
+
+-- Fonction qui indique si un spectateur a déjà un billet pour une date donnée
+CREATE function aBilletDate(idS int(10), dateE date) returns boolean
+READS SQL DATA
+DETERMINISTIC
+BEGIN
+    declare idB int(10);
+    declare dateB date;
+    declare nbJoursB int(10);
+    declare fini boolean default false;
+    declare lesBillets cursor for 
+        select idBillet, dateInscription from EST_INSCRIT where idSpectateur = idS;
+    declare continue handler for not found set fini = true;
+    open lesBillets;
+    while not fini do
+        fetch lesBillets into idB, dateB;
+        if not fini then
+            SELECT nbJoursBillet into nbJoursB from TYPE_BILLET where idBillet = idB;
+            if dateE BETWEEN dateB AND DATE_ADD(dateB, INTERVAL nbJoursB DAY) then
+                return true;
+            end if;
+        end if;
+    end while;
+    close lesBillets;
+    return false;
+end|
+
+DELIMITER ;
 DELIMITER |
 
 -- Trigger qui permet de vérifier que le nombre d'artiste est inférieur à la capacité de l'hébergement
@@ -254,6 +301,20 @@ DELIMITER ;
 
 DELIMITER |
 
+-- trigger qui verifie que le spectateur peut s'inscrire à un événement, soit il est gratuit soit il a un billet pour cette date
+CREATE Trigger inscriptionEvenement BEFORE INSERT ON PRE_INSCRIT for each row
+begin 
+    DECLARE evnementGratuit boolean;
+    DECLARE dateE date;
+    select EvenementEstGratuit(new.idEvenement) into evnementGratuit;
+    SELECT dateEvenement into dateE from EVENEMENT where idEvenement = new.idEvenement;
+    if (evnementGratuit = false) then
+        if (aBilletDate(new.idSpectateur, dateE) = false) then
+            signal sqlstate '45000' set message_text = 'Le spectateur n''a pas de billet pour cette date';
+        end if;
+    end if;
+end|
+
 CREATE TRIGGER conflitDateGroupeEvenement BEFORE INSERT ON EVENEMENT FOR EACH ROW
 BEGIN
     DECLARE finEvenement DATE;
@@ -271,4 +332,5 @@ BEGIN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Ce groupe participe déjà à un événement se chevauchant dans le temps';
     END IF;
 END|
+
 DELIMITER ;
