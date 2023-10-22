@@ -197,9 +197,9 @@ CREATE function getNomTypeEvenement(idE int(10)) returns varchar(50)
 READS SQL DATA
 DETERMINISTIC
 begin
-    declare nomTypeEvenement varchar(50);
-    select nomTypeEvenement into nomTypeEvenement from TYPE_EVENEMENT where idTypeEvenement = idE;
-    return nomTypeEvenement;
+    declare nomTypeE varchar(50);
+    select nomTypeEvenement into nomTypeE from TYPE_EVENEMENT natural join EVENEMENT where idTypeEvenement = idE;
+    return nomTypeE;
 end|
 
 DELIMITER ;
