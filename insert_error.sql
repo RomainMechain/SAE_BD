@@ -17,4 +17,4 @@ insert into EVENEMENT values(2,'2023-11-21','2023-11-21 12:00:00',100,100,100,1,
 INSERT INTO SPECTATEUR VALUES (1, 'Dupont', 'Jean', 'mdp123', '0612345678', 'jean.dupont@gmail.com');
 insert into PRE_INSCRIT values(1,1); -- Declanche le trigger maxCapaciteLieu
 insert into PRE_INSCRIT values(1,2); -- Declanche le trigger inscriptionEvenement
-insert into EVENEMENT values(3,"2023-10-21",'2023-10-21 12:00:00',100,100,100,1,1,1)
+insert into EVENEMENT values(3,"2023-10-21",'2023-10-21 12:00:00',100,100,100,1,1,1) -- Declanche le trigger conflitDateGroupeEvenement
