@@ -73,6 +73,7 @@ create table GROUPE (
 
 create table EVENEMENT (
     idEvenement int(10),
+    nomEvenement varchar(50),
     dateEvenement date,
     heureEvenement date,
     dureeEvenement int(10),

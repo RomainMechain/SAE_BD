@@ -23,12 +23,12 @@ INSERT INTO GROUPE (idGroupe, nomGroupe, descriptionGroupe, photoGroupe, lienRes
 (2, 'Vianney', 'Auteur-compositeur-interprète français', 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Vianney_2022.jpg/220px-Vianney_2022.jpg', 'https://www.facebook.com/vianneyofficiel', 'https://www.youtube.com/channel/UC-5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6'),
 (3, 'louloucopter', 'Auteur français', 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Vianney_2022.jpg/220px-Vianney_2022.jpg', 'https://www.facebook.com/vianneyofficiel', 'https://www.youtube.com/channel/UC-5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6Q5g73-c6');
 
-INSERT INTO EVENEMENT (idEvenement, dateEvenement, heureEvenement, dureeEvenement, dureeMontageEvenement, dureeDemontageEvenement, idGroupe, idTypeEvenement, idLieu)
-VALUES (1, '2023-10-21', '2023-10-21 12:00:00', 120, 60, 60, 1, 1, 1);
-INSERT INTO EVENEMENT (idEvenement, dateEvenement, heureEvenement, dureeEvenement, dureeMontageEvenement, dureeDemontageEvenement, idGroupe, idTypeEvenement, idLieu)
-VALUES (2, '2023-10-22', '2023-10-22 14:00:00', 180, 90, 90, 2, 2, 2);
-INSERT INTO EVENEMENT (idEvenement, dateEvenement, heureEvenement, dureeEvenement, dureeMontageEvenement, dureeDemontageEvenement, idGroupe, idTypeEvenement, idLieu)
-VALUES (3, '2023-10-23', '2023-10-23 16:00:00', 240, 120, 120, 3, 3, 3);
+INSERT INTO EVENEMENT (idEvenement,nomEvenement, dateEvenement, heureEvenement, dureeEvenement, dureeMontageEvenement, dureeDemontageEvenement, idGroupe, idTypeEvenement, idLieu)
+VALUES (1, "nom 1",'2023-10-21', '2023-10-21 12:00:00', 120, 60, 60, 1, 1, 1);
+INSERT INTO EVENEMENT (idEvenement, nomEvenement, dateEvenement, heureEvenement, dureeEvenement, dureeMontageEvenement, dureeDemontageEvenement, idGroupe, idTypeEvenement, idLieu)
+VALUES (2, "nom2", '2023-10-22', '2023-10-22 14:00:00', 180, 90, 90, 2, 2, 2);
+INSERT INTO EVENEMENT (idEvenement, nomEvenement, dateEvenement, heureEvenement, dureeEvenement, dureeMontageEvenement, dureeDemontageEvenement, idGroupe, idTypeEvenement, idLieu)
+VALUES (3, "Nom 3", '2023-10-23', '2023-10-23 16:00:00', 240, 120, 120, 3, 3, 3);
 
 INSERT INTO EST_FAVORIE (idSpectateur, idGroupe) VALUES
 (1, 1),
