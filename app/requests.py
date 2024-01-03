@@ -26,3 +26,33 @@ def get_all_instruments() :
     instruments = session.query(INSTRUMENT).all()
     session.close()
     return instruments
+
+def get_user_by_email(email) :
+    """Retourne l'utilisateur correspondant à l'email
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    user = session.query(SPECTATEUR).filter(SPECTATEUR.emailSpectateur==email).first()
+    session.close()
+    return user
+
+def email_exists(email) :
+    """Retourne True si l'email existe dans la base de données
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    user = session.query(SPECTATEUR).filter(SPECTATEUR.emailSpectateur==email).first()
+    session.close()
+    return user != None
+
+def add_user(nom, prenom, email, mdp, telephone) :
+    """Ajoute un utilisateur dans la base de données
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    id = session.query(SPECTATEUR).count() + 1
+    user = SPECTATEUR(idSpectateur=id, nomSpectateur=nom, prenomSpectateur=prenom, emailSpectateur=email, mdpSpectateur=mdp, numTelSpectateur=telephone)
+    session.add(user)
+    session.commit()
+    session.close()
+    print("Utilisateur ajouté")

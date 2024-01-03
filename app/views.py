@@ -25,12 +25,19 @@ def login():
     if form.validate_on_submit():
         if user :
             if check_password_hash(user.mdpSpectateur, form.mdp.data):
-                login_user(user)
                 return redirect(url_for('home'))
     return render_template('login.html', form=form, login=True)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     """Register page"""
-    form = LoginForm()
-    return render_template('login.html', form=form)
+    form = RegisterForm()
+    if form.validate_on_submit():
+        if not email_exists(form.mail.data):
+            password = generate_password_hash(form.mdp.data).decode('utf-8')
+            add_user(form.nom.data, form.prenom.data, form.mail.data, password, form.telephone.data)
+            return redirect(url_for('login'))
+        else :
+            print("Email déjà utilisé")
+            return render_template('register.html', form=form, email_exist=True)
+    return render_template('register.html', form=form)
