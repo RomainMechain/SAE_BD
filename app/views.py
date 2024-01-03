@@ -17,3 +17,20 @@ import collections
 def home():
     return render_template('home.html')
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    """Login page"""
+    form = LoginForm()
+    user = get_user_by_email(form.mail.data)
+    if form.validate_on_submit():
+        if user :
+            if check_password_hash(user.mdpSpectateur, form.mdp.data):
+                login_user(user)
+                return redirect(url_for('home'))
+    return render_template('login.html', form=form, login=True)
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    """Register page"""
+    form = LoginForm()
+    return render_template('login.html', form=form)

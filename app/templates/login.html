@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Connexion</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/header_login.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+<body>
+    {% include 'components/header_login.html' %}
+    <main>
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+            <div>
+                <p>Email</p>
+                {{ form.mail(size=50) }}
+            </div>
+            <div>
+                <p>Mot de passe</p>
+                {{ form.mdp(size=50) }}
+            </div>
+            <div>
+                {{ form.submit }}
+            </div>
+        </form>
+    </main>
+</html>

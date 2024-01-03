@@ -6,6 +6,7 @@ from flask_dropzone import Dropzone
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.normpath(os.path.join(os.path.dirname(__file__), 'database/app.db'))
+app.config['SECRET_KEY'] = 'la clef'
 
 if not os.path.exists(os.path.normpath(os.path.join(os.path.dirname(__file__), 'database'))):
     os.makedirs(os.path.normpath(os.path.join(os.path.dirname(__file__), 'database')))
