@@ -32,7 +32,7 @@ def get_user_by_email(email) :
     """
     Session = sessionmaker(bind=db.engine)
     session = Session()
-    user = session.query(SPECTATEUR).filter(SPECTATEUR.emailSpectateur==email).first()
+    user = session.query(UTILISATEUR).filter(UTILISATEUR.emailUtilisateur==email).first()
     session.close()
     return user
 
@@ -41,7 +41,7 @@ def email_exists(email) :
     """
     Session = sessionmaker(bind=db.engine)
     session = Session()
-    user = session.query(SPECTATEUR).filter(SPECTATEUR.emailSpectateur==email).first()
+    user = session.query(UTILISATEUR).filter(UTILISATEUR.emailUtilisateur==email).first()
     session.close()
     return user != None
 
@@ -50,9 +50,27 @@ def add_user(nom, prenom, email, mdp, telephone) :
     """
     Session = sessionmaker(bind=db.engine)
     session = Session()
-    id = session.query(SPECTATEUR).count() + 1
-    user = SPECTATEUR(idSpectateur=id, nomSpectateur=nom, prenomSpectateur=prenom, emailSpectateur=email, mdpSpectateur=mdp, numTelSpectateur=telephone)
+    id = session.query(UTILISATEUR).count() + 1
+    user = UTILISATEUR(idUtilisateur=id, nomUtilisateur=nom, prenomUtilisateur=prenom, emailUtilisateur=email, mdpUtilisateur=mdp, numTelUtilisateur=telephone, idTypeUtilisateur=1)
     session.add(user)
     session.commit()
     session.close()
     print("Utilisateur ajouté")
+
+def add_user_type(id, nom) :
+    """Ajoute un type d'utilisateur dans la base de données
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    type = TYPEUTILISATEUR(idTypeUtilisateur=id, nomTypeUtilisateur=nom)
+    session.add(type)
+    session.commit()
+    session.close()
+    print("Type d'utilisateur ajouté")
+
+def initialise_user_type() :
+    """Initialise le type de tous les utilisateurs à "Membre"
+    """
+    add_user_type(1, "Membre")
+    add_user_type(2, "Administrateur")
+    add_user_type(3, "Participant")
