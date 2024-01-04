@@ -74,3 +74,12 @@ def initialise_user_type() :
     add_user_type(1, "Membre")
     add_user_type(2, "Administrateur")
     add_user_type(3, "Participant")
+
+def get_user_by_id(id) :
+    """Retourne l'utilisateur correspondant à l'id
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    user = session.query(UTILISATEUR).filter(UTILISATEUR.idUtilisateur==id).first()
+    session.close()
+    return user

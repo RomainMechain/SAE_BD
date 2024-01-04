@@ -13,7 +13,12 @@ from app import *
 import base64
 import collections
 
+@login_manager.user_loader
+def load_user(user_id):
+    return get_user_by_id(user_id)
+
 @app.route('/')
+@login_required
 def home():
     return render_template('home.html')
 
@@ -25,6 +30,8 @@ def login():
     if form.validate_on_submit():
         if user :
             if check_password_hash(user.mdpUtilisateur, form.mdp.data):
+                login_user(user, remember=True)
+                print(current_user.idUtilisateur)
                 return redirect(url_for('home'))
     return render_template('login.html', form=form, login=True)
 

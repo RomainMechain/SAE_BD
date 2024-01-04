@@ -218,6 +218,16 @@ class UTILISATEUR(Base):
     TYPE_UTILISATEUR: Mapped[Optional['TYPEUTILISATEUR']] = relationship('TYPEUTILISATEUR', back_populates='UTILISATEUR')
     EST_INSCRIT: Mapped[List['ESTINSCRIT']] = relationship('ESTINSCRIT', uselist=True, back_populates='UTILISATEUR_')
 
+    @property
+    def is_active(self):
+        return True
+    
+    def get_id(self):
+        return str(self.idUtilisateur)
+    
+    def is_authenticated(self):
+        return True
+
 
 t_EST_FAVORIE = Table(
     'EST_FAVORIE', metadata,
