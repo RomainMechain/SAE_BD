@@ -1,0 +1,8 @@
+<header>
+    <img src="{{ url_for('static', filename='images/logo_fest_iuto.png') }}" alt="le logo" id="logo_header">
+    {% if login %}
+        <a href="{{ url_for('register') }}" id="logout">Inscription</a>
+    {% else %}
+        <a href="{{ url_for('login') }}" id="login">Connexion</a>
+    {% endif %}
+</header>

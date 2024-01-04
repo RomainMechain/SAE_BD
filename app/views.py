@@ -13,7 +13,38 @@ from app import *
 import base64
 import collections
 
+@login_manager.user_loader
+def load_user(user_id):
+    return get_user_by_id(user_id)
+
 @app.route('/')
+@login_required
 def home():
     return render_template('home.html')
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    """Login page"""
+    form = LoginForm()
+    user = get_user_by_email(form.mail.data)
+    if form.validate_on_submit():
+        if user :
+            if check_password_hash(user.mdpUtilisateur, form.mdp.data):
+                login_user(user, remember=True)
+                print(current_user.idUtilisateur)
+                return redirect(url_for('home'))
+    return render_template('login.html', form=form, login=True)
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    """Register page"""
+    form = RegisterForm()
+    if form.validate_on_submit():
+        if not email_exists(form.mail.data):
+            password = generate_password_hash(form.mdp.data).decode('utf-8')
+            add_user(form.nom.data, form.prenom.data, form.mail.data, password, form.telephone.data)
+            return redirect(url_for('login'))
+        else :
+            print("Email déjà utilisé")
+            return render_template('register.html', form=form, email_exist=True)
+    return render_template('register.html', form=form)
