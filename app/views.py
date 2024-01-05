@@ -20,7 +20,7 @@ def load_user(user_id):
 @app.route('/')
 @login_required
 def home():
-    return render_template('home.html')
+    return render_template('home.html', type_user=current_user.idTypeUtilisateur)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -31,7 +31,7 @@ def login():
         if user :
             if check_password_hash(user.mdpUtilisateur, form.mdp.data):
                 login_user(user, remember=True)
-                print(current_user.idUtilisateur)
+                print(current_user.idTypeUtilisateur)
                 return redirect(url_for('home'))
     return render_template('login.html', form=form, login=True)
 
@@ -48,3 +48,9 @@ def register():
             print("Email déjà utilisé")
             return render_template('register.html', form=form, email_exist=True)
     return render_template('register.html', form=form)
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
