@@ -2,9 +2,60 @@
 <html>
 <head>
     <title>Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/header_home.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
 </head>
 <body>
-    <h1>Home</h1>
-    <p>Welcome to the home page!</p>
+    {% include 'components/header_home.html' %}
+    <main>
+        <section>
+            {% if type_user == 1 %}
+                <div>
+                    <a href="">
+                        <img src="{{ url_for('static', filename='images/festival.jpg') }}" alt="une image de concert">
+                        <p>Consulter les événements</p>
+                    </a>
+                </div>
+                <div>
+                    <a href="">
+                        <img src="{{ url_for('static', filename='images/billets.png') }}" alt="une image de billet">
+                        <p>Consulter les événements</p>
+                    </a>
+                </div>
+                <div>
+                    <a href="">
+                        <img src="{{ url_for('static', filename='images/groupe.jpg') }}" alt="une image de groupe">
+                        <p>Consulter les groupes/artistes</p>
+                    </a>
+                </div>
+            {% elif type_user == 2 %}
+                <div>
+                    <a href="">
+                        <img src="{{ url_for('static', filename='images/festival.jpg') }}" alt="une image de concert">
+                        <p>Gérer les événements</p>
+                    </a>
+                </div>
+                <div>
+                    <a href="">
+                        <img src="{{ url_for('static', filename='images/groupe.jpg') }}" alt="une image de billet">
+                        <p>Gérer les groupes/artistes</p>
+                    </a>
+                </div>
+            {% else %}
+                <div>
+                    <a href="">
+                        <img src="{{ url_for('static', filename='images/festival.jpg') }}" alt="une image de concert">
+                        <p>Consulter mes prochains événements</p>
+                    </a>
+                </div>
+                <div>
+                    <a href="">
+                        <img src="{{ url_for('static', filename='images/hotel.png') }}" alt="une image de billet">
+                        <p>Hébergement</p>
+                    </a>
+                </div>
+            {% endif %}
+        </section>
+    </main>
 </body>
 </html>
