@@ -1,18 +1,21 @@
 body{
     margin:0;
+    background-color: rgb(230, 230, 230)
 }
 
-main, #se_connecter, #options_connexion{
+main, #se_connecter, #options_connexion, .form{
     display: flex;
     justify-content: center;
 }
 
 .form{
-    padding: 2vw;
+    padding-bottom: 7vh;
+    padding-left: 3vw;
+    padding-right: 3vw;
     margin-top: 10vh;
-    padding-top: 3vw;
+    padding-top: 2vw;
     background-color: rgb(240, 196, 131);
-    border-radius: 10px;
+    border-radius: 50px;
 }
 
 form > div{
@@ -22,4 +25,8 @@ form > div{
 #options_connexion{
     margin-top: 8vh;
     margin-left: 6vw;
+}
+
+p{
+    font-size:large;
 }
