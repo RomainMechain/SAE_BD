@@ -3,25 +3,32 @@
 <head>
     <title>Connexion</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/header_login.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/header_login.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/login.css') }}">
 </head>
 <body>
     {% include 'components/header_login.html' %}
     <main>
-        <form action="" method="post">
-            {{ form.hidden_tag() }}
-            <div>
-                <p>Email</p>
-                {{ form.mail(size=50) }}
+        <div class="container">
+            <div class="form">
+                <form action="" method="post">
+                    {{ form.hidden_tag() }}
+                    <div>
+                        <p>Email</p>
+                        {{ form.mail(size=50) }}
+                    </div>
+                    <div>
+                        <p>Mot de passe</p>
+                        {{ form.mdp(size=50) }}
+                    </div>
+                    <div id="se_connecter">
+                        {{ form.submit }}
+                    </div>
+                </form>
             </div>
-            <div>
-                <p>Mot de passe</p>
-                {{ form.mdp(size=50) }}
+            <div id="options_connexion">
+                <p>Pas encore membre ?  <a href="{{ url_for('register')}}">Inscrivez-vous !</a></p>
             </div>
-            <div>
-                {{ form.submit }}
-            </div>
-        </form>
+        </div>
     </main>
 </html>

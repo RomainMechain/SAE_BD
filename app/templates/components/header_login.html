@@ -1,8 +1,16 @@
 <header>
-    <img src="{{ url_for('static', filename='images/logo_fest_iuto.png') }}" alt="le logo" id="logo_header">
-    {% if login %}
-        <a href="{{ url_for('register') }}" id="logout">Inscription</a>
-    {% else %}
-        <a href="{{ url_for('login') }}" id="login">Connexion</a>
-    {% endif %}
+    <div class="gauche">
+        <img src="{{ url_for('static', filename='images/logo_fest_iuto.png') }}" alt="le logo" id="logo_header">
+    </div>
+    <div class="droite">
+            {% if login %}
+                <a href="{{ url_for('register') }}" id="logout">
+                    <button class="button">Inscription</button>
+                </a>
+            {% else %}
+                <a href="{{ url_for('login') }}" id="login" class>
+                    <button class="button">Connexion</button>
+                </a>
+            {% endif %}
+    </div>
 </header>
