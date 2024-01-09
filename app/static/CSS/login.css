@@ -1,3 +1,25 @@
 body{
     margin:0;
 }
+
+main, #se_connecter, #options_connexion{
+    display: flex;
+    justify-content: center;
+}
+
+.form{
+    padding: 2vw;
+    margin-top: 10vh;
+    padding-top: 3vw;
+    background-color: rgb(240, 196, 131);
+    border-radius: 10px;
+}
+
+form > div{
+    margin-top: 7vh;
+}
+
+#options_connexion{
+    margin-top: 8vh;
+    margin-left: 6vw;
+}
