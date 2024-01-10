@@ -1,7 +1,7 @@
 from app import db
 from typing import List, Optional
 
-from sqlalchemy import Column, Date, ForeignKeyConstraint, Index, Integer, String, Table
+from sqlalchemy import Column, Date, ForeignKeyConstraint, Index, Integer, String, Table, DateTime, Float
 from sqlalchemy.dialects.mysql import INTEGER
 from sqlalchemy.orm import Mapped, declarative_base, mapped_column, relationship
 from sqlalchemy.orm.base import Mapped
@@ -123,7 +123,7 @@ class ARESERVE(Base):
 
     idGroupe = mapped_column(Integer, primary_key=True, nullable=False)
     idHebergement = mapped_column(Integer, primary_key=True, nullable=False)
-    dateAReserve = mapped_column(Date, primary_key=True, nullable=False)
+    dateAReserve = mapped_column(DateTime, primary_key=True, nullable=False)
     dureeHebergement = mapped_column(Integer)
 
     GROUPE_: Mapped['GROUPE'] = relationship('GROUPE', back_populates='A_RESERVE')
@@ -153,11 +153,10 @@ class EVENEMENT(Base):
 
     idEvenement = mapped_column(Integer, primary_key=True)
     nomEvenement = mapped_column(String(50))
-    dateEvenement = mapped_column(Date)
-    heureEvenement = mapped_column(Date)
-    dureeEvenement = mapped_column(Integer)
-    dureeMontageEvenement = mapped_column(Integer)
-    dureeDemontageEvenement = mapped_column(Integer)
+    heureEvenement = mapped_column(DateTime)
+    dureeEvenement = mapped_column(Float)
+    dureeMontageEvenement = mapped_column(Float)
+    dureeDemontageEvenement = mapped_column(Float)
     idGroupe = mapped_column(Integer)
     idTypeEvenement = mapped_column(Integer)
     idLieu = mapped_column(Integer)
@@ -249,7 +248,7 @@ class ESTINSCRIT(Base):
 
     idUtilisateur = mapped_column(Integer, primary_key=True, nullable=False)
     idBillet = mapped_column(Integer, primary_key=True, nullable=False)
-    dateInscription = mapped_column(Date)
+    dateInscription = mapped_column(DateTime)
 
     TYPE_BILLET: Mapped['TYPEBILLET'] = relationship('TYPEBILLET', back_populates='EST_INSCRIT')
     UTILISATEUR_: Mapped['UTILISATEUR'] = relationship('UTILISATEUR', back_populates='EST_INSCRIT')
