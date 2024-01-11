@@ -83,3 +83,44 @@ def get_user_by_id(id) :
     user = session.query(UTILISATEUR).filter(UTILISATEUR.idUtilisateur==id).first()
     session.close()
     return user
+
+def get_all_event() :
+    """Retourne tous les évènements de la base de données
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    events = session.query(EVENEMENT).all()
+    session.close()
+    return events
+
+def get_all_type_event() :
+    """Retourne tous les types d'évènements de la base de données
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    types = session.query(TYPEEVENEMENT).all()
+    session.close()
+    return types
+
+def get_event_by_type(id) :
+    """Retourne tous les évènements du type id
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    events = session.query(EVENEMENT).filter(EVENEMENT.idTypeEvenement==id).all()
+    session.close()
+    return events
+
+def order_events(lst_events) :
+    """Retourne les évènements de la liste lst_events triés par date croissante
+    """
+    return sorted(lst_events, key=lambda event: event.heureEvenement)
+
+def get_event_by_name(name) :
+    """Retourne tous les évènements dont le nom contient name
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    events = session.query(EVENEMENT).filter(EVENEMENT.nomEvenement.ilike("%" + name + "%")).all()
+    session.close()
+    return events
