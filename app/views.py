@@ -93,3 +93,8 @@ def search_event() :
             events = get_all_event()
         events = order_events(events)
         return render_template('search_event.html', events=events, types=get_all_type_event())
+
+@app.route('/event')
+@login_required
+def event() :
+    return render_template('event.html', test=request.args.get('id_event'))
