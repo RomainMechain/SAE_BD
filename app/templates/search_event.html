@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <title>Evenement</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='CSS/header_home.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='CSS/search_event.css') }}">
+        <script type="module" src="{{ url_for('static', filename='JS/search_event.js') }}"></script>
+    </head>
+    <body>
+        {% include 'components/header_home.html' %}
+        <main>
+            <section>
+                <div>
+                    <p>Type d'evenement : </p>
+                    <div>
+                        <select name="type_evenement" id="select_type">
+                            <option value="all">Tous</option>
+                            {% for type in types %}
+                                <option value="{{ type.idTypeEvenement }}">{{ type.nomTypeEvenement }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <form action="{{ url_for('search_event') }}" method="post" role="search">
+                        <input type="search" name="search" placeholder="Rechercher" id="search_barre">
+                    </form>
+                </div>
+            </section>
+            <section>
+                {% for event in events %}
+                    <div>
+                        <a href="{{url_for('event', id_event=event.idEvenement)}}">{{ event.nomEvenement}}</a>
+                        <p>{{ event.heureEvenement }}</p>
+                        <p>{{ event.dureeEvenement }}</p>
+                    </div>
+                {% endfor %}
+            </section>
+        </main>
+    </body>
+</html>
