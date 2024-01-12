@@ -99,3 +99,21 @@ def search_event() :
 def event() :
     dico_event = create_dico_event(request.args.get('id_event'))
     return render_template('event.html', dico_event=dico_event, int=int)
+
+@app.route('/groupe', methods=['GET', 'POST'])
+@login_required
+def groupe() :
+    dico_groupe = create_dico_groupe(request.args.get('id_groupe'))
+    return render_template('groupe.html', dico_groupe=dico_groupe, int=int, est_favorie=groupe_is_favori(request.args.get('id_groupe'), current_user.idUtilisateur))
+
+@app.route('/add_favori', methods=['GET', 'POST'])
+@login_required
+def add_favori() :
+    add_favori_db(request.args.get('id_groupe'), current_user.idUtilisateur)
+    return redirect(url_for('groupe', id_groupe=request.args.get('id_groupe')))
+
+@app.route('/remove_favori', methods=['GET', 'POST'])
+@login_required
+def remove_favori() :
+    remove_favori_db(request.args.get('id_groupe'), current_user.idUtilisateur)
+    return redirect(url_for('groupe', id_groupe=request.args.get('id_groupe')))

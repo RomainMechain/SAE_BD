@@ -140,3 +140,84 @@ def create_dico_event(id_event) :
     dico["lieu"] = lieu
     dico["groupe"] = groupe
     return dico
+
+def get_instrument_by_groupe(id_groupe) :
+    """Retourne tous les instruments du groupe id_groupe
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    all_instruments = session.query(t_JOUE).filter_by(idGroupe=id_groupe).all()
+    instruments = []
+    for instrument in all_instruments :
+        instruments.append(session.query(INSTRUMENT).filter_by(idInstrument=instrument.idInstrument).first())
+    session.close()
+    return instruments
+
+def get_artiste_by_groupe(id_groupe) :
+    """Retourne tous les artistes du groupe id_groupe
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    all_artistes = session.query(t_FAIT_PARTIE).filter_by(idGroupe=id_groupe).all()
+    artistes = []
+    for artiste in all_artistes :
+        artistes.append(session.query(ARTISTE).filter_by(idArtiste=artiste.idArtiste).first())
+    session.close()
+    return artistes
+
+def get_type_musique_by_groupe(id_groupe) :
+    """Retourne tous les types de musique du groupe id_groupe
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    all_types = session.query(t_CHANTE).filter_by(idGroupe=id_groupe).all()
+    types = []
+    for type in all_types :
+        types.append(session.query(TYPEMUSIQUE).filter_by(idTypeMusique=type.idTypeMusique).first())
+    session.close()
+    return types
+
+def create_dico_groupe(id_groupe) :
+    """Retourne un dictionnaire avec les informations necessaire pour l'affichage de la page d'un groupe
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    groupe = session.query(GROUPE).filter(GROUPE.idGroupe==id_groupe).first()
+    instruments = get_instrument_by_groupe(id_groupe)
+    artistes = get_artiste_by_groupe(id_groupe)
+    types_musique = get_type_musique_by_groupe(id_groupe)
+    evenements = session.query(EVENEMENT).filter(EVENEMENT.idGroupe==id_groupe).all()
+    dico = {}
+    dico["groupe"] = groupe
+    dico["instruments"] = instruments
+    dico["artistes"] = artistes
+    dico["types_musique"] = types_musique
+    dico["evenements"] = evenements
+    return dico
+
+def groupe_is_favori(id_groupe, id_utilisateur) :
+    """Retourne True si le groupe id_groupe est un favori de l'utilisateur id_utilisateur
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    favori = session.query(t_EST_FAVORIE).filter_by(idGroupe=id_groupe, idUtilisateur=id_utilisateur).first()
+    session.close()
+    return favori != None
+
+def add_favori_db(id_groupe, id_utilisateur) :
+    """Ajoute le groupe id_groupe aux favoris de l'utilisateur id_utilisateur
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    session.execute(t_EST_FAVORIE.insert().values(idGroupe=id_groupe, idUtilisateur=id_utilisateur))
+    session.commit()
+    session.close()
+
+def remove_favori_db(id_groupe, id_utilisateur) :
+    """Retire le groupe id_groupe des favoris de l'utilisateur id_utilisateur
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    session.execute(t_EST_FAVORIE.delete().where(t_EST_FAVORIE.c.idGroupe==id_groupe).where(t_EST_FAVORIE.c.idUtilisateur==id_utilisateur))
+    session.commit()
+    session.close()
