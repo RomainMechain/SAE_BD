@@ -124,3 +124,19 @@ def get_event_by_name(name) :
     events = session.query(EVENEMENT).filter(EVENEMENT.nomEvenement.ilike("%" + name + "%")).all()
     session.close()
     return events
+
+def create_dico_event(id_event) :
+    """Retourne un dictionnaire avec les informations necessaire pour l'affichage de la page d'un evenement
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    event = session.query(EVENEMENT).filter(EVENEMENT.idEvenement==id_event).first()
+    type_evenement = session.query(TYPEEVENEMENT).filter(TYPEEVENEMENT.idTypeEvenement==event.idTypeEvenement).first()
+    lieu = session.query(LIEU).filter(LIEU.idLieu==event.idLieu).first()
+    groupe = session.query(GROUPE).filter(GROUPE.idGroupe==event.idGroupe).first()
+    dico = {}
+    dico["event"] = event
+    dico["type_evenement"] = type_evenement
+    dico["lieu"] = lieu
+    dico["groupe"] = groupe
+    return dico

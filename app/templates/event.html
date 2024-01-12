@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Evenement</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='CSS/header_home.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='CSS/event.css') }}">
+    </head>
+    <body>
+        {% include 'components/header_home.html' %}
+        <main>
+            <h1>{{ dico_event["event"].nomEvenement }}</h1>
+            <section>
+                <div>
+                    <p>{{ dico_event["type_evenement"].nomTypeEvenement }} du groupe {{ dico_event["groupe"].nomGroupe }}</p>
+                    <p>{{ dico_event["groupe"].descriptionGroupe }}</p>
+                    <a href="#">En savoir plus !</a>
+                </div>
+                <div>
+                    <p>L'evenement aura lieu le {{ dico_event["event"].heureEvenement }} et se déroulera à </p>
+                    <a href="#">{{ dico_event["lieu"].nomLieu }}</a>
+                </div>
+                <div>
+                    {% set hours = int(dico_event["event"].dureeEvenement) %}
+                    {% set minutes = int((dico_event["event"].dureeEvenement - hours) * 60) %}
+                    <p>Il durera {{ hours }}h{{ minutes }}min</p>
+                </div>
+                <div>
+                    {% if dico_event["type_evenement"].estGratuitTypeEvenement %}
+                        <p>Cette est événements est gratuit</p>
+                    {% else %}
+                        <p>Cette est événements est payant</p>
+                    {% endif %}
+                </div>
+                <div>
+                    {% if dico_event["type_evenement"].preInscription %}
+                        <a href="#">Pre-inscription</a>
+                    {% endif %}
+                </div>
+            </section>
+        </main>
+    </body>
+</html>
