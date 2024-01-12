@@ -11,7 +11,7 @@
         <section>
             {% if type_user == 1 %}
                 <div>
-                    <a href="">
+                    <a href="{{ url_for('search_event') }}">
                         <img src="{{ url_for('static', filename='images/festival.jpg') }}" alt="une image de concert">
                         <p>Consulter les événements</p>
                     </a>

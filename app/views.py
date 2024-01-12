@@ -54,3 +54,47 @@ def register():
 def logout():
     logout_user()
     return redirect(url_for('login'))
+
+def intersection(liste1, liste2) :
+    if len(liste1) == 0 or len(liste2) == 0 :
+        return liste1 + liste2
+    else :
+        res = []
+        for event1 in liste1 :
+            for event2 in liste2 :
+                if event1.idEvenement == event2.idEvenement :
+                    res.append(event1)
+                    break
+    return res 
+            
+
+@app.route('/search_event', methods=['GET', 'POST'])
+@login_required
+def search_event() :
+    if request.method == 'POST' :
+        id_type = request.form.get('id_type', None)
+        search_term = request.form.get('search_term', None)
+        return redirect(url_for('search_event', id_type=id_type, search_term=search_term))
+    else :
+        id_type = request.args.get('id_type')
+        search_term = request.args.get('search_term')
+        events_type = []
+        events_name = []
+        if id_type and id_type != "all" :
+            events_type = get_event_by_type(id_type)
+            print(events_type)
+        if search_term :
+            events_name = get_event_by_name(search_term)
+            print(events_name)
+        
+        events = intersection(events_type, events_name)
+
+        if (not id_type or id_type == "all") and not search_term :
+            events = get_all_event()
+        events = order_events(events)
+        return render_template('search_event.html', events=events, types=get_all_type_event())
+
+@app.route('/event')
+@login_required
+def event() :
+    return render_template('event.html', test=request.args.get('id_event'))
