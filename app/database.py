@@ -49,7 +49,7 @@ def init_database():
         reader = csv.reader(csvfile)
         next(reader)
         for row in reader:
-            type_event = TYPEEVENEMENT(idTypeEvenement=row[0], nomTypeEvenement=row[1], caracteristiqueTypeEvenement=row[2], estGratuitTypeEvenement=row[3])
+            type_event = TYPEEVENEMENT(idTypeEvenement=row[0], nomTypeEvenement=row[1], caracteristiqueTypeEvenement=row[2], estGratuitTypeEvenement=row[3], preInscription=row[4])
             db.session.add(type_event)
             print("Type d'événement ajouté : " + row[1])
     db.session.commit()

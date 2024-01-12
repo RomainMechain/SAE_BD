@@ -32,7 +32,9 @@
                     <div>
                         <a href="{{url_for('event', id_event=event.idEvenement)}}">{{ event.nomEvenement}}</a>
                         <p>{{ event.heureEvenement }}</p>
-                        <p>{{ event.dureeEvenement }}</p>
+                        {% set hours = int(event.dureeEvenement) %}
+                        {% set minutes = int((event.dureeEvenement - hours) * 60) %}
+                        <p>{{ hours }}h{{ minutes }}min</p>
                     </div>
                 {% endfor %}
             </section>

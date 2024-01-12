@@ -88,6 +88,7 @@ class TYPEEVENEMENT(Base):
     nomTypeEvenement = mapped_column(String(50))
     caracteristiqueTypeEvenement = mapped_column(String(100))
     estGratuitTypeEvenement = mapped_column(INTEGER(1))
+    preInscription = mapped_column(INTEGER(1))
 
     EVENEMENT: Mapped[List['EVENEMENT']] = relationship('EVENEMENT', uselist=True, back_populates='TYPE_EVENEMENT')
 
