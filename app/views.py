@@ -92,9 +92,10 @@ def search_event() :
         if (not id_type or id_type == "all") and not search_term :
             events = get_all_event()
         events = order_events(events)
-        return render_template('search_event.html', events=events, types=get_all_type_event())
+        return render_template('search_event.html', events=events, types=get_all_type_event(), int=int)
 
-@app.route('/event')
+@app.route('/event', methods=['GET', 'POST'])
 @login_required
 def event() :
-    return render_template('event.html', test=request.args.get('id_event'))
+    dico_event = create_dico_event(request.args.get('id_event'))
+    return render_template('event.html', dico_event=dico_event, int=int)
