@@ -2,7 +2,7 @@ from app import db
 from typing import List, Optional
 
 from sqlalchemy import Column, Date, ForeignKeyConstraint, Index, Integer, String, Table, DateTime, Float
-from sqlalchemy.dialects.mysql import INTEGER
+from sqlalchemy.dialects.mysql import INTEGER, BLOB
 from sqlalchemy.orm import Mapped, declarative_base, mapped_column, relationship
 from sqlalchemy.orm.base import Mapped
 
@@ -15,6 +15,8 @@ class ARTISTE(Base):
 
     idArtiste = mapped_column(Integer, primary_key=True)
     nomArtiste = mapped_column(String(50))
+    descriptionArtiste = mapped_column(String(500))
+    photoArtiste = mapped_column(BLOB)
 
     GROUPE: Mapped['GROUPE'] = relationship('GROUPE', secondary='FAIT_PARTIE', back_populates='ARTISTE_')
 
@@ -25,7 +27,7 @@ class GROUPE(Base):
     idGroupe = mapped_column(Integer, primary_key=True)
     nomGroupe = mapped_column(String(50))
     descriptionGroupe = mapped_column(String(100))
-    photoGroupe = mapped_column(String(500))
+    photoGroupe = mapped_column(BLOB)
     lienReseauxGroupe = mapped_column(String(500))
     lienVideoGroupe = mapped_column(String(500))
 

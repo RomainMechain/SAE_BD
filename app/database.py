@@ -79,7 +79,7 @@ def init_database():
         reader = csv.reader(csvfile)
         next(reader)
         for row in reader:
-            artist = ARTISTE(idArtiste=row[0], nomArtiste=row[1])
+            artist = ARTISTE(idArtiste=row[0], nomArtiste=row[1], descriptionArtiste=row[2], photoArtiste=bytes(row[3], 'utf-8'))
             db.session.add(artist)
             print("Artiste ajouté : " + row[1])
     db.session.commit()
@@ -109,7 +109,7 @@ def init_database():
         reader = csv.reader(csvfile)
         next(reader)
         for row in reader:
-            group = GROUPE(idGroupe=row[0], nomGroupe=row[1], descriptionGroupe=row[2], photoGroupe=row[3], lienReseauxGroupe=row[4], lienVideoGroupe=row[5])
+            group = GROUPE(idGroupe=row[0], nomGroupe=row[1], descriptionGroupe=row[2], photoGroupe=bytes(row[3], 'utf-8'), lienReseauxGroupe=row[4], lienVideoGroupe=row[5])
             db.session.add(group)
             print("Groupe ajouté : " + row[1])
     db.session.commit()
