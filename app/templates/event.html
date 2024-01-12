@@ -13,7 +13,7 @@
                 <div>
                     <p>{{ dico_event["type_evenement"].nomTypeEvenement }} du groupe {{ dico_event["groupe"].nomGroupe }}</p>
                     <p>{{ dico_event["groupe"].descriptionGroupe }}</p>
-                    <a href="#">En savoir plus !</a>
+                    <a href="{{ url_for('groupe', id_groupe=dico_event['groupe'].idGroupe) }}">En savoir plus !</a>
                 </div>
                 <div>
                     <p>L'evenement aura lieu le {{ dico_event["event"].heureEvenement }} et se déroulera à </p>

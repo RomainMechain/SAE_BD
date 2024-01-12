@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Groupe</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='CSS/header_home.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='CSS/groupe.css') }}">
+    </head>
+    <body>
+        {% include 'components/header_home.html' %}
+        <main>
+            <div>
+                <h1>{{ dico_groupe["groupe"].nomGroupe }}</h1>
+                {% if est_favorie %}
+                    <a href="{{ url_for('remove_favori', id_groupe=dico_groupe['groupe'].idGroupe) }}">Retirer des favoris</a>
+                {% else %}
+                    <a href="{{ url_for('add_favori', id_groupe=dico_groupe['groupe'].idGroupe) }}">Ajouter aux favoris</a>
+                {% endif %}
+            </div>
+            <section>
+                <object data="data:image/jpeg;base64,{{ dico_groupe['groupe'].photoGroupe.decode('utf-8') }}" type="image/jpeg"></object>
+                <div>
+                    <p>{{ dico_groupe["groupe"].descriptionGroupe }}</p>
+                    <div>
+                        <h2>Groupe composé de :</h2>
+                        <div>
+                            {% for artiste in dico_groupe["artistes"] %}
+                                <a href="#">{{ artiste.nomArtiste }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div>
+                    <h2>Styles de musique :</h2>
+                    <div>
+                        {% for style in dico_groupe["types_musique"] %}
+                            <a href="#">{{ style.nomTypeMusique }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div>
+                    <h2>Instruments utilisés</h2>
+                    <div>
+                        {% for instrument in dico_groupe["instruments"] %}
+                            <p>{{ instrument.nomInstrument }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div>
+                    <h2>Les événements :</h2>
+                    <div>
+                        {% for event in dico_groupe["evenements"] %}
+                            <a href="{{ url_for('event', id_event=event.idEvenement) }}">{{ event.nomEvenement }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+            <section>
+                <iframe src="{{ dico_groupe['groupe'].lienVideoGroupe }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <a href="{{ dico_groupe['groupe'].lienReseauxGroupe }}">Retrouvez le groupe sur ce lien !</a>
+            </section>
+        </main>
+    </body>
+</html>
