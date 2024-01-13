@@ -123,3 +123,11 @@ def remove_favori() :
 def artiste() :
     artiste = get_artiste_by_id(request.args.get('id_artiste'))
     return render_template('artiste.html', artiste=artiste)
+
+@app.route('/type_musique', methods=['GET', 'POST'])
+@login_required
+def type_musique() :
+    type_musique = get_type_musique_by_id(request.args.get('id_type_musique'))
+    types_musique = get_paire_musique(request.args.get('id_type_musique'))
+    groupes = get_groupe_by_type_musique(request.args.get('id_type_musique'))
+    return render_template('type_musique.html', type_musique=type_musique, types_musique=types_musique, groupes=groupes)
