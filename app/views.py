@@ -117,3 +117,9 @@ def add_favori() :
 def remove_favori() :
     remove_favori_db(request.args.get('id_groupe'), current_user.idUtilisateur)
     return redirect(url_for('groupe', id_groupe=request.args.get('id_groupe')))
+
+@app.route('/artiste', methods=['GET', 'POST'])
+@login_required
+def artiste() :
+    artiste = get_artiste_by_id(request.args.get('id_artiste'))
+    return render_template('artiste.html', artiste=artiste)

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ artiste.nomArtiste }}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='CSS/header_home.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='CSS/artiste.css') }}">
+    </head>
+    <body>
+        {% include 'components/header_home.html' %}
+        <main>
+            <h1>{{ artiste.nomArtiste }}</h1>
+            <div>
+                <object data="data:image/jpeg;base64,{{ artiste.photoArtiste.decode('utf-8') }}" type="image/jpeg"></object>
+                <p>{{ artiste.descriptionArtiste }}</p>
+            </div>
+        </main>
+    </body>
+</html>

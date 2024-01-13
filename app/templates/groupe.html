@@ -24,7 +24,7 @@
                         <h2>Groupe composé de :</h2>
                         <div>
                             {% for artiste in dico_groupe["artistes"] %}
-                                <a href="#">{{ artiste.nomArtiste }}</a>
+                                <a href="{{ url_for('artiste', id_artiste=artiste.idArtiste) }}">{{ artiste.nomArtiste }}</a>
                             {% endfor %}
                         </div>
                     </div>
