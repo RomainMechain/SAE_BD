@@ -221,3 +221,12 @@ def remove_favori_db(id_groupe, id_utilisateur) :
     session.execute(t_EST_FAVORIE.delete().where(t_EST_FAVORIE.c.idGroupe==id_groupe).where(t_EST_FAVORIE.c.idUtilisateur==id_utilisateur))
     session.commit()
     session.close()
+
+def get_artiste_by_id(id_artiste) :
+    """Retourne l'artiste correspondant à l'id
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    artiste = session.query(ARTISTE).filter(ARTISTE.idArtiste==id_artiste).first()
+    session.close()
+    return artiste
