@@ -17,7 +17,7 @@
                 </div>
                 <div>
                     <p>L'evenement aura lieu le {{ dico_event["event"].heureEvenement }} et se déroulera à </p>
-                    <a href="#">{{ dico_event["lieu"].nomLieu }}</a>
+                    <a href="{{ url_for('lieu', id_lieu=dico_event['lieu'].idLieu) }}">{{ dico_event["lieu"].nomLieu }}</a>
                 </div>
                 <div>
                     {% set hours = int(dico_event["event"].dureeEvenement) %}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ lieu.nomLieu }}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='CSS/header_home.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='CSS/lieu.css') }}">
+    </head>
+    <body>
+        {% include 'components/header_home.html' %}
+        <main>
+            <h1>{{ lieu.nomLieu }}</h1>
+            <section>
+                <p>Il se situe à l'adresse : {{ lieu.adresse }}</p>
+                <p>Il possède une capacité de : {{ lieu.capactiteLieu }} personnes</p>
+            </section>
+            <section>
+                <h2>Planning</h2>
+                <div>
+                    {% for event in events %}
+                        <div>
+                            <a href="{{url_for('event', id_event=event.idEvenement)}}">{{ event.nomEvenement}}</a>
+                            <p>{{ event.heureEvenement }}</p>
+                            {% set hours = int(event.dureeEvenement) %}
+                            {% set minutes = int((event.dureeEvenement - hours) * 60) %}
+                            <p>{{ hours }}h{{ minutes }}min</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+        </main>
+    </body>
+</html>

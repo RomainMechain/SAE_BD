@@ -230,3 +230,54 @@ def get_artiste_by_id(id_artiste) :
     artiste = session.query(ARTISTE).filter(ARTISTE.idArtiste==id_artiste).first()
     session.close()
     return artiste
+
+def get_paire_musique(id_type_musique) :
+    """Retourne une paire de musique correspondant à l'id
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    all_paires = session.query(t_PAIRE_MUSIQUE).filter_by(musique1=id_type_musique).all()
+    paires = []
+    for paire in all_paires :
+        paires.append(session.query(TYPEMUSIQUE).filter_by(idTypeMusique=paire.musique2).first())
+    session.close()
+    return paires
+
+def get_groupe_by_type_musique(id_type_musique) :
+    """Retourne tous les groupes qui font de la musique du type id_type_musique
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    all_groupes = session.query(t_CHANTE).filter_by(idTypeMusique=id_type_musique).all()
+    groupes = []
+    for groupe in all_groupes :
+        groupes.append(session.query(GROUPE).filter_by(idGroupe=groupe.idGroupe).first())
+    session.close()
+    return groupes
+
+def get_type_musique_by_id(id_type_musique) :
+    """Retourne le type de musique correspondant à l'id
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    type_musique = session.query(TYPEMUSIQUE).filter(TYPEMUSIQUE.idTypeMusique==id_type_musique).first()
+    session.close()
+    return type_musique
+
+def get_lieu_by_id(id_lieu) :
+    """Retourne le lieu correspondant à l'id
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    lieu = session.query(LIEU).filter(LIEU.idLieu==id_lieu).first()
+    session.close()
+    return lieu
+
+def get_event_by_lieu(id_lieu) :
+    """Retourne tous les évènements qui ont lieu au lieu id_lieu
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    events = session.query(EVENEMENT).filter(EVENEMENT.idLieu==id_lieu).all()
+    session.close()
+    return order_events(events)
