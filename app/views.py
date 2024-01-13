@@ -131,3 +131,10 @@ def type_musique() :
     types_musique = get_paire_musique(request.args.get('id_type_musique'))
     groupes = get_groupe_by_type_musique(request.args.get('id_type_musique'))
     return render_template('type_musique.html', type_musique=type_musique, types_musique=types_musique, groupes=groupes)
+
+@app.route('/lieu/<id_lieu>', methods=['GET', 'POST'])
+@login_required
+def lieu(id_lieu):
+    lieu = get_lieu_by_id(id_lieu)
+    events = get_event_by_lieu(id_lieu)
+    return render_template('lieu.html', lieu=lieu, events=events, int=int)

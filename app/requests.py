@@ -263,3 +263,21 @@ def get_type_musique_by_id(id_type_musique) :
     type_musique = session.query(TYPEMUSIQUE).filter(TYPEMUSIQUE.idTypeMusique==id_type_musique).first()
     session.close()
     return type_musique
+
+def get_lieu_by_id(id_lieu) :
+    """Retourne le lieu correspondant à l'id
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    lieu = session.query(LIEU).filter(LIEU.idLieu==id_lieu).first()
+    session.close()
+    return lieu
+
+def get_event_by_lieu(id_lieu) :
+    """Retourne tous les évènements qui ont lieu au lieu id_lieu
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    events = session.query(EVENEMENT).filter(EVENEMENT.idLieu==id_lieu).all()
+    session.close()
+    return order_events(events)
