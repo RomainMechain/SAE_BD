@@ -35,7 +35,7 @@
                     <h2>Styles de musique :</h2>
                     <div>
                         {% for style in dico_groupe["types_musique"] %}
-                            <a href="#">{{ style.nomTypeMusique }}</a>
+                            <a href="{{ url_for('type_musique', id_type_musique=style.idTypeMusique) }}">{{ style.nomTypeMusique }}</a>
                         {% endfor %}
                     </div>
                 </div>
