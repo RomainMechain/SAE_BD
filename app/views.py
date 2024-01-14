@@ -144,3 +144,19 @@ def lieu(id_lieu):
 def search_ticket() :
     types_billet = get_all_type_billet()
     return render_template('search_ticket.html', types_billet=types_billet)
+
+@app.route('/ticket', methods=['GET', 'POST'])
+@login_required
+def ticket() :
+    billet = get_billet_by_id(request.args.get('id_billet'))
+    dates = get_unique_event_days()
+    return render_template('ticket.html', billet=billet, dates=dates)
+
+@app.route('/add_billet', methods=['GET', 'POST'])
+@login_required
+def add_billet() :
+    json = request.get_json()
+    if (buy_ticket(json['id_billet'], current_user.idUtilisateur, json['date'])) :
+        return jsonify(success=True, redirect_url=url_for('search_ticket'))
+    else :
+        return jsonify(success=False, message='Vous avez déjà une réservation à cette date',  redirect_url=url_for('ticket', id_billet=json['id_billet']))
