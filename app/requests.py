@@ -281,3 +281,12 @@ def get_event_by_lieu(id_lieu) :
     events = session.query(EVENEMENT).filter(EVENEMENT.idLieu==id_lieu).all()
     session.close()
     return order_events(events)
+
+def get_all_type_billet() :
+    """Retourne tous les types de billets de la base de données
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    types = session.query(TYPEBILLET).all()
+    session.close()
+    return types

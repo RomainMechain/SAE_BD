@@ -138,3 +138,9 @@ def lieu(id_lieu):
     lieu = get_lieu_by_id(id_lieu)
     events = get_event_by_lieu(id_lieu)
     return render_template('lieu.html', lieu=lieu, events=events, int=int)
+
+@app.route('/search_ticket', methods=['GET', 'POST'])
+@login_required
+def search_ticket() :
+    types_billet = get_all_type_billet()
+    return render_template('search_ticket.html', types_billet=types_billet)
