@@ -1,10 +1,11 @@
 from app import db
 from app.models import *
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy import asc
+from sqlalchemy import asc, func
 from datetime import datetime
 from unidecode import unidecode
 from pytz import timezone
+from sqlalchemy.exc import SQLAlchemyError
 
 def add_instrument(nom, description) :
     """Ajoute un instrument dans la base de données
@@ -281,3 +282,48 @@ def get_event_by_lieu(id_lieu) :
     events = session.query(EVENEMENT).filter(EVENEMENT.idLieu==id_lieu).all()
     session.close()
     return order_events(events)
+
+def get_all_type_billet() :
+    """Retourne tous les types de billets de la base de données
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    types = session.query(TYPEBILLET).all()
+    session.close()
+    return types
+
+def get_unique_event_days():
+    """Retourne tous les jours uniques où il y a un événement
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    unique_days = session.query(func.date(EVENEMENT.heureEvenement)).all()
+    unique_days = sorted(list(set(unique_days)))
+    session.close()
+    return [day[0] for day in unique_days]
+
+def get_billet_by_id(id_billet) :
+    """Retourne le billet correspondant à l'id
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    billet = session.query(TYPEBILLET).filter(TYPEBILLET.idBillet==id_billet).first()
+    session.close()
+    return billet
+
+def buy_ticket(id_billet, id_utilisateur, date) :
+    """Ajoute un billet à l'utilisateur id_utilisateur pour l'évènement id_billet
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    date = datetime.strptime(date, "%Y-%m-%d").date()
+    achat = ESTINSCRIT(idBillet=id_billet, idUtilisateur=id_utilisateur, dateInscription=date)
+    try:
+        session.add(achat)
+        session.commit()
+        return True
+    except SQLAlchemyError:
+        session.rollback()
+        return False
+    finally:
+        session.close()
