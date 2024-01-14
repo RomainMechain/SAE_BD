@@ -251,7 +251,7 @@ class ESTINSCRIT(Base):
 
     idUtilisateur = mapped_column(Integer, primary_key=True, nullable=False)
     idBillet = mapped_column(Integer, primary_key=True, nullable=False)
-    dateInscription = mapped_column(DateTime)
+    dateInscription = mapped_column(Date, primary_key=True, nullable=False)
 
     TYPE_BILLET: Mapped['TYPEBILLET'] = relationship('TYPEBILLET', back_populates='EST_INSCRIT')
     UTILISATEUR_: Mapped['UTILISATEUR'] = relationship('UTILISATEUR', back_populates='EST_INSCRIT')
