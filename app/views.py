@@ -98,7 +98,9 @@ def search_event() :
 @login_required
 def event() :
     dico_event = create_dico_event(request.args.get('id_event'))
-    return render_template('event.html', dico_event=dico_event, int=int)
+    nb_pre_inscrit = get_nb_pre_inscrits(request.args.get('id_event'))
+    pre_inscrit = est_pre_inscrit(request.args.get('id_event'), current_user.idUtilisateur)
+    return render_template('event.html', dico_event=dico_event, int=int, nb_pre_inscrit=nb_pre_inscrit, pre_inscrit=pre_inscrit)
 
 @app.route('/groupe', methods=['GET', 'POST'])
 @login_required
@@ -160,3 +162,19 @@ def add_billet() :
         return jsonify(success=True, redirect_url=url_for('search_ticket'))
     else :
         return jsonify(success=False, message='Vous avez déjà une réservation à cette date',  redirect_url=url_for('ticket', id_billet=json['id_billet']))
+    
+@app.route('/pre_inscription', methods=['GET', 'POST'])
+@login_required
+def pre_inscription() :
+    id_evevnement = request.args.get('id_evenement')
+    if pre_inscription_possible(id_evevnement, current_user.idUtilisateur) :
+        pre_inscription_db(id_evevnement, current_user.idUtilisateur)
+        return redirect(url_for('event', id_event=id_evevnement))
+    return redirect(url_for('search_ticket'))
+
+@app.route('/remove_pre_inscription', methods=['GET', 'POST'])
+@login_required
+def remove_pre_inscription() :
+    id_evevnement = request.args.get('id_evenement')
+    remove_pre_inscription_db(id_evevnement, current_user.idUtilisateur)
+    return redirect(url_for('event', id_event=id_evevnement))
