@@ -196,3 +196,9 @@ def search_groupe() :
             print(favori)
             groupes = get_groupe_favori(groupes, current_user.idUtilisateur)
         return render_template('search_groupe.html', groupes=groupes)
+    
+@app.route('/profil', methods=['GET', 'POST'])
+@login_required
+def profil() :
+    user = get_user_by_id(current_user.idUtilisateur)
+    return render_template('profil.html', user=user)
