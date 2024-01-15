@@ -10,9 +10,9 @@
         {% include 'components/header_home.html' %}
         <main>
             <section>
-                <div>
+                <div id="trier">
                     <p>Type d'evenement : </p>
-                    <div>
+                    <div >
                         <select name="type_evenement" id="select_type">
                             <option value="all">Tous</option>
                             {% for type in types %}
@@ -21,7 +21,7 @@
                         </select>
                     </div>
                 </div>
-                <div>
+                <div id="la_barre">
                     <form action="{{ url_for('search_event') }}" method="post" role="search">
                         <input type="search" name="search" placeholder="Rechercher" id="search_barre">
                     </form>

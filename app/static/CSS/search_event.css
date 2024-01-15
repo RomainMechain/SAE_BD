@@ -1,0 +1,32 @@
+body{
+    margin:0;
+    background-color: rgb(226, 218, 218)
+}
+
+#search_barre{
+    width: 15vw;
+    height: 5vh;
+}
+
+#la_barre{
+    display:flex;
+    align-items: right;
+    justify-content: right;
+    margin-right: 5vw;
+}
+
+#select_type{
+    appearance: none;
+    background-color: #ffffff ;
+    color: #2a2b38;
+    text-align: center;
+    font-size: 2vh;
+    box-sizing: border-box;
+    border-radius: 0.9375em;
+    border: none;
+}
+
+#trier{
+    margin-top: 5vh;
+    margin-left: 2vw;
+}
