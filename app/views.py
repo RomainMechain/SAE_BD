@@ -178,3 +178,21 @@ def remove_pre_inscription() :
     id_evevnement = request.args.get('id_evenement')
     remove_pre_inscription_db(id_evevnement, current_user.idUtilisateur)
     return redirect(url_for('event', id_event=id_evevnement))
+
+@app.route('/search_groupe', methods=['GET', 'POST'])
+@login_required
+def search_groupe() :
+    if request.method == 'POST' :
+        search_term = request.form.get('search_term', None)
+        favori = request.form.get('favori', None)
+        return redirect(url_for('search_groupe', search_term=search_term, favori=favori))
+    else :
+        search_term = request.args.get('search_term')
+        favori = request.args.get('favori')
+        groupes = get_all_groupe()
+        if search_term :
+            groupes = get_groupe_by_nom(search_term)
+        if favori == 'true':
+            print(favori)
+            groupes = get_groupe_favori(groupes, current_user.idUtilisateur)
+        return render_template('search_groupe.html', groupes=groupes)
