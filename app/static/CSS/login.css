@@ -1,6 +1,6 @@
 body{
     margin:0;
-    background-color: rgb(49, 47, 47)
+    background-color: rgb(226, 218, 218)
 }
 
 main, #se_connecter, #options_connexion, .form{
@@ -14,8 +14,12 @@ main, #se_connecter, #options_connexion, .form{
     padding-right: 3vw;
     margin-top: 10vh;
     padding-top: 2vw;
-    background-color: rgb(240, 196, 131);
+    background-color: rgb(161, 161, 161);
     border-radius: 50px;
+}
+
+form > div > p{
+    color: white;
 }
 
 form > div{
@@ -31,6 +35,3 @@ p{
     font-size:large;
 }
 
-#inscription, #pasmembre{
-    color: white
-}

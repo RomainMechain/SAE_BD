@@ -1,5 +1,5 @@
 header{
-    background-color: rgb(240, 196, 131);
+    background-color: rgb(44, 42, 42);
     height: 9rem;
     flex-basis: 100%;
 }
@@ -15,7 +15,7 @@ header{
 }
 
 a{
-    margin-right: 8rem;
+    margin-right: 4rem;
 }
 
 a, .button{
@@ -46,7 +46,7 @@ a, .button{
 
 .button{
     appearance: none;
-    background-color: #70b5c9;
+    background-color: #ffffff ;
     color: #2a2b38;
     text-align: center;
     font-size: 2vh;
@@ -61,7 +61,7 @@ a, .button{
 
 .button:hover {
   color: #2a2b38;
-  background-color: #ffffff;
+  background-color: #70b5c9;
   box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
   transform: translateY(-2px);
 }

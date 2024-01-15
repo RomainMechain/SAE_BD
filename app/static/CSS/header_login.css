@@ -1,5 +1,5 @@
 header{
-    background-color: rgb(240, 196, 131);
+    background-color: rgb(44, 42, 42);
     height: 9rem;
     flex-basis: 100%;
 }
@@ -23,6 +23,11 @@ a, .button{
     height: 4rem;
 }
 
+#submit{
+    padding: 1rem;
+    margin-right: 3vw;
+}
+
 .droite{
     flex-basis: 100%;
     justify-content: right;
@@ -34,9 +39,9 @@ img{
     height: 9rem;
 }
 
-.button{
+.button, #submit{
     appearance: none;
-    background-color: #70b5c9;
+    background-color: #ffffff;
     color: #2a2b38;
     margin-top: 5vh;
     margin-left: 3vw;
@@ -47,18 +52,18 @@ img{
     border: none;
 }
 
-.button:disabled {
+.button:disabled , #submit:disabled{
     pointer-events: none;
 }
 
-.button:hover {
+.button:hover, #submit:hover {
   color: #2a2b38;
-  background-color: #ffffff;
+  background-color: #70b5c9;
   box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
   transform: translateY(-2px);
 }
 
-.button:active {
+.button:active, #submit:active {
   box-shadow: none;
   transform: translateY(0);
 }
