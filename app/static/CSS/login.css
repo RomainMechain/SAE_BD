@@ -1,6 +1,6 @@
 body{
     margin:0;
-    background-color: rgb(230, 230, 230)
+    background-color: rgb(49, 47, 47)
 }
 
 main, #se_connecter, #options_connexion, .form{
@@ -29,4 +29,8 @@ form > div{
 
 p{
     font-size:large;
+}
+
+#inscription, #pasmembre{
+    color: white
 }

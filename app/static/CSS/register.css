@@ -1,5 +1,10 @@
-body{
+body, main{
     margin:0;
+}
+
+main{
+  background-color: rgb(49, 47, 47);
+  padding-bottom: 8vh;
 }
 
 main, .form, .send, .email{

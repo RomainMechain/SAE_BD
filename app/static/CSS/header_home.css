@@ -1,0 +1,72 @@
+header{
+    background-color: rgb(240, 196, 131);
+    height: 9rem;
+    flex-basis: 100%;
+}
+
+.droite, header, .gauche{
+    display:flex;
+    align-items: center;
+}
+
+
+.gauche{
+    justify-content: center;
+}
+
+a{
+    margin-right: 8rem;
+}
+
+a, .button{
+    width: 10rem;
+    height: 4rem;
+}
+
+.droite .information{
+    margin-top: 3vh;
+}
+
+.droite{
+    margin-top : -2vh;
+    flex-basis: 100%;
+    justify-content: right;
+}
+
+#logo_header{
+    margin-left: 1vw;
+    width: 9rem;
+    height: 9rem;
+}
+
+#maison_header{
+    width: 6rem;
+    height: 6rem;
+}
+
+.button{
+    appearance: none;
+    background-color: #70b5c9;
+    color: #2a2b38;
+    text-align: center;
+    font-size: 2vh;
+    box-sizing: border-box;
+    border-radius: 0.9375em;
+    border: none;
+}
+
+.button:disabled {
+    pointer-events: none;
+}
+
+.button:hover {
+  color: #2a2b38;
+  background-color: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.button:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
