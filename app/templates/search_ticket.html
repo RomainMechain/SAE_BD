@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Billeteri</title>
+        <title>Billeterie</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='CSS/header_home.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='CSS/search_ticket.css') }}">
     </head>
     <body>
         {% include 'components/header_home.html' %}
         <main>
-            <h1>Billeteri</h1>
+            <h1>Billeterie</h1>
             <section>
                 {% for billet in types_billet %}
-                    <div>
-                        <a href="{{ url_for('ticket', id_billet=billet.idBillet) }}">
+                    <div class="element_liste_billet">
+                        <a href="{{ url_for('ticket', id_billet=billet.idBillet) }}" class="lien_choix">
                             <p>{{ billet.nomBillet }}</p>
                             <p>{{ billet.prixBillet }}€</p>
                             <p>Pour {{ billet.nbJoursBillet }} jour(s)</p>
