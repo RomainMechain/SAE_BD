@@ -3,7 +3,7 @@
 <head>
     <title>Home</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='CSS/header_home.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/home.css') }}">
 </head>
 <body>
     {% include 'components/header_home.html' %}
@@ -23,9 +23,9 @@
                     </a>
                 </div>
                 <div>
-                    <a href="">
+                    <a href="{{ url_for('search_groupe') }}">
                         <img src="{{ url_for('static', filename='images/groupe.jpg') }}" alt="une image de groupe">
-                        <p>Consulter les groupes/artistes</p>
+                        <p>Consulter les groupes</p>
                     </a>
                 </div>
             {% elif type_user == 2 %}

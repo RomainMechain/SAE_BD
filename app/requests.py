@@ -400,3 +400,33 @@ def remove_pre_inscription_db(id_event, id_utilisateur) :
     session.commit()
     session.close()
     print("Pré-inscription retirée")
+
+def get_all_groupe() :
+    """Retourne tous les groupes de la base de données
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    groupes = session.query(GROUPE).all()
+    session.close()
+    return groupes
+
+def get_groupe_by_nom(nom) :
+    """Retourne tous les groupes dont le nom contient nom
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    groupes = session.query(GROUPE).filter(GROUPE.nomGroupe.ilike("%" + nom + "%")).all()
+    session.close()
+    return groupes
+
+def get_groupe_favori(groupes,id_user) :
+    """Retourne tous les groupes favoris de l'utilisateur id_user
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    groupes_favoris = []
+    for groupe in groupes :
+        if groupe_is_favori(groupe.idGroupe, id_user) :
+            groupes_favoris.append(groupe)
+    session.close()
+    return groupes_favoris
