@@ -11,47 +11,47 @@
         <section>
             {% if type_user == 1 %}
                 <div>
-                    <a href="{{ url_for('search_event') }}">
+                    <a href="{{ url_for('search_event') }}" class="lien_choix">
                         <img src="{{ url_for('static', filename='images/festival.jpg') }}" alt="une image de concert">
-                        <p>Consulter les événements</p>
+                        <button class="button">Consulter les événements</button>
                     </a>
                 </div>
                 <div>
-                    <a href="{{ url_for('search_ticket') }}">
+                    <a href="{{ url_for('search_ticket') }}" class="lien_choix">
                         <img src="{{ url_for('static', filename='images/billets.png') }}" alt="une image de billet">
-                        <p>Consulter les événements</p>
+                        <button class="button">Consulter les événements</button>
                     </a>
                 </div>
                 <div>
-                    <a href="{{ url_for('search_groupe') }}">
+                    <a href="{{ url_for('search_groupe') }}" class="lien_choix">
                         <img src="{{ url_for('static', filename='images/groupe.jpg') }}" alt="une image de groupe">
-                        <p>Consulter les groupes</p>
+                        <button class="button">Consulter les groupes/artistes</button>
                     </a>
                 </div>
             {% elif type_user == 2 %}
                 <div>
-                    <a href="">
+                    <a href="" class="lien_choix">
                         <img src="{{ url_for('static', filename='images/festival.jpg') }}" alt="une image de concert">
-                        <p>Gérer les événements</p>
+                        <button class="button">Gérer les événements</button>
                     </a>
                 </div>
                 <div>
-                    <a href="">
+                    <a href="" class="lien_choix">
                         <img src="{{ url_for('static', filename='images/groupe.jpg') }}" alt="une image de billet">
-                        <p>Gérer les groupes/artistes</p>
+                        <button class="button">Gérer les groupes/artistes</button class="button">
                     </a>
                 </div>
             {% else %}
                 <div>
-                    <a href="">
+                    <a href="" class="lien_choix">
                         <img src="{{ url_for('static', filename='images/festival.jpg') }}" alt="une image de concert">
-                        <p>Consulter mes prochains événements</p>
+                        <button class="button">Consulter mes prochains événements</button>
                     </a>
                 </div>
                 <div>
-                    <a href="">
+                    <a href="" class="lien_choix">
                         <img src="{{ url_for('static', filename='images/hotel.png') }}" alt="une image de billet">
-                        <p>Hébergement</p>
+                        <button class="button">Hébergement</button>
                     </a>
                 </div>
             {% endif %}

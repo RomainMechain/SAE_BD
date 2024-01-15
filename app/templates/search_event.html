@@ -10,9 +10,9 @@
         {% include 'components/header_home.html' %}
         <main>
             <section>
-                <div>
-                    <p>Type d'evenement : </p>
-                    <div>
+                <div id="trier">
+                    <p>Type d'événement : </p>
+                    <div >
                         <select name="type_evenement" id="select_type">
                             <option value="all">Tous</option>
                             {% for type in types %}
@@ -21,20 +21,22 @@
                         </select>
                     </div>
                 </div>
-                <div>
+                <div id="la_barre">
                     <form action="{{ url_for('search_event') }}" method="post" role="search">
                         <input type="search" name="search" placeholder="Rechercher" id="search_barre">
                     </form>
                 </div>
             </section>
-            <section>
+            <section id="contenant">
                 {% for event in events %}
-                    <div>
+                    <div class="element_liste_evenements">
                         <a href="{{url_for('event', id_event=event.idEvenement)}}">{{ event.nomEvenement}}</a>
-                        <p>{{ event.heureEvenement }}</p>
-                        {% set hours = int(event.dureeEvenement) %}
-                        {% set minutes = int((event.dureeEvenement - hours) * 60) %}
-                        <p>{{ hours }}h{{ minutes }}min</p>
+                        <div>
+                            <p>{{ event.heureEvenement }}</p>
+                            {% set hours = int(event.dureeEvenement) %}
+                            {% set minutes = int((event.dureeEvenement - hours) * 60) %}
+                            <p>{{ hours }}h{{ minutes }}min</p>
+                        </div>
                     </div>
                 {% endfor %}
             </section>

@@ -1,5 +1,10 @@
-body{
+body, main{
     margin:0;
+}
+
+main{
+  background-color: rgb(226, 218, 218);
+  padding-bottom: 8vh;
 }
 
 main, .form, .send, .email{
@@ -7,12 +12,16 @@ main, .form, .send, .email{
   justify-content: center;
 }
 
+form > div > p{
+  color: white;
+}
+
 .form{
   padding-left: 3vw;
   padding-right: 3vw;
   margin-top: 8vh;
   padding-top: 4vh;
-  background-color: rgb(240, 196, 131);
+  background-color: rgb(161, 161, 161);
   border-radius: 50px;
 }
 
