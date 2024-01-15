@@ -11,7 +11,7 @@
         <main>
             <section>
                 <div id="trier">
-                    <p>Type d'evenement : </p>
+                    <p>Type d'événement : </p>
                     <div >
                         <select name="type_evenement" id="select_type">
                             <option value="all">Tous</option>
@@ -27,14 +27,16 @@
                     </form>
                 </div>
             </section>
-            <section>
+            <section id="contenant">
                 {% for event in events %}
-                    <div>
+                    <div class="element_liste_evenements">
                         <a href="{{url_for('event', id_event=event.idEvenement)}}">{{ event.nomEvenement}}</a>
-                        <p>{{ event.heureEvenement }}</p>
-                        {% set hours = int(event.dureeEvenement) %}
-                        {% set minutes = int((event.dureeEvenement - hours) * 60) %}
-                        <p>{{ hours }}h{{ minutes }}min</p>
+                        <div>
+                            <p>{{ event.heureEvenement }}</p>
+                            {% set hours = int(event.dureeEvenement) %}
+                            {% set minutes = int((event.dureeEvenement - hours) * 60) %}
+                            <p>{{ hours }}h{{ minutes }}min</p>
+                        </div>
                     </div>
                 {% endfor %}
             </section>
