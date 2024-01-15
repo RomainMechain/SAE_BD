@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ user.nomUtilisateur }} {{ user.prenomUtilisateur }}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='CSS/header_home.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='CSS/profil.css') }}">
+    </head>
+    <body>
+        {% include 'components/header_home.html' %}
+        <main>
+            <h1>{{ user.nomUtilisateur }} {{ user.prenomUtilisateur }}</h1>
+            <section>
+                <div>
+                    <p>Numéro de téléphone : {{ user.numTelUtilisateur }}</p>
+                </div>
+                <div>
+                    <p>Adresse mail : {{ user.emailUtilisateur }}</p>
+                </div>
+            </section>
+        </main>
+    </body>
+</html>

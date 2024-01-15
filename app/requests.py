@@ -1,10 +1,10 @@
 from app import db
 from app.models import *
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy import asc, func
-from datetime import datetime
+from sqlalchemy import asc, distinct, func, cast
 from unidecode import unidecode
 from pytz import timezone
+from datetime import datetime, timedelta
 from sqlalchemy.exc import SQLAlchemyError
 
 def add_instrument(nom, description) :
@@ -327,3 +327,106 @@ def buy_ticket(id_billet, id_utilisateur, date) :
         return False
     finally:
         session.close()
+
+def get_nb_pre_inscrits(id_event) :
+    """Retourne le nombre de pré-inscrits à l'évènement id_event
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    nb_pre_inscrits = session.query(t_PRE_INSCRIT).filter(t_PRE_INSCRIT.c.idEvenement==id_event).count()
+    session.close()
+    return nb_pre_inscrits
+
+def  est_pre_inscrit(id_event, id_utilisateur) :
+    """Retourne True si l'utilisateur id_utilisateur est pré-inscrit à l'évènement id_event
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    pre_inscrit = session.query(t_PRE_INSCRIT).filter(t_PRE_INSCRIT.c.idEvenement==id_event).filter(t_PRE_INSCRIT.c.idUtilisateur==id_utilisateur).first()
+    session.close()
+    return pre_inscrit != None
+
+def get_inscription_by_utilisateur(id_utilisateur) :
+    """Retourne toutes les inscriptions de l'utilisateur id_utilisateur
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    inscriptions = session.query(ESTINSCRIT).filter(ESTINSCRIT.idUtilisateur==id_utilisateur).all()
+    session.close()
+    return inscriptions
+
+def inscrit_pour_date(id_utilisateur, date) :
+    """return True si l'utilisateur id_utilisateur a un billet valide la date date
+    """
+    inscriptions = get_inscription_by_utilisateur(id_utilisateur)
+    for inscription in inscriptions :
+        billet = get_billet_by_id(inscription.idBillet)
+        # Convertit date en objet datetime.date
+        date = date.date()
+        # Vérifie si la date est comprise entre dateInscription et dateInscription + nbJoursBillet
+        if inscription.dateInscription <= date <= (inscription.dateInscription + timedelta(days=billet.nbJoursBillet)):
+            return True
+    return False
+
+def pre_inscription_possible(id_event, id_utilisateur):
+    """Retourne True si l'utilisateur id_utilisateur peut se pré-inscrire à l'évènement dico_event
+    """
+    dico_event = create_dico_event(id_event)
+    if get_nb_pre_inscrits(dico_event["event"].idEvenement) >= dico_event["lieu"].capactiteLieu :
+        return False
+    else :
+        if dico_event["type_evenement"].estGratuitTypeEvenement :
+            return True
+        if inscrit_pour_date(id_utilisateur, dico_event["event"].heureEvenement) :
+            return True
+    return False
+
+def pre_inscription_db(id_event, id_utilisateur) :
+    """Ajoute une pré-inscription à l'utilisateur id_utilisateur pour l'évènement id_event
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    session.execute(t_PRE_INSCRIT.insert().values(idEvenement=id_event, idUtilisateur=id_utilisateur))
+    session.commit()
+    session.close()
+    print("Pré-inscription ajoutée")
+
+def remove_pre_inscription_db(id_event, id_utilisateur) :
+    """Retire la pré-inscription de l'utilisateur id_utilisateur pour l'évènement id_event
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    session.execute(t_PRE_INSCRIT.delete().where(t_PRE_INSCRIT.c.idEvenement==id_event).where(t_PRE_INSCRIT.c.idUtilisateur==id_utilisateur))
+    session.commit()
+    session.close()
+    print("Pré-inscription retirée")
+
+def get_all_groupe() :
+    """Retourne tous les groupes de la base de données
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    groupes = session.query(GROUPE).all()
+    session.close()
+    return groupes
+
+def get_groupe_by_nom(nom) :
+    """Retourne tous les groupes dont le nom contient nom
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    groupes = session.query(GROUPE).filter(GROUPE.nomGroupe.ilike("%" + nom + "%")).all()
+    session.close()
+    return groupes
+
+def get_groupe_favori(groupes,id_user) :
+    """Retourne tous les groupes favoris de l'utilisateur id_user
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    groupes_favoris = []
+    for groupe in groupes :
+        if groupe_is_favori(groupe.idGroupe, id_user) :
+            groupes_favoris.append(groupe)
+    session.close()
+    return groupes_favoris
