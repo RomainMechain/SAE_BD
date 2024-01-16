@@ -10,33 +10,33 @@
     <main>
         <section>
             {% if type_user == 1 %}
-                <div>
+                <div class="spec">
                     <a href="{{ url_for('search_event') }}" class="lien_choix">
                         <img src="{{ url_for('static', filename='images/festival.jpg') }}" alt="une image de concert">
                         <button class="button">Consulter les événements</button>
                     </a>
                 </div>
-                <div>
+                <div class="spec">
                     <a href="{{ url_for('search_ticket') }}" class="lien_choix">
                         <img src="{{ url_for('static', filename='images/billets.png') }}" alt="une image de billet">
                         <button class="button">Consulter les événements</button>
                     </a>
                 </div>
-                <div>
+                <div class="spec">
                     <a href="" class="lien_choix">
                         <img src="{{ url_for('static', filename='images/groupe.jpg') }}" alt="une image de groupe">
                         <button class="button">Consulter les groupes/artistes</button>
                     </a>
                 </div>
             {% elif type_user == 2 %}
-                <div>
-                    <a href="" class="lien_choix">
+                <div class="admin">
+                    <a href="" class="lien_choix_admin">
                         <img src="{{ url_for('static', filename='images/festival.jpg') }}" alt="une image de concert">
                         <button class="button">Gérer les événements</button>
                     </a>
                 </div>
-                <div>
-                    <a href="" class="lien_choix">
+                <div class="admin">
+                    <a href="" class="lien_choix_admin">
                         <img src="{{ url_for('static', filename='images/groupe.jpg') }}" alt="une image de billet">
                         <button class="button">Gérer les groupes/artistes</button class="button">
                     </a>
