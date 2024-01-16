@@ -33,7 +33,19 @@
                 </div>
                 <div>
                     {% if dico_event["type_evenement"].preInscription %}
-                        <a href="#">Pre-inscription</a>
+                        <h2>Les pré-inscriptions sont ouvertes !</h2>
+                        <p>Nombre d'inscription : {{ nb_pre_inscrit }} / {{ dico_event["lieu"].capactiteLieu }}</p>
+                        {% if pre_inscrit %}
+                            <form action="{{ url_for('remove_pre_inscription', id_evenement=dico_event['event'].idEvenement) }}" method="post">
+                                <input type="hidden" name="id_evenement" value="{{ dico_event['event'].idEvenement }}">
+                                <button type="submit">Se desincrire</button>
+                            </form>
+                        {% else %}
+                            <form action="{{ url_for('pre_inscription', id_evenement=dico_event['event'].idEvenement) }}" method="post">
+                                <input type="hidden" name="id_evenement" value="{{ dico_event['event'].idEvenement }}">
+                                <button type="submit">Je m'inscrit</button>
+                            </form>
+                        {% endif %}
                     {% endif %}
                 </div>
             </section>

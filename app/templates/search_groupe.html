@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <title>Recherche de groupe</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='CSS/header_home.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='CSS/search_groupe.css') }}">
+        <script type="module" src="{{ url_for('static', filename='JS/search_groupe.js') }}"></script>
+    </head>
+    <body>
+        {% include 'components/header_home.html' %}
+        <main>
+            <section>
+                <h1>Recherche de groupe</h1>
+                <div>
+                    <form action="{{ url_for('search_groupe') }}" method="post" role="search">
+                        <input type="search" name="search" placeholder="Rechercher" id="search_barre">
+                        <input type="checkbox" id="favori" name="favori" id="checkbox">
+                        <label for="favori">Favoris</label>
+                    </form>
+                </div>
+                {% if admin %}
+                    <div>
+                        <a href="#">
+                            <button>Ajouter un groupe</button>
+                        </a>
+                        <a href="#">
+                            <button>Ajouter un artiste</button>
+                        </a>
+                    </div>
+                {% endif %}
+                <div>
+                    {% for groupe in groupes %}
+                        <div>
+                            <a href="{{url_for('groupe', id_groupe=groupe.idGroupe)}}">{{ groupe.nomGroupe}}</a>
+                            <a href="{{ groupe.lienReseauxGroupe }}">Réseaux</a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+        </main>
+    </body>
+</html>

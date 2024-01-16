@@ -22,36 +22,24 @@
                         <button class="button">Consulter les événements</button>
                     </a>
                 </div>
+
                 <div class="spec">
-                    <a href="" class="lien_choix">
+                    <a href="{{ url_for('search_groupe') }}" class="lien_choix">
                         <img src="{{ url_for('static', filename='images/groupe.jpg') }}" alt="une image de groupe">
                         <button class="button">Consulter les groupes/artistes</button>
                     </a>
                 </div>
             {% elif type_user == 2 %}
                 <div class="admin">
-                    <a href="" class="lien_choix_admin">
+                    <a href="{{ url_for('search_event') }}" class="lien_choix">
                         <img src="{{ url_for('static', filename='images/festival.jpg') }}" alt="une image de concert">
                         <button class="button">Gérer les événements</button>
                     </a>
                 </div>
                 <div class="admin">
-                    <a href="" class="lien_choix_admin">
+                    <a href="{{ url_for('search_groupe') }}" class="lien_choix">
                         <img src="{{ url_for('static', filename='images/groupe.jpg') }}" alt="une image de billet">
                         <button class="button">Gérer les groupes/artistes</button class="button">
-                    </a>
-                </div>
-            {% else %}
-                <div>
-                    <a href="" class="lien_choix">
-                        <img src="{{ url_for('static', filename='images/festival.jpg') }}" alt="une image de concert">
-                        <button class="button">Consulter mes prochains événements</button>
-                    </a>
-                </div>
-                <div>
-                    <a href="" class="lien_choix">
-                        <img src="{{ url_for('static', filename='images/hotel.png') }}" alt="une image de billet">
-                        <button class="button">Hébergement</button>
                     </a>
                 </div>
             {% endif %}
