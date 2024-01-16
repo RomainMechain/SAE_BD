@@ -202,3 +202,13 @@ def search_groupe() :
 def profil() :
     user = get_user_by_id(current_user.idUtilisateur)
     return render_template('profil.html', user=user)
+
+@app.route('/add_artiste', methods=['GET', 'POST'])
+@login_required
+def add_artiste() :
+    form = addArtisteForm()
+    if form.validate_on_submit():
+        encoded_photo = base64.b64encode(form.photo.data.read())
+        id_artiste = add_artiste_bd(form.nom.data, form.description.data, encoded_photo)
+        return redirect(url_for('artiste', id_artiste=id_artiste))
+    return render_template('add_artiste.html', form=form)

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ajout d'artiste</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='CSS/header_home.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='CSS/add_artiste.css') }}">
+    </head>
+    <body>
+        {% include 'components/header_home.html' %}
+        <main>
+            <h1>Ajout d'artiste</h1>
+            <section>
+                <div>
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {{ form.hidden_tag() }}
+                        <div>
+                            <p>Nom</p>
+                            {{ form.nom(size=50) }}
+                        </div>
+                        <div>
+                            <p>Description</p>
+                            {{ form.description(size=50) }}
+                        </div>
+                        <div>
+                            <p>Photo</p>
+                            {{ form.photo(size=50) }}
+                        </div>
+                        <div>
+                            {{ form.submit }}
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </body>
+</html>

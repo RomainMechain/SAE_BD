@@ -15,3 +15,10 @@ class RegisterForm(FlaskForm):
     mdp = PasswordField(validators=[DataRequired()], render_kw={"placeholder": "Mot de passe"})
     telephone = StringField(validators=[DataRequired()], render_kw={"placeholder": "Téléphone"})
     submit = SubmitField('Ajouter')
+
+class addArtisteForm(FlaskForm) :
+    id = HiddenField('id')
+    nom = StringField(validators=[DataRequired()], render_kw={"placeholder": "Nom"})
+    description = StringField(validators=[DataRequired()], render_kw={"placeholder": "Description"})
+    photo = FileField(validators=[DataRequired()])
+    submit = SubmitField('Ajouter')

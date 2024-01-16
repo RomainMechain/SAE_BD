@@ -439,3 +439,15 @@ def is_admin(id_user) :
     user = session.query(UTILISATEUR).filter(UTILISATEUR.idUtilisateur==id_user).first()
     session.close()
     return user.idTypeUtilisateur == 2
+
+def add_artiste_bd(nom, description, photo) :
+    """Ajoute un artiste dans la base de données
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    id = session.query(ARTISTE).count() + 1
+    artiste = ARTISTE(idArtiste=id, nomArtiste=nom, descriptionArtiste=description, photoArtiste=photo)
+    session.add(artiste)
+    session.commit()
+    session.close()
+    return id
