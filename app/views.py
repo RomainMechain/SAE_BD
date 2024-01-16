@@ -92,7 +92,7 @@ def search_event() :
         if (not id_type or id_type == "all") and not search_term :
             events = get_all_event()
         events = order_events(events)
-        return render_template('search_event.html', events=events, types=get_all_type_event(), int=int)
+        return render_template('search_event.html', events=events, types=get_all_type_event(), int=int, admin=is_admin(current_user.idTypeUtilisateur))
 
 @app.route('/event', methods=['GET', 'POST'])
 @login_required
@@ -195,7 +195,7 @@ def search_groupe() :
         if favori == 'true':
             print(favori)
             groupes = get_groupe_favori(groupes, current_user.idUtilisateur)
-        return render_template('search_groupe.html', groupes=groupes)
+        return render_template('search_groupe.html', groupes=groupes, admin=is_admin(current_user.idTypeUtilisateur))
     
 @app.route('/profil', methods=['GET', 'POST'])
 @login_required

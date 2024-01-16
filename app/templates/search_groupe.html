@@ -18,6 +18,16 @@
                         <label for="favori">Favoris</label>
                     </form>
                 </div>
+                {% if admin %}
+                    <div>
+                        <a href="#">
+                            <button>Ajouter un groupe</button>
+                        </a>
+                        <a href="#">
+                            <button>Ajouter un artiste</button>
+                        </a>
+                    </div>
+                {% endif %}
                 <div>
                     {% for groupe in groupes %}
                         <div>
