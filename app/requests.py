@@ -430,3 +430,12 @@ def get_groupe_favori(groupes,id_user) :
             groupes_favoris.append(groupe)
     session.close()
     return groupes_favoris
+
+def is_admin(id_user) :
+    """Retourne True si l'utilisateur id_user est un administrateur
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    user = session.query(UTILISATEUR).filter(UTILISATEUR.idUtilisateur==id_user).first()
+    session.close()
+    return user.idTypeUtilisateur == 2
