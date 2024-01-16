@@ -7,7 +7,7 @@ section, .lien_choix, .lien_choix_admin, .spec, .admin {
     display: flex;
 }
 
-.lien_choix, .lien_choix_admin, .spec, .admin{
+.lien_choix_admin{
     margin-top: -20rem;
 }
 
@@ -46,15 +46,7 @@ section > .admin{
     border-radius: 50px;
 }
 
-.lien_choix{
-    margin-left: 3vw;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;;
-}
-
-.lien_choix_admin{
+.lien_choix, .lien_choix_admin{
     margin-left: 3vw;
     flex-wrap: wrap;
     align-items: center;
