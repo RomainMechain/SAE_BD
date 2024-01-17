@@ -3,17 +3,7 @@ body{
     background-color: rgb(226, 218, 218)
 }
 
-#titre_groupe{
-    display: flex;
-}
-
-#titre_groupe{
-    align-items: center;
-    justify-content: center;
-    margin-top: 3rem;
-}
-
-main a{
+.favoris, #lien a{
     text-decoration: none;
     background-color: grey;
     color: white;
@@ -22,7 +12,117 @@ main a{
     padding: 1rem;
 }
 
-#image_du_groupe{
+#titre_groupe {
+    text-align: center;
+}
+
+#image_du_groupe {
+    width: 50vw;
+    height: 60vh;
+    margin-top: 3rem;
+    margin-left: 1rem;
+}
+
+a {
+    text-decoration: none;
+    color: darkblue;
+}
+
+.flex {
+    display: flex;
+}
+
+#droite {
+    margin-top: 1rem;
+    margin-left: 4rem;
+}
+
+#artistes, #styles div {
+    overflow-y: auto;
+    width: 100%;
+    background-color: #2a2b38;
+    display: flex;
+    flex-wrap: wrap;
     width: 20vw;
-    height: 20vw;
+    height: 35vh;
+}
+
+#artistes a, #styles a {
+    flex-basis: 100%;
+    margin: 0;
+    padding-top: 1.5rem;
+    border : solid 1px white;
+    color: white;
+    font-size:x-large;
+    text-align: center;
+}
+
+#styles {
+    flex-basis: 50%;
+}
+
+#styles div {
+    margin-left: 2rem;
+}
+
+.element_liste_evenements{
+    border-radius: 0.9375em;
+    background-color: white;
+    display: flex;
+    margin:1rem;
+    align-items: center;
+}
+
+.element_liste_evenements > a{
+    text-decoration: none;
+    color: black;
+    margin-left: 3vw;
+    margin-top: 5vh;
+}
+
+.element_liste_evenements > div{
+    min-width: 80%;
+    display: flex;
+    justify-content: right;
+}
+
+.element_liste_evenements > div > p{
+    margin-right: 3vw;
+}
+
+.element_liste_evenements > a{
+    font-size:large ;
+}
+
+.element_liste_evenements > a{
+    width: 10vw;
+}
+
+#contenant{
+    background-color: gray;
+    height: 35vh;
+    overflow-y: scroll;
+    width: 80vw;
+    padding: 3rem;
+    margin-left: 7rem;
+    margin-right : 7rem;
+    margin-top: 4rem;
+    border-radius: 0.5375em;
+}
+
+#video {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#video iframe {
+    width: 50vw;
+    height: 30vh;
+}
+
+#lien {
+    margin-left: 2rem;
+    margin-top: 2rem;
 }
