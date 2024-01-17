@@ -20,7 +20,7 @@
                 </div>
                 {% if admin %}
                     <div class="button_admin">
-                        <a href="#">
+                        <a href="{{ url_for('add_groupe') }}">
                             <button class="button">Ajouter un groupe</button>
                         </a>
                         <a href="{{ url_for('add_artiste') }}">
