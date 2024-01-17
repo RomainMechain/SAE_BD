@@ -11,31 +11,33 @@
         <main>
             <section>
                 <h1>Recherche de groupe</h1>
-                <div>
+                <div id="la_barre">
                     <form action="{{ url_for('search_groupe') }}" method="post" role="search">
+                            <input type="checkbox" id="favori" name="favori" id="checkbox">
+                            <label for="favori" class="favoris">Favoris</label>
                         <input type="search" name="search" placeholder="Rechercher" id="search_barre">
-                        <input type="checkbox" id="favori" name="favori" id="checkbox">
-                        <label for="favori">Favoris</label>
                     </form>
                 </div>
                 {% if admin %}
-                    <div>
+                    <div class="button_admin">
                         <a href="#">
-                            <button>Ajouter un groupe</button>
+                            <button class="button">Ajouter un groupe</button>
                         </a>
                         <a href="{{ url_for('add_artiste') }}">
-                            <button>Ajouter un artiste</button>
+                            <button class="button">Ajouter un artiste</button>
                         </a>
                     </div>
                 {% endif %}
-                <div>
+                <section class="contenant">
                     {% for groupe in groupes %}
-                        <div>
+                        <div class="element_liste_groupe">
                             <a href="{{url_for('groupe', id_groupe=groupe.idGroupe)}}">{{ groupe.nomGroupe}}</a>
-                            <a href="{{ groupe.lienReseauxGroupe }}">Réseaux</a>
+                            <div>
+                                <a href="{{ groupe.lienReseauxGroupe }}">Réseaux</a>
+                            </div>
                         </div>
                     {% endfor %}
-                </div>
+                </section>
             </section>
         </main>
     </body>
