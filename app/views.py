@@ -212,3 +212,19 @@ def add_artiste() :
         id_artiste = add_artiste_bd(form.nom.data, form.description.data, encoded_photo)
         return redirect(url_for('artiste', id_artiste=id_artiste))
     return render_template('add_artiste.html', form=form)
+
+@app.route('/add_event', methods=['GET', 'POST'])
+@login_required
+def add_event() :
+    form = addEventForm(get_all_groupe(), get_all_lieu(), get_all_type_event())
+    if form.validate_on_submit():
+        date_object = datetime.strptime(form.date.data, "%Y-%m-%dT%H:%M")
+        if not is_float(form.duree.data) or not is_float(form.dureeMontage.data) or not is_float(form.dureeDemontage.data) :
+            return render_template('add_event.html', form=form, datetime=datetime, erreur="il faut mettre un nombre pour les durées")
+        if not is_date_ok_for_lieu(date_object, form.duree.data,  form.dureeMontage.data, form.dureeDemontage.data, form.lieu.data) :
+            return render_template('add_event.html', form=form, datetime=datetime, erreur="le lieu n'est pas disponible à cette date")
+        if not is_date_ok_for_groupe(date_object, form.duree.data,  form.dureeMontage.data, form.dureeDemontage.data, form.groupe.data) :
+            return render_template('add_event.html', form=form, datetime=datetime, erreur="le groupe n'est pas disponible à cette date")
+        id = add_event_db(form.nom.data, date_object, form.duree.data, form.dureeMontage.data, form.dureeDemontage.data, form.groupe.data, form.lieu.data, form.type_event.data)
+        return redirect(url_for('event', id_event=id))
+    return render_template('add_event.html', form=form, datetime=datetime)

@@ -21,6 +21,13 @@
                         </select>
                     </div>
                 </div>
+                {% if admin %}
+                    <div>
+                        <a href="{{ url_for('add_event') }}">
+                            <button>Ajouter un événement</button>
+                        </a>
+                    </div>
+                {% endif %}
                 <div id="la_barre">
                     <form action="{{ url_for('search_event') }}" method="post" role="search">
                         <input type="search" name="search" placeholder="Rechercher" id="search_barre">
