@@ -228,3 +228,14 @@ def add_event() :
         id = add_event_db(form.nom.data, date_object, form.duree.data, form.dureeMontage.data, form.dureeDemontage.data, form.groupe.data, form.lieu.data, form.type_event.data)
         return redirect(url_for('event', id_event=id))
     return render_template('add_event.html', form=form, datetime=datetime)
+
+
+@app.route('/add_groupe', methods=['GET', 'POST'])
+@login_required
+def add_groupe() :
+    form = AddGroupForm(get_all_artiste(), get_all_instrument(), get_all_type_musique())
+    if form.validate_on_submit():
+        encoded_photo = base64.b64encode(form.photo.data.read())
+        id_groupe = add_groupe_db(form.nom.data, form.description.data, form.lienReseaux.data, form.lienVideo.data, encoded_photo, form.artistes.data, form.instruments.data, form.types_musique.data)
+        return redirect(url_for('groupe', id_groupe=id_groupe))
+    return render_template('add_groupe.html', form=form)

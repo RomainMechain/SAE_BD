@@ -547,3 +547,79 @@ def add_event_db(nom, date, duree, dureeMontage, dureeDemontage, id_groupe, id_l
     session.close()
     print("Evènement ajouté")
     return id
+
+def get_all_artiste() :
+    """Retourne tous les artistes de la base de données
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    artistes = session.query(ARTISTE).all()
+    session.close()
+    return artistes
+
+def get_all_type_musique() :
+    """Retourne tous les types de musique de la base de données
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    types_musique = session.query(TYPEMUSIQUE).all()
+    session.close()
+    return types_musique
+
+def get_all_instrument() :
+    """Retourne tous les instruments de la base de données
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    instruments = session.query(INSTRUMENT).all()
+    session.close()
+    return instruments
+
+def add_groupe_db(nom, description, lienReseaux, lienVideo, photo, artistes, instruments, types_musique) :
+    """Ajoute un groupe dans la base de données
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    id = session.query(GROUPE).count() + 1
+    groupe = GROUPE(idGroupe=id, nomGroupe=nom, descriptionGroupe=description, lienReseauxGroupe=lienReseaux, lienVideoGroupe=lienVideo, photoGroupe=photo)
+    session.add(groupe)
+    session.commit()
+    session.close()
+    print("Groupe ajouté")
+    for artiste in artistes :
+        add_artiste_groupe_db(id, artiste)
+    for instrument in instruments :
+        add_instrument_groupe_db(id, instrument)
+    for type_musique in types_musique :
+        add_type_musique_groupe_db(id, type_musique)
+    return id
+
+def add_artiste_groupe_db(id_groupe, id_artiste) :
+    """Ajoute un artiste au groupe id_groupe
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    session.execute(t_FAIT_PARTIE.insert().values(idGroupe=id_groupe, idArtiste=id_artiste))
+    session.commit()
+    session.close()
+    print("Artiste ajouté au groupe")
+
+def add_instrument_groupe_db(id_groupe, id_instrument) :
+    """Ajoute un instrument au groupe id_groupe
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    session.execute(t_JOUE.insert().values(idGroupe=id_groupe, idInstrument=id_instrument))
+    session.commit()
+    session.close()
+    print("Instrument ajouté au groupe")
+
+def add_type_musique_groupe_db(id_groupe, id_type_musique) :
+    """Ajoute un type de musique au groupe id_groupe
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    session.execute(t_CHANTE.insert().values(idGroupe=id_groupe, idTypeMusique=id_type_musique))
+    session.commit()
+    session.close()
+    print("Type de musique ajouté au groupe")
