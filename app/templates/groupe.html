@@ -9,7 +9,9 @@
         {% include 'components/header_home.html' %}
         <main>
             <div>
-                <h1>{{ dico_groupe["groupe"].nomGroupe }}</h1>
+                <div id="titre_groupe">
+                    <h1>{{ dico_groupe["groupe"].nomGroupe }}</h1>
+                </div>
                 {% if est_favorie %}
                     <a href="{{ url_for('remove_favori', id_groupe=dico_groupe['groupe'].idGroupe) }}">Retirer des favoris</a>
                 {% else %}
@@ -17,7 +19,7 @@
                 {% endif %}
             </div>
             <section>
-                <object data="data:image/jpeg;base64,{{ dico_groupe['groupe'].photoGroupe.decode('utf-8') }}" type="image/jpeg"></object>
+                <object data="data:image/jpeg;base64,{{ dico_groupe['groupe'].photoGroupe.decode('utf-8') }}" alt="l'image du groupe" type="image/jpeg" id="image_du_groupe"></object>
                 <div>
                     <p>{{ dico_groupe["groupe"].descriptionGroupe }}</p>
                     <div>

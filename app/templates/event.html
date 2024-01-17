@@ -8,14 +8,18 @@
     <body>
         {% include 'components/header_home.html' %}
         <main>
-            <h1>{{ dico_event["event"].nomEvenement }}</h1>
+            <div id="titre_evenement">
+                <h1>{{ dico_event["event"].nomEvenement }}</h1>
+            </div>
             <section>
                 <div>
                     <p>{{ dico_event["type_evenement"].nomTypeEvenement }} du groupe {{ dico_event["groupe"].nomGroupe }}</p>
-                    <p>{{ dico_event["groupe"].descriptionGroupe }}</p>
-                    <a href="{{ url_for('groupe', id_groupe=dico_event['groupe'].idGroupe) }}">En savoir plus !</a>
+                    <div class="contenant">
+                        <p>{{ dico_event["groupe"].descriptionGroupe }}</p>  
+                        <a href="{{ url_for('groupe', id_groupe=dico_event['groupe'].idGroupe) }}">En savoir plus !</a>
+                    </div>
                 </div>
-                <div>
+                <div class="contenant">
                     <p>L'evenement aura lieu le {{ dico_event["event"].heureEvenement }} et se déroulera à </p>
                     <a href="{{ url_for('lieu', id_lieu=dico_event['lieu'].idLieu) }}">{{ dico_event["lieu"].nomLieu }}</a>
                 </div>
@@ -31,21 +35,23 @@
                         <p>Cette est événements est payant</p>
                     {% endif %}
                 </div>
-                <div>
+                <div class="preinscription">
                     {% if dico_event["type_evenement"].preInscription %}
                         <h2>Les pré-inscriptions sont ouvertes !</h2>
-                        <p>Nombre d'inscription : {{ nb_pre_inscrit }} / {{ dico_event["lieu"].capactiteLieu }}</p>
-                        {% if pre_inscrit %}
-                            <form action="{{ url_for('remove_pre_inscription', id_evenement=dico_event['event'].idEvenement) }}" method="post">
-                                <input type="hidden" name="id_evenement" value="{{ dico_event['event'].idEvenement }}">
-                                <button type="submit">Se desincrire</button>
-                            </form>
-                        {% else %}
-                            <form action="{{ url_for('pre_inscription', id_evenement=dico_event['event'].idEvenement) }}" method="post">
-                                <input type="hidden" name="id_evenement" value="{{ dico_event['event'].idEvenement }}">
-                                <button type="submit">Je m'inscrit</button>
-                            </form>
-                        {% endif %}
+                        <div class="inscription">
+                            <p>Nombre d'inscription : {{ nb_pre_inscrit }} / {{ dico_event["lieu"].capactiteLieu }}</p>
+                            {% if pre_inscrit %}
+                                <form action="{{ url_for('remove_pre_inscription', id_evenement=dico_event['event'].idEvenement) }}" method="post">
+                                    <input type="hidden" name="id_evenement" value="{{ dico_event['event'].idEvenement }}">
+                                    <button type="submit" class="button">Se désinscrire</button>
+                                </form>
+                            {% else %}
+                                <form action="{{ url_for('pre_inscription', id_evenement=dico_event['event'].idEvenement) }}" method="post">
+                                    <input type="hidden" name="id_evenement" value="{{ dico_event['event'].idEvenement }}">
+                                    <button type="submit" class="button">Je m'inscris</button>
+                                </form>
+                            {% endif %}
+                            </div>
                     {% endif %}
                 </div>
             </section>
