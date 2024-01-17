@@ -33,15 +33,15 @@
                         <p>Mot de passe</p>
                         {{ form.mdp(size=50) }}
                     </div>
-                    {% if email_exist %}
-                        <div class="email">
-                                <p>L'Email est déjà utilisé</p>
-                        </div>
-                    {% endif %}
                     <div class="send">
                         {{ form.submit }}
                     </div>
                 </form>
+                </div>
+                <div class="email">
+                {% if email_exist %}
+                    <p>L'Email est déjà utilisé</p>
+                {% endif %}
                 </div>
             </div>
         </main>
