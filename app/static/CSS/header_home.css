@@ -18,7 +18,7 @@ a{
     margin-right: 4rem;
 }
 
-a, .button{
+header > a, .button{
     width: 10rem;
     height: 4rem;
 }
