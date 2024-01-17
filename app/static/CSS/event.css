@@ -77,3 +77,8 @@ main > div, section > div{
     margin-top: 4rem;
     margin-left: 3rem;
 }
+
+main a{
+    width: 8vw;
+    height: 3vh;
+}
