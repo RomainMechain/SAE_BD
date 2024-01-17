@@ -451,3 +451,99 @@ def add_artiste_bd(nom, description, photo) :
     session.commit()
     session.close()
     return id
+
+def get_all_lieu() :
+    """Retourne tous les lieux de la base de données
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    lieux = session.query(LIEU).all()
+    session.close()
+    return lieux
+
+def get_datetime_debut_fin(date, duree, dureeMontage, dureeDemontage) : 
+    date_debut = date - timedelta(hours=float(dureeMontage))
+    date_fin = date + timedelta(hours=float(duree)) + timedelta(hours=float(dureeDemontage))
+    print(date_debut, date_fin)
+    return (date_debut, date_fin)
+
+def get_datetime_debut_fin_by_evenement(id_event) :
+    """Retourne un tuple avec la date de début et la date de fin de l'évènement id_event
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    event = session.query(EVENEMENT).filter(EVENEMENT.idEvenement==id_event).first()
+    date = event.heureEvenement
+    duree = event.dureeEvenement
+    dureeMontage = event.dureeMontageEvenement
+    dureeDemontage = event.dureeDemontageEvenement
+    session.close()
+    return get_datetime_debut_fin(date, duree, dureeMontage, dureeDemontage)
+
+def get_event_by_lieu(id_lieu) :
+    """Retourne tous les évènements qui ont lieu au lieu id_lieu
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    events = session.query(EVENEMENT).filter(EVENEMENT.idLieu==id_lieu).all()
+    session.close()
+    return order_events(events)
+
+def is_enclosed(startA, endA, startB, endB):
+    print("ENCLOSE", startA >= startB and endA <= endB)
+    return startA >= startB and endA <= endB
+
+def is_overlapping(startA, endA, startB, endB):
+    print("OVERLAP", startA < endB and endA > startB)
+    return startA < endB and endA > startB
+
+def is_date_ok_for_lieu(date, duree, dureeMontage, dureeDemontage, id_lieu) :
+    """Retourne True si la date est disponible pour le lieu id_lieu
+    """
+    date_debut, date_fin = get_datetime_debut_fin(date, duree, dureeMontage, dureeDemontage)
+    events = get_event_by_lieu(id_lieu)
+    for event in events :
+        event_debut, event_fin = get_datetime_debut_fin_by_evenement(event.idEvenement)
+        if is_overlapping(date_debut, date_fin, event_debut, event_fin) or is_overlapping(event_debut, event_fin, date_debut, date_fin) or is_enclosed(date_debut, date_fin, event_debut, event_fin) :
+            return False
+    return True
+
+def get_event_by_groupe(id_groupe) :
+    """Retourne tous les évènements du groupe id_groupe
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    events = session.query(EVENEMENT).filter(EVENEMENT.idGroupe==id_groupe).all()
+    session.close()
+    return order_events(events)
+
+def is_date_ok_for_groupe(date, duree, dureeMontage, dureeDemontage, id_groupe) :
+    """Retourne True si la date est disponible pour le groupe id_groupe
+    """
+    date_debut, date_fin = get_datetime_debut_fin(date, duree, dureeMontage, dureeDemontage)
+    events = get_event_by_groupe(id_groupe)
+    for event in events :
+        event_debut, event_fin = get_datetime_debut_fin_by_evenement(event.idEvenement)
+        if is_overlapping(date_debut, date_fin, event_debut, event_fin) or is_overlapping(event_debut, event_fin, date_debut, date_fin) or is_enclosed(date_debut, date_fin, event_debut, event_fin) :
+            return False
+    return True
+
+def is_float(value):
+    try:
+        float(value)
+        return True
+    except ValueError:
+        return False
+    
+def add_event_db(nom, date, duree, dureeMontage, dureeDemontage, id_groupe, id_lieu, id_type_event) :
+    """Ajoute un évènement dans la base de données
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    id = session.query(EVENEMENT).count() + 1
+    event = EVENEMENT(idEvenement=id, nomEvenement=nom, heureEvenement=date, dureeEvenement=duree, dureeMontageEvenement=dureeMontage, dureeDemontageEvenement=dureeDemontage, idGroupe=id_groupe, idLieu=id_lieu, idTypeEvenement=id_type_event)
+    session.add(event)
+    session.commit()
+    session.close()
+    print("Evènement ajouté")
+    return id
