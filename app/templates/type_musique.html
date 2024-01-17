@@ -13,22 +13,24 @@
                 <h2>Description : </h2>
                 <p>{{ type_musique.caracteristiqueTypeMusique }}</p>
             </div>
-            <div>
-                <h2>Les groupes :</h2>
-                <div>
-                    {% for groupe in groupes %}
-                        <a href="{{ url_for('groupe', id_groupe=groupe.idGroupe) }}">{{ groupe.nomGroupe }}</a>
-                    {% endfor %}
+            <section class="flex">
+                <div id="groupe">
+                    <h2>Les groupes :</h2>
+                    <div>
+                        {% for groupe in groupes %}
+                            <a href="{{ url_for('groupe', id_groupe=groupe.idGroupe) }}">{{ groupe.nomGroupe }}</a>
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
-            <div>
-                <h2>Vouss pourriez aussi aimer : </h2>
-                <div>
-                    {% for type_musique in types_musique %}
-                        <a href="{{ url_for('type_musique', id_type_musique=type_musique.idTypeMusique) }}">{{ type_musique.nomTypeMusique }}</a>
-                    {% endfor %}
+                <div id="types">
+                    <h2>Vous pourriez aussi aimer : </h2>
+                    <div>
+                        {% for type_musique in types_musique %}
+                            <a href="{{ url_for('type_musique', id_type_musique=type_musique.idTypeMusique) }}">{{ type_musique.nomTypeMusique }}</a>
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
+            </section>
         </main>
     </body>
 </html>
