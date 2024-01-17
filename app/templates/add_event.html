@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ajout d'evenement</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='CSS/header_home.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='CSS/add_event.css') }}">
+    </head>
+    <body>
+        {% include 'components/header_home.html' %}
+        <main>
+            <h1>Ajout d'evenement</h1>
+            <p>{{ erreur }}</p>
+            <section>
+                <div>
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {{ form.hidden_tag() }}
+                        <div>
+                            <p>Nom</p>
+                            {{ form.nom(size=50) }}
+                        </div>
+                        <div>
+                            <p>Date et heure</p>
+                            <input type="datetime-local" id="datetime" name="date">
+                        </div>
+                        <div>
+                            <p>durée</p>
+                            {{ form.duree(size=50) }}
+                        </div>
+                        <div>
+                            <p>durée de montage</p>
+                            {{ form.dureeMontage(size=50) }}
+                        </div>
+                        <div>
+                            <p>durée de démontage</p>
+                            {{ form.dureeDemontage(size=50) }}
+                        </div>
+                        <div>
+                            <p>Groupe</p>
+                            {{ form.groupe }}
+                        </div> 
+                        <div>
+                            <p>Lieu</p>
+                            {{ form.lieu }}
+                        </div>
+                        <div>
+                            <p>type d'evenement</p>
+                            {{ form.type_event }}
+                        </div>
+                        <div>
+                            {{ form.submit }}
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </body>
+</html>
