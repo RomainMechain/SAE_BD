@@ -13,7 +13,7 @@
                 {% for billet in types_billet %}
                     <div class="element_liste_billet">
                         <a href="{{ url_for('ticket', id_billet=billet.idBillet) }}" class="lien_choix">
-                            <p>{{ billet.nomBillet }}</p>
+                            <p id="titre">{{ billet.nomBillet }}</p>
                             <p>{{ billet.prixBillet }}€</p>
                             <p>Pour {{ billet.nbJoursBillet }} jour(s)</p>
                         </a>
