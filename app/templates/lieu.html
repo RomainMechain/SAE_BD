@@ -14,10 +14,10 @@
                 <p>Il possède une capacité de : {{ lieu.capactiteLieu }} personnes</p>
             </section>
             <section>
-                <h2>Planning</h2>
-                <div>
+                <h2>Planning :</h2>
+                <div id="contenant">
                     {% for event in events %}
-                        <div>
+                        <div class="element_liste_evenements">
                             <a href="{{url_for('event', id_event=event.idEvenement)}}">{{ event.nomEvenement}}</a>
                             <p>{{ event.heureEvenement }}</p>
                             {% set hours = int(event.dureeEvenement) %}
