@@ -28,6 +28,18 @@
                     {% set minutes = int((dico_event["event"].dureeEvenement - hours) * 60) %}
                     <p>Il durera {{ hours }}h{{ minutes }}min</p>
                 </div>
+                {% if admin %}
+                    <div>
+                        {% set hours = int(dico_event["event"].dureeMontageEvenement) %}
+                        {% set minutes = int((dico_event["event"].dureeMontageEvenement - hours) * 60) %}
+                        <p>Temps de montage : {{ hours }}h{{ minutes }}min</p>
+                    </div>
+                    <div>
+                        {% set hours = int(dico_event["event"].dureeDemontageEvenement) %}
+                        {% set minutes = int((dico_event["event"].dureeDemontageEvenement - hours) * 60) %}
+                        <p>Temps de démontage : {{ hours }}h{{ minutes }}min</p>
+                    </div>
+                {% endif %}
                 <div>
                     {% if dico_event["type_evenement"].estGratuitTypeEvenement %}
                         <p>Cette est événements est gratuit</p>

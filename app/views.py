@@ -100,7 +100,7 @@ def event() :
     dico_event = create_dico_event(request.args.get('id_event'))
     nb_pre_inscrit = get_nb_pre_inscrits(request.args.get('id_event'))
     pre_inscrit = est_pre_inscrit(request.args.get('id_event'), current_user.idUtilisateur)
-    return render_template('event.html', dico_event=dico_event, int=int, nb_pre_inscrit=nb_pre_inscrit, pre_inscrit=pre_inscrit)
+    return render_template('event.html', dico_event=dico_event, int=int, nb_pre_inscrit=nb_pre_inscrit, pre_inscrit=pre_inscrit, admin=is_admin(current_user.idTypeUtilisateur))
 
 @app.route('/groupe', methods=['GET', 'POST'])
 @login_required
