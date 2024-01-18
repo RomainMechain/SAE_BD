@@ -9,9 +9,16 @@
         {% include 'components/header_home.html' %}
         <main>
             <h1>{{ artiste.nomArtiste }}</h1>
-            <div>
-                <object data="data:image/jpeg;base64,{{ artiste.photoArtiste.decode('utf-8') }}" type="image/jpeg"></object>
-                <p>{{ artiste.descriptionArtiste }}</p>
+            <div class="flex">
+                {% if artiste.photoArtiste %}
+                    <object data="data:image/jpeg;base64,{{ artiste.photoArtiste.decode('utf-8') }}" type="image/jpeg" id="image_du_groupe"></object>
+                {% else %}
+                    <img src="{{ url_for('static', filename='images/groupe.jpg') }}" alt="l'image de l'artiste" id="image_du_groupe">
+                {% endif %}
+                <div id="droite">
+                    <h2>Description de l'artiste :</h2>
+                    <p>{{ artiste.descriptionArtiste }}</p>
+                </div>
             </div>
         </main>
     </body>

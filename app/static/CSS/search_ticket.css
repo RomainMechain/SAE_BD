@@ -37,3 +37,12 @@ section > div{
     background-color: rgb(161, 161, 161);
     border-radius: 50px;
 }
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+#titre {
+    font-weight: bold;
+}

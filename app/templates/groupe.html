@@ -13,18 +13,23 @@
                     <h1>{{ dico_groupe["groupe"].nomGroupe }}</h1>
                 </div>
                 {% if est_favorie %}
-                    <a href="{{ url_for('remove_favori', id_groupe=dico_groupe['groupe'].idGroupe) }}">Retirer des favoris</a>
+                    <a href="{{ url_for('remove_favori', id_groupe=dico_groupe['groupe'].idGroupe) }}" class="favoris">Retirer des favoris</a>
                 {% else %}
-                    <a href="{{ url_for('add_favori', id_groupe=dico_groupe['groupe'].idGroupe) }}">Ajouter aux favoris</a>
+                    <a href="{{ url_for('add_favori', id_groupe=dico_groupe['groupe'].idGroupe) }}" class="favoris">Ajouter aux favoris</a>
                 {% endif %}
             </div>
-            <section>
-                <object data="data:image/jpeg;base64,{{ dico_groupe['groupe'].photoGroupe.decode('utf-8') }}" alt="l'image du groupe" type="image/jpeg" id="image_du_groupe"></object>
-                <div>
+            <section class="flex">
+                {% if dico_groupe['groupe'].photoGroupe %}
+                    <object data="data:image/jpeg;base64,{{ dico_groupe['groupe'].photoGroupe.decode('utf-8') }}" alt="l'image du groupe" type="image/jpeg" id="image_du_groupe"></object>
+                {% else %}
+                    <img src="{{ url_for('static', filename='images/groupe.jpg') }}" alt="l'image du groupe" id="image_du_groupe">
+                {% endif %}
+                <div id="droite">
+                    <h2>Description du groupe :</h2>
                     <p>{{ dico_groupe["groupe"].descriptionGroupe }}</p>
                     <div>
                         <h2>Groupe composé de :</h2>
-                        <div>
+                        <div id="artistes">
                             {% for artiste in dico_groupe["artistes"] %}
                                 <a href="{{ url_for('artiste', id_artiste=artiste.idArtiste) }}">{{ artiste.nomArtiste }}</a>
                             {% endfor %}
@@ -32,8 +37,8 @@
                     </div>
                 </div>
             </section>
-            <section>
-                <div>
+            <section class="flex">
+                <div id="styles">
                     <h2>Styles de musique :</h2>
                     <div>
                         {% for style in dico_groupe["types_musique"] %}
@@ -42,7 +47,7 @@
                     </div>
                 </div>
                 <div>
-                    <h2>Instruments utilisés</h2>
+                    <h2>Instruments utilisés :</h2>
                     <div>
                         {% for instrument in dico_groupe["instruments"] %}
                             <p>{{ instrument.nomInstrument }}</p>
@@ -53,17 +58,27 @@
             <section>
                 <div>
                     <h2>Les événements :</h2>
-                    <div>
+                    <div id="contenant">
                         {% for event in dico_groupe["evenements"] %}
-                            <a href="{{ url_for('event', id_event=event.idEvenement) }}">{{ event.nomEvenement }}</a>
+                            <div class="element_liste_evenements">
+                                <a href="{{url_for('event', id_event=event.idEvenement)}}">{{ event.nomEvenement}}</a>
+                                <div>
+                                    <p>{{ event.heureEvenement }}</p>
+                                    {% set hours = int(event.dureeEvenement) %}
+                                    {% set minutes = int((event.dureeEvenement - hours) * 60) %}
+                                    <p>{{ hours }}h{{ minutes }}min</p>
+                                </div>
+                            </div>
                         {% endfor %}
                     </div>
                 </div>
             </section>
-            <section>
+            <section id="video">
                 <iframe src="{{ dico_groupe['groupe'].lienVideoGroupe }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                <a href="{{ dico_groupe['groupe'].lienReseauxGroupe }}">Retrouvez le groupe sur ce lien !</a>
             </section>
+            <div id="lien">
+                <a href="{{ dico_groupe['groupe'].lienReseauxGroupe }}">Retrouvez le groupe sur ce lien !</a>
+            </div>
         </main>
     </body>
 </html>

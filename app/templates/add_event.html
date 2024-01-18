@@ -9,44 +9,44 @@
         {% include 'components/header_home.html' %}
         <main>
             <h1>Ajout d'evenement</h1>
-            <p>{{ erreur }}</p>
-            <section>
-                <div>
+            <p id="erreur">{{ erreur }}</p>
+            <section class="contenu">
+                <div class="contenant">
                     <form action="" method="post" enctype="multipart/form-data">
                         {{ form.hidden_tag() }}
                         <div>
-                            <p>Nom</p>
+                            <p>Nom :</p>
                             {{ form.nom(size=50) }}
                         </div>
                         <div>
-                            <p>Date et heure</p>
+                            <p>Date et heure :</p>
                             <input type="datetime-local" id="datetime" name="date">
                         </div>
                         <div>
-                            <p>durée</p>
+                            <p>durée (en heure) :</p>
                             {{ form.duree(size=50) }}
                         </div>
                         <div>
-                            <p>durée de montage</p>
+                            <p>durée de montage (en heure) :</p>
                             {{ form.dureeMontage(size=50) }}
                         </div>
                         <div>
-                            <p>durée de démontage</p>
+                            <p>durée de démontage (en heure) :</p>
                             {{ form.dureeDemontage(size=50) }}
                         </div>
                         <div>
-                            <p>Groupe</p>
+                            <p>Groupe :</p>
                             {{ form.groupe }}
                         </div> 
                         <div>
-                            <p>Lieu</p>
+                            <p>Lieu :</p>
                             {{ form.lieu }}
                         </div>
                         <div>
-                            <p>type d'evenement</p>
+                            <p>type d'evenement :</p>
                             {{ form.type_event }}
                         </div>
-                        <div>
+                        <div id="se_connecter">
                             {{ form.submit }}
                         </div>
                     </form>

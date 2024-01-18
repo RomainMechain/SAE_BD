@@ -1,0 +1,17 @@
+body{
+    margin:0;
+    background-color: rgb(226, 218, 218)
+}
+
+h1{
+    text-align: center;
+}
+
+p {
+    font-size: x-large;
+    margin-left: 1rem;
+}
+
+span {
+    font-weight: bold;
+}
