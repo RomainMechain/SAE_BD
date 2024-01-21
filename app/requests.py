@@ -1,9 +1,7 @@
 from app import db
 from app.models import *
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy import asc, distinct, func, cast
-from unidecode import unidecode
-from pytz import timezone
+from sqlalchemy import func
 from datetime import datetime, timedelta
 from sqlalchemy.exc import SQLAlchemyError
 
