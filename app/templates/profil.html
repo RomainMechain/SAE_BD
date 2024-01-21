@@ -17,6 +17,17 @@
                     <p><span>Mail : </span> {{ user.emailUtilisateur }}</p>
                 </div>
             </section>
+            <section>
+                <h2>Billets :</h2>
+                <div id="billets">
+                    {% for dico in liste %}
+                        <div>
+                            <p id="nomBillet">{{ dico['nomBillet'] }}</p>
+                            <p>Pour le : {{ dico['dateInscription'] }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
         </main>
     </body>
 </html>
