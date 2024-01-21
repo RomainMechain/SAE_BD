@@ -19,6 +19,7 @@
                 {% endif %}
                 {% if admin %}
                     <a href="{{ url_for('hebergement', id_groupe=dico_groupe['groupe'].idGroupe) }}" class="favoris">Gestion de l'hebergement</a>
+                    <a href="{{ url_for('delete_groupe', id_groupe=dico_groupe['groupe'].idGroupe) }}" class="favoris">Supprimer le groupe</a>
                 {% endif %}
             </div>
             <section class="flex">
