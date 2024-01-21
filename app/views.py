@@ -106,19 +106,19 @@ def event() :
 @login_required
 def groupe() :
     dico_groupe = create_dico_groupe(request.args.get('id_groupe'))
-    return render_template('groupe.html', dico_groupe=dico_groupe, int=int, est_favorie=groupe_is_favori(request.args.get('id_groupe'), current_user.idUtilisateur))
+    return render_template('groupe.html', dico_groupe=dico_groupe, admin=is_admin(current_user.idTypeUtilisateur),int=int, est_favorie=groupe_is_favori(request.args.get('id_groupe'), current_user.idUtilisateur))
 
 @app.route('/add_favori', methods=['GET', 'POST'])
 @login_required
 def add_favori() :
     add_favori_db(request.args.get('id_groupe'), current_user.idUtilisateur)
-    return redirect(url_for('groupe', id_groupe=request.args.get('id_groupe')))
+    return redirect(url_for('groupe', id_groupe=request.args.get('id_groupe'), admin = is_admin(current_user.idTypeUtilisateur)))
 
 @app.route('/remove_favori', methods=['GET', 'POST'])
 @login_required
 def remove_favori() :
     remove_favori_db(request.args.get('id_groupe'), current_user.idUtilisateur)
-    return redirect(url_for('groupe', id_groupe=request.args.get('id_groupe')))
+    return redirect(url_for('groupe', id_groupe=request.args.get('id_groupe'), admin = is_admin(current_user.idTypeUtilisateur)))
 
 @app.route('/artiste', methods=['GET', 'POST'])
 @login_required
@@ -237,5 +237,22 @@ def add_groupe() :
     if form.validate_on_submit():
         encoded_photo = base64.b64encode(form.photo.data.read())
         id_groupe = add_groupe_db(form.nom.data, form.description.data, form.lienReseaux.data, form.lienVideo.data, encoded_photo, form.artistes.data, form.instruments.data, form.types_musique.data)
-        return redirect(url_for('groupe', id_groupe=id_groupe))
+        return redirect(url_for('groupe', id_groupe=id_groupe, admin = is_admin(current_user.idTypeUtilisateur)))
     return render_template('add_groupe.html', form=form)
+
+@app.route('/hebergement', methods=['GET', 'POST'])
+@login_required
+def hebergement() :
+    form = AddHebergement(get_all_hebergement(), get_unique_event_days())
+    id_groupe = request.args.get('id_groupe')
+    liste = create_liste_hebergement(id_groupe)
+    groupe = get_groupe_by_id(id_groupe)
+    if form.validate_on_submit():
+        date_object = datetime.strptime(form.date.data, "%Y-%m-%d")
+        if not is_date_ok_for_hebergement_groupe(date_object, int(form.nbJours.data), id_groupe) :
+            return render_template('hebergement.html', form=form, groupe=groupe, liste=liste, erreur="le groupe n'est pas disponible à cette date")
+        if not is_ok_capacite_hebergement(date_object, int(form.nbJours.data), form.hebergement.data, id_groupe) :
+            return render_template('hebergement.html', form=form, groupe=groupe, liste=liste, erreur="le lieu n'est pas disponible à cette date")
+        add_hebergement_db(form.hebergement.data, date_object, int(form.nbJours.data), id_groupe)
+        return redirect(url_for('hebergement', id_groupe=id_groupe))
+    return render_template('hebergement.html', form=form, groupe=groupe, liste=liste)
