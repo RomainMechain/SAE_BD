@@ -195,7 +195,8 @@ def search_groupe() :
 @login_required
 def profil() :
     user = get_user_by_id(current_user.idUtilisateur)
-    return render_template('profil.html', user=user)
+    liste = get_liste_billet(current_user.idUtilisateur)
+    return render_template('profil.html', user=user, liste=liste)
 
 @app.route('/add_artiste', methods=['GET', 'POST'])
 @login_required

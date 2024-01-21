@@ -734,3 +734,18 @@ def is_ok_capacite_hebergement(date, duree, idHebergement, id_groupe) :
         if not is_ok_capacite_hebergement_date(date + timedelta(days=i), idHebergement, id_groupe) :
             return False
     return True
+
+def get_liste_billet(id_utilisateur) :
+    """Retourne la liste des billets de l'utilisateur id_utilisateur
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    res = []
+    inscriptions = session.query(ESTINSCRIT).filter(ESTINSCRIT.idUtilisateur==id_utilisateur).all()
+    for inscription in inscriptions :
+        res.append({
+            'nomBillet' : session.query(TYPEBILLET).filter(TYPEBILLET.idBillet==inscription.idBillet).first().nomBillet,
+            'dateInscription' : inscription.dateInscription,
+        })
+    session.close()
+    return res
