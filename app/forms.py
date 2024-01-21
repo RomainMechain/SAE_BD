@@ -56,3 +56,14 @@ class AddGroupForm(FlaskForm):
         self.artistes.choices = [(artiste.idArtiste, artiste.nomArtiste) for artiste in artistes]
         self.instruments.choices = [(instrument.idInstrument, instrument.nomInstrument) for instrument in instruments]
         self.types_musique.choices = [(type_musique.idTypeMusique, type_musique.nomTypeMusique) for type_musique in types_musique]
+
+class AddHebergement(FlaskForm) :
+    hebergement = SelectField('Hebergement', coerce=int, validators=[DataRequired()])
+    date = SelectField('Date', coerce=str, validators=[DataRequired()])
+    nbJours = StringField(validators=[DataRequired()], render_kw={"placeholder": "Nombre de jours"})
+    submit = SubmitField('Ajouter')
+
+    def __init__(self, hebergements, dates, *args, **kwargs):
+        super(AddHebergement, self).__init__(*args, **kwargs)
+        self.hebergement.choices = [(hebergement.idHebergement, hebergement.nomHebergement) for hebergement in hebergements]
+        self.date.choices = [(date, date) for date in dates]
