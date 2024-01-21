@@ -11,6 +11,11 @@
             <div id="titre_evenement">
                 <h1>{{ dico_event["event"].nomEvenement }}</h1>
             </div>
+            {% if admin %}
+                <a href="{{ url_for('delete_event', id_event=dico_event['event'].idEvenement) }}">
+                    <button class="button" id="supprimer">Supprimer l'evenement</button>
+                </a>
+            {% endif %}
             <section>
                 <div>
                     <h2>{{ dico_event["type_evenement"].nomTypeEvenement }} du groupe {{ dico_event["groupe"].nomGroupe }}</h2>
