@@ -268,3 +268,10 @@ def delete_groupe() :
         return redirect(url_for('search_groupe'))
     else :
         return redirect(url_for('groupe', id_groupe=id_groupe))
+    
+@app.route('/delete_event', methods=['GET', 'POST'])
+@login_required
+def delete_event() :
+    id_event = request.args.get('id_event')
+    delete_event_bd(id_event)
+    return redirect(url_for('search_event'))

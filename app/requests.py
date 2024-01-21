@@ -785,3 +785,15 @@ def delete_groupe_bd(id_groupe):
         session.delete(groupe)
     session.commit()
     session.close()
+
+def delete_event_bd(id_event):
+    """supprime l'évènement de la base de données
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    session.execute(t_PRE_INSCRIT.delete().where(t_PRE_INSCRIT.c.idEvenement==id_event))
+    event = session.query(EVENEMENT).filter(EVENEMENT.idEvenement == id_event).first()
+    if event:
+        session.delete(event)
+    session.commit()
+    session.close()
