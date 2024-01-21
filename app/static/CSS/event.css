@@ -1,0 +1,39 @@
+body{
+    margin:0;
+    background-color: rgb(226, 218, 218)
+}
+
+h1{
+    text-align: center;
+}
+
+section {
+    margin-left: 3rem;
+    margin-top: 2rem;
+}
+
+section p, section a {
+    margin-left: 1rem;
+    font-size: large;
+}
+
+#date {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#date h3 {
+    flex-basis: 100%;
+}
+
+#date a {
+    margin-top: 1rem;
+}
+
+section div {
+    margin: 0;
+}
+
+#supprimer {
+    margin-left: 3rem;
+}

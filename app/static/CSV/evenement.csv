@@ -1,0 +1,10 @@
+"idEvenement","nomEvenement","heureEvenement","dureeEvenement","dureeMontageEvenement",dureeDemontageEvenement","idGroupe","idTypeEvenement","idLieu"
+1,"Grand concert","2024-01-20 10:30:00",1.5,0.5,0.5,1,1,1
+2,"Le grand spectacle","2024-01-20 12:30:00",1.5,0.5,0.5,2,2,2
+3,"Interview spéciale","2024-01-20 16:45:00",0.5,0.2,0.2,3,3,3
+4,"Le dernier des spectacle","2024-01-20 22:55:00",1.8,0.2,0.3,1,2,1
+5,"Debut du 2ème jour","2024-01-21 10:30:00",1.5,0.5,0.5,5,1,1
+6,"Un autre spectacle","2024-01-21 10:30:00",1.5,0.5,0.5,9,2,2
+7,"Un autre interview","2024-01-21 10:30:00",1.5,0.5,0.5,8,3,3
+8,"Concert de l'après midi","2024-01-21 14:30:00",1.5,0.5,0.5,7,1,1
+9,"spectacle de fin de soirée","2024-01-21 22:30:00",1.5,0.5,0.5,6,2,2

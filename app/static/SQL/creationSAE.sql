@@ -15,16 +15,26 @@ drop table LIEU;
 drop table TYPE_EVENEMENT;
 drop table EST_INSCRIT;
 drop table TYPE_BILLET;
-drop table SPECTATEUR;
+drop table UTILISATEUR;
+drop table TYPE_UTILISATEUR;
 
-create table SPECTATEUR (
-    idSpectateur int(10),
-    nomSpectateur varchar(50),
-    prenomSpectateur varchar(50),
-    mdpSpectateur varchar(50),
-    numTelSpectateur varchar(50),
-    emailSpectateur varchar(50),
-    constraint PKspectateur PRIMARY KEY (idSpectateur)
+
+create table TYPE_UTILISATEUR (
+    idTypeUtilisateur int(10),
+    nomTypeUtilisateur varchar(50),
+    constraint PKtype_utilisateur PRIMARY KEY (idTypeUtilisateur)
+);
+
+create table UTILISATEUR (
+    idUtilisateur int(10),
+    nomUtilisateur varchar(50),
+    prenomUtilisateur varchar(50),
+    mdpUtilisateur varchar(50),
+    numTelUtilisateur varchar(50),
+    emailUtilisateur varchar(50),
+    idTypeUtilisateur int(10),
+    constraint PKUtilisateur PRIMARY KEY (idUtilisateur),
+    constraint FKUtilisateur_type_utilisateur FOREIGN KEY (idTypeUtilisateur) references TYPE_UTILISATEUR(idTypeUtilisateur)
 );
 
 create table TYPE_BILLET (
@@ -37,11 +47,11 @@ create table TYPE_BILLET (
 );
 
 create table EST_INSCRIT (
-    idSpectateur int(10),
+    idUtilisateur int(10),
     idBillet int(10),
     dateInscription date,
-    constraint PKest_inscrit PRIMARY KEY (idSpectateur, idBillet),
-    constraint FKest_inscrit_spectateur FOREIGN KEY (idSpectateur) references SPECTATEUR(idSpectateur),
+    constraint PKest_inscrit PRIMARY KEY (idUtilisateur, idBillet),
+    constraint FKest_inscrit_Utilisateur FOREIGN KEY (idUtilisateur) references UTILISATEUR(idUtilisateur),
     constraint FKest_inscrit_type_billet FOREIGN KEY (idBillet) references TYPE_BILLET(idBillet)
 );
 
@@ -89,18 +99,18 @@ create table EVENEMENT (
 );
 
 create table EST_FAVORIE (
-    idSpectateur int(10),
+    idUtilisateur int(10),
     idGroupe int(10),
-    constraint PKestFavorie PRIMARY KEY (idSpectateur, idGroupe),
-    constraint FKestFavorie_spectateur FOREIGN KEY (idSpectateur) references SPECTATEUR(idSpectateur),
+    constraint PKestFavorie PRIMARY KEY (idUtilisateur, idGroupe),
+    constraint FKestFavorie_Utilisateur FOREIGN KEY (idUtilisateur) references UTILISATEUR(idUtilisateur),
     constraint FKestFavorie_groupe FOREIGN KEY (idGroupe) references GROUPE(idGroupe)
 );
 
 create table PRE_INSCRIT (
-    idSpectateur int(10),
+    idUtilisateur int(10),
     idEvenement int(10),
-    constraint PKpreInscrit PRIMARY KEY (idSpectateur,idEvenement),
-    constraint FKpreInscrit_spectateur FOREIGN KEY (idSpectateur) references SPECTATEUR(idSpectateur),
+    constraint PKpreInscrit PRIMARY KEY (idUtilisateur,idEvenement),
+    constraint FKpreInscrit_Utilisateur FOREIGN KEY (idUtilisateur) references UTILISATEUR(idUtilisateur),
     constraint FKpreInscrit_Evenement FOREIGN KEY (idEvenement) references EVENEMENT(idEvenement)
 ); 
 
@@ -222,7 +232,7 @@ DELIMITER ;
 
 DELIMITER |
 
--- Fonction qui indique si un spectateur a déjà un billet pour une date donnée
+-- Fonction qui indique si un Utilisateur a déjà un billet pour une date donnée
 CREATE function aBilletDate(idS int(10), dateE date) returns boolean
 READS SQL DATA
 DETERMINISTIC
@@ -232,7 +242,7 @@ BEGIN
     declare nbJoursB int(10);
     declare fini boolean default false;
     declare lesBillets cursor for 
-        select idBillet, dateInscription from EST_INSCRIT where idSpectateur = idS;
+        select idBillet, dateInscription from EST_INSCRIT where idUtilisateur = idS;
     declare continue handler for not found set fini = true;
     open lesBillets;
     while not fini do
@@ -273,9 +283,9 @@ begin
     declare capa int(10);
     declare nbPreInscris int(10);
     select capactiteLieu into capa from LIEU natural join EVENEMENT where idEvenement = new.idEvenement;
-    select count(idSpectateur) into nbPreInscris from PRE_INSCRIT where idEvenement = new.idEvenement;
+    select count(idUtilisateur) into nbPreInscris from PRE_INSCRIT where idEvenement = new.idEvenement;
     if (nbPreInscris >= capa) then
-        signal sqlstate '45000' set message_text = 'Le nombre de spectateur se préinscrivant à cet événement est supérieur à la capacité du lieu';
+        signal sqlstate '45000' set message_text = 'Le nombre d Utilisateur se préinscrivant à cet événement est supérieur à la capacité du lieu';
     end if;
 end|
 DELIMITER ;
@@ -302,7 +312,7 @@ DELIMITER ;
 
 DELIMITER |
 
--- trigger qui verifie que le spectateur peut s'inscrire à un événement, soit il est gratuit soit il a un billet pour cette date
+-- trigger qui verifie que l Utilisateur peut s'inscrire à un événement, soit il est gratuit soit il a un billet pour cette date
 CREATE Trigger inscriptionEvenement BEFORE INSERT ON PRE_INSCRIT for each row
 begin 
     DECLARE evnementGratuit boolean;
@@ -310,8 +320,8 @@ begin
     select EvenementEstGratuit(new.idEvenement) into evnementGratuit;
     SELECT dateEvenement into dateE from EVENEMENT where idEvenement = new.idEvenement;
     if (evnementGratuit = false) then
-        if (aBilletDate(new.idSpectateur, dateE) = false) then
-            signal sqlstate '45000' set message_text = 'Le spectateur n''a pas de billet pour cette date';
+        if (aBilletDate(new.idUtilisateur, dateE) = false) then
+            signal sqlstate '45000' set message_text = 'L Utilisateur n''a pas de billet pour cette date';
         end if;
     end if;
 end|

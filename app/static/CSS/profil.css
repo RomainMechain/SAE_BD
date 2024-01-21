@@ -1,0 +1,40 @@
+body{
+    margin:0;
+    background-color: rgb(226, 218, 218)
+}
+
+h1{
+    text-align: center;
+}
+
+p {
+    font-size: x-large;
+    margin-left: 1rem;
+}
+
+h2 {
+    margin-left: 1rem;
+}
+
+span {
+    font-weight: bold;
+}
+
+#billets {
+    overflow-y: auto;
+    width: 80vw;
+    margin-left: 10vw;
+    background-color: grey;
+    height: 50vh;
+}
+
+#billets div {
+    display: flex;
+    border: solid 1px black;
+}
+
+#nomBillet {
+    flex-basis: 70%;
+    margin-left: 1rem;
+    font-weight: bold;
+}

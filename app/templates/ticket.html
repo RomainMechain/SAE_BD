@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Billet {{ billet.nomBillet }}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='CSS/header_home.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='CSS/ticket.css') }}">
+        <script type="module" src="{{ url_for('static', filename='JS/ticket.js') }}"></script>
+    </head>
+    <body>
+        {% include 'components/header_home.html' %}
+        <main>
+            <div class="titre_billet">
+                <h1>Billeterie</h1>
+            </div>
+            <div class="contenu">
+                <section class="contenant">
+                    <div>
+                        <h2>{{ billet.nomBillet }}</h2>
+                    </div>
+                    <div>
+                        <p>{{ billet.caracteristiqueBillet }}</p>
+                    </div>
+                    <div>
+                        <p>Au prix de {{ billet.prixBillet }}€</p>
+                    </div>
+                    <div>
+                        <p>Pour {{ billet.nbJoursBillet }} jour(s)</p>
+                    </div>
+                    <div>
+                        <p>Choisissez la date de début de validité</p>
+                    </div>
+                    <div>
+                        <select name="date" id="select_date">
+                            {% for date in dates %}
+                                <option value="{{ date }}">{{ date }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div>
+                        <button class="button" id="valider">Valider</button>
+                    </div>       
+                </section>
+            </div>
+        </main>
+    </body>
+</html>

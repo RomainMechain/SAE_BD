@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <title>Inscription</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="{{ url_for('static', filename='CSS/header_login.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='CSS/register.css') }}">
+    </head>
+    <body>
+        {% include 'components/header_login.html' %}
+        <main>
+            <div class="container">
+                <div class="form">
+                <form action="" method="post">
+                    {{ form.hidden_tag() }}
+                    <div>
+                        <p>Nom</p>
+                        {{ form.nom(size=50) }}
+                    </div>
+                    <div>
+                        <p>Prénom</p>
+                        {{ form.prenom(size=50) }}
+                    </div>
+                    <div>
+                        <p>Email</p>
+                        {{ form.mail(size=50) }}
+                    </div>
+                    <div>
+                        <p>Numéro de téléphone</p>
+                        {{ form.telephone(size=50) }}
+                    </div>
+                    <div>
+                        <p>Mot de passe</p>
+                        {{ form.mdp(size=50) }}
+                    </div>
+                    <div class="send">
+                        {{ form.submit }}
+                    </div>
+                </form>
+                </div>
+                <div class="email">
+                {% if email_exist %}
+                    <p>L'Email est déjà utilisé</p>
+                {% endif %}
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

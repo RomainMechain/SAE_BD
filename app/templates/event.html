@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Evenement</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='CSS/header_home.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='CSS/event.css') }}">
+    </head>
+    <body>
+        {% include 'components/header_home.html' %}
+        <main>
+            <div id="titre_evenement">
+                <h1>{{ dico_event["event"].nomEvenement }}</h1>
+            </div>
+            {% if admin %}
+                <a href="{{ url_for('delete_event', id_event=dico_event['event'].idEvenement) }}">
+                    <button class="button" id="supprimer">Supprimer l'evenement</button>
+                </a>
+            {% endif %}
+            <section>
+                <div>
+                    <h2>{{ dico_event["type_evenement"].nomTypeEvenement }} du groupe {{ dico_event["groupe"].nomGroupe }}</h2>
+                    <div class="contenant">
+                        <h3>Description : </h3>
+                        <p>{{ dico_event["groupe"].descriptionGroupe }}</p>  
+                        <a href="{{ url_for('groupe', id_groupe=dico_event['groupe'].idGroupe) }}">En savoir plus !</a>
+                    </div>
+                </div>
+                <div id="date">
+                    <h3>Date et lieu :</h3>
+                    <p>L'evenement aura lieu le {{ dico_event["event"].heureEvenement }} et se déroulera à </p>
+                    <a href="{{ url_for('lieu', id_lieu=dico_event['lieu'].idLieu) }}">{{ dico_event["lieu"].nomLieu }}</a>
+                </div>
+                <div>
+                    <h3>Durée :</h3>
+                    {% set hours = int(dico_event["event"].dureeEvenement) %}
+                    {% set minutes = int((dico_event["event"].dureeEvenement - hours) * 60) %}
+                    <p>Il durera {{ hours }}h{{ minutes }}min</p>
+                </div>
+                {% if admin %}
+                    <h3>Informations administrateur :</h3>
+                    <div>
+                        {% set hours = int(dico_event["event"].dureeMontageEvenement) %}
+                        {% set minutes = int((dico_event["event"].dureeMontageEvenement - hours) * 60) %}
+                        <p>Temps de montage : {{ hours }}h{{ minutes }}min</p>
+                    </div>
+                    <div>
+                        {% set hours = int(dico_event["event"].dureeDemontageEvenement) %}
+                        {% set minutes = int((dico_event["event"].dureeDemontageEvenement - hours) * 60) %}
+                        <p>Temps de démontage : {{ hours }}h{{ minutes }}min</p>
+                    </div>
+                {% endif %}
+                <div>
+                    {% if dico_event["type_evenement"].estGratuitTypeEvenement %}
+                        <p>Cette est événements est gratuit</p>
+                    {% else %}
+                        <p>Cette est événements est payant</p>
+                    {% endif %}
+                </div>
+                <div class="preinscription">
+                    {% if dico_event["type_evenement"].preInscription %}
+                        <h2>Les pré-inscriptions sont ouvertes !</h2>
+                        <div class="inscription">
+                            <p>Nombre d'inscription : {{ nb_pre_inscrit }} / {{ dico_event["lieu"].capactiteLieu }}</p>
+                            {% if pre_inscrit %}
+                                <form action="{{ url_for('remove_pre_inscription', id_evenement=dico_event['event'].idEvenement) }}" method="post">
+                                    <input type="hidden" name="id_evenement" value="{{ dico_event['event'].idEvenement }}">
+                                    <button type="submit" class="button">Se désinscrire</button>
+                                </form>
+                            {% else %}
+                                <form action="{{ url_for('pre_inscription', id_evenement=dico_event['event'].idEvenement) }}" method="post">
+                                    <input type="hidden" name="id_evenement" value="{{ dico_event['event'].idEvenement }}">
+                                    <button type="submit" class="button">Je m'inscris</button>
+                                </form>
+                            {% endif %}
+                            </div>
+                    {% endif %}
+                </div>
+            </section>
+        </main>
+    </body>
+</html>

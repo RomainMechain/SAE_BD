@@ -1,0 +1,16 @@
+<header>
+    <div class="gauche">
+        <img src="{{ url_for('static', filename='images/logo_fest_iuto.png') }}" alt="le logo" id="logo_header">
+    </div>
+    <div class="droite">
+        <a href="{{ url_for('home') }}">
+            <img src="{{ url_for('static', filename='images/Home.png') }}" alt="la maison" id="maison_header">
+        </a>
+        <a href="{{ url_for('logout') }}" class="information" id="deconnexion">
+            <button class="button">Deconnexion</button>
+        </a>
+        <a href="{{ url_for('profil') }}" class="information">
+            <button class="button">Profil</button>
+        </a>
+    </div>
+</header>

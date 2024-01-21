@@ -1,0 +1,4 @@
+"idTypeEvenement","nomTypeEvenement","caracteristiqueTypeEvenement","estGratuitTypeEvenement","preInscription"
+1,"Concert","Concert de musique","0","0"
+2,"Spectacle","Spectacle de musique","0","1"
+3,"Interview","Interview de groupe","1","1"

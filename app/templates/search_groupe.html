@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <title>Recherche de groupe</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='CSS/header_home.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='CSS/search_groupe.css') }}">
+        <script type="module" src="{{ url_for('static', filename='JS/search_groupe.js') }}"></script>
+    </head>
+    <body>
+        {% include 'components/header_home.html' %}
+        <main>
+            <section>
+                <h1>Recherche de groupe</h1>
+                <div id="la_barre">
+                    <form action="{{ url_for('search_groupe') }}" method="post" role="search">
+                            <input type="checkbox" id="favori" name="favori" id="checkbox">
+                            <label for="favori" class="favoris">Favoris</label>
+                        <input type="search" name="search" placeholder="Rechercher" id="search_barre">
+                    </form>
+                </div>
+                {% if admin %}
+                    <div class="button_admin">
+                        <a href="{{ url_for('add_groupe') }}">
+                            <button class="button">Ajouter un groupe</button>
+                        </a>
+                        <a href="{{ url_for('add_artiste') }}">
+                            <button class="button">Ajouter un artiste</button>
+                        </a>
+                    </div>
+                {% endif %}
+                <section class="contenant">
+                    {% for groupe in groupes %}
+                        <div class="element_liste_groupe">
+                            <a href="{{url_for('groupe', id_groupe=groupe.idGroupe)}}">{{ groupe.nomGroupe}}</a>
+                            <div>
+                                <a href="{{ groupe.lienReseauxGroupe }}">Réseaux</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </section>
+            </section>
+        </main>
+    </body>
+</html>

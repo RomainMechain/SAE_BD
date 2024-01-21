@@ -1,0 +1,55 @@
+body{
+    margin:0;
+    background-color: rgb(226, 218, 218)
+}
+
+#image_du_groupe {
+    width: 50vw;
+    height: 60vh;
+    margin-top: 3rem;
+    margin-left: 1rem;
+}
+
+.flex {
+    display: flex;
+}
+
+h1 {
+    text-align: center;
+}
+
+#droite {
+    margin-top: 1rem;
+    margin-left: 4rem;
+}
+
+.button{
+    appearance: none;
+    background-color: #ffffff ;
+    color: #2a2b38;
+    text-align: center;
+    font-size: 2vh;
+    box-sizing: border-box;
+    border-radius: 0.9375em;
+    border: none;
+}
+
+.button:disabled {
+    pointer-events: none;
+}
+
+.button:hover {
+  color: #2a2b38;
+  background-color: #70b5c9;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.button:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+
+#supprimer {
+    margin-left: 3rem;
+}

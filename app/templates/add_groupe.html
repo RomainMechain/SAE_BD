@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ajout de groupes</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='CSS/header_home.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='CSS/add_groupe.css') }}">
+    </head>
+    <body>
+        {% include 'components/header_home.html' %}
+        <main>
+            <h1>Ajout de groupes</h1>
+            <section class="contenu">
+                <div class="contenant">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {{ form.hidden_tag() }}
+                        <div>
+                            <p>Nom</p>
+                            {{ form.nom(size=50) }}
+                        </div>
+                        <div>
+                            <p>Description</p>
+                            {{ form.description(size=50) }}
+                        </div>
+                        <div>
+                            <p>Lien Reseaux</p>
+                            {{ form.lienReseaux(size=50) }}
+                        </div>
+                        <div>
+                            <p>Lien video</p>
+                            {{ form.lienVideo(size=50) }}
+                        </div>
+                        <div>
+                            <p>Photo</p>
+                            {{ form.photo(size=50) }}
+                        </div>
+                        <div class="flex">
+                            <div>
+                                <p>Artistes</p>
+                                {{ form.artistes }}
+                            </div>
+                            <div>
+                                <p>Instruments</p>
+                                {{ form.instruments }}
+                            </div>
+                            <div>
+                                <p>Type musique</p>
+                                {{ form.types_musique }}
+                            </div>
+                        </div>
+                        <div id="se_connecter">
+                            {{ form.submit() }}
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </body>
+</html>

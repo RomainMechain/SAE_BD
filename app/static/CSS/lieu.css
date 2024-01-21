@@ -1,0 +1,53 @@
+body{
+    margin:0;
+    background-color: rgb(226, 218, 218)
+}
+
+h1{
+    text-align: center;
+}
+
+#contenant{
+    background-color: gray;
+    height: 45vh;
+    overflow-y: scroll;
+    width: 80vw;
+    padding: 3rem;
+    margin-left: 7rem;
+    margin-right : 7rem;
+    margin-top: 4rem;
+    border-radius: 0.5375em;
+}
+
+.element_liste_evenements{
+    border-radius: 0.9375em;
+    background-color: white;
+    display: flex;
+    margin:1rem;
+    align-items: center;
+}
+
+.element_liste_evenements > a{
+    text-decoration: none;
+    color: black;
+    margin-left: 3vw;
+    margin-top: 5vh;
+}
+
+.element_liste_evenements > div{
+    min-width: 80%;
+    display: flex;
+    justify-content: right;
+}
+
+.element_liste_evenements > div > p{
+    margin-right: 3vw;
+}
+
+.element_liste_evenements > a{
+    font-size:large ;
+}
+
+.element_liste_evenements > a{
+    width: 10vw;
+}

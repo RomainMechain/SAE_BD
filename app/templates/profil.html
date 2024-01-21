@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ user.nomUtilisateur }} {{ user.prenomUtilisateur }}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='CSS/header_home.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='CSS/profil.css') }}">
+    </head>
+    <body>
+        {% include 'components/header_home.html' %}
+        <main>
+            <h1>{{ user.nomUtilisateur }} {{ user.prenomUtilisateur }}</h1>
+            <section>
+                <div>
+                    <p><span>Numéro de téléphone :</span> {{ user.numTelUtilisateur }}</p>
+                </div>
+                <div>
+                    <p><span>Mail : </span> {{ user.emailUtilisateur }}</p>
+                </div>
+            </section>
+            <section>
+                <h2>Billets :</h2>
+                <div id="billets">
+                    {% for dico in liste %}
+                        <div>
+                            <p id="nomBillet">{{ dico['nomBillet'] }}</p>
+                            <p>Pour le : {{ dico['dateInscription'] }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+        </main>
+    </body>
+</html>
