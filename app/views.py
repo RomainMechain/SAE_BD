@@ -258,3 +258,13 @@ def delete_artiste() :
     id_artiste = request.args.get('id_artiste')
     delete_artiste_bd(id_artiste)
     return redirect(url_for('search_groupe'))
+
+@app.route('/delete_groupe', methods=['GET', 'POST'])
+@login_required
+def delete_groupe() :
+    id_groupe = request.args.get('id_groupe')
+    if not is_groupe_have_event(id_groupe) :
+        delete_groupe_bd(id_groupe)
+        return redirect(url_for('search_groupe'))
+    else :
+        return redirect(url_for('groupe', id_groupe=id_groupe))

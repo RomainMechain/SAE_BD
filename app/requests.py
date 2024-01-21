@@ -761,3 +761,27 @@ def delete_artiste_bd(id_artiste):
         session.delete(artiste)
     session.commit()
     session.close()
+
+def is_groupe_have_event(id_groupe) :
+    """Retourne True si le groupe id_groupe a au moins un évènement
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    events = session.query(EVENEMENT).filter(EVENEMENT.idGroupe==id_groupe).all()
+    session.close()
+    return len(events) > 0
+
+def delete_groupe_bd(id_groupe):
+    """supprime le groupe de la base de données
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    session.execute(t_FAIT_PARTIE.delete().where(t_FAIT_PARTIE.c.idGroupe==id_groupe))
+    session.execute(t_CHANTE.delete().where(t_CHANTE.c.idGroupe==id_groupe))
+    session.execute(t_JOUE.delete().where(t_JOUE.c.idGroupe==id_groupe))
+    session.execute(t_EST_FAVORIE.delete().where(t_EST_FAVORIE.c.idGroupe==id_groupe))
+    groupe = session.query(GROUPE).filter(GROUPE.idGroupe == id_groupe).first()
+    if groupe:
+        session.delete(groupe)
+    session.commit()
+    session.close()
