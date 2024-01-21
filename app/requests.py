@@ -749,3 +749,15 @@ def get_liste_billet(id_utilisateur) :
         })
     session.close()
     return res
+
+def delete_artiste_bd(id_artiste):
+    """supprime l'artise de la base de données
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    session.execute(t_FAIT_PARTIE.delete().where(t_FAIT_PARTIE.c.idArtiste==id_artiste))
+    artiste = session.query(ARTISTE).filter(ARTISTE.idArtiste == id_artiste).first()
+    if artiste:
+        session.delete(artiste)
+    session.commit()
+    session.close()

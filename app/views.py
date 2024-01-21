@@ -118,7 +118,7 @@ def remove_favori() :
 @login_required
 def artiste() :
     artiste = get_artiste_by_id(request.args.get('id_artiste'))
-    return render_template('artiste.html', artiste=artiste)
+    return render_template('artiste.html', artiste=artiste, admin=is_admin(current_user.idTypeUtilisateur))
 
 @app.route('/type_musique', methods=['GET', 'POST'])
 @login_required
@@ -251,3 +251,10 @@ def hebergement() :
         add_hebergement_db(form.hebergement.data, date_object, int(form.nbJours.data), id_groupe)
         return redirect(url_for('hebergement', id_groupe=id_groupe))
     return render_template('hebergement.html', form=form, groupe=groupe, liste=liste)
+
+@app.route('/delete_artiste', methods=['GET', 'POST'])
+@login_required
+def delete_artiste() :
+    id_artiste = request.args.get('id_artiste')
+    delete_artiste_bd(id_artiste)
+    return redirect(url_for('search_groupe'))
