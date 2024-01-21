@@ -33,3 +33,7 @@ section p, section a {
 section div {
     margin: 0;
 }
+
+#supprimer {
+    margin-left: 3rem;
+}
