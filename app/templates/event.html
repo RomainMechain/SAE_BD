@@ -13,22 +13,26 @@
             </div>
             <section>
                 <div>
-                    <p>{{ dico_event["type_evenement"].nomTypeEvenement }} du groupe {{ dico_event["groupe"].nomGroupe }}</p>
+                    <h2>{{ dico_event["type_evenement"].nomTypeEvenement }} du groupe {{ dico_event["groupe"].nomGroupe }}</h2>
                     <div class="contenant">
+                        <h3>Description : </h3>
                         <p>{{ dico_event["groupe"].descriptionGroupe }}</p>  
                         <a href="{{ url_for('groupe', id_groupe=dico_event['groupe'].idGroupe) }}">En savoir plus !</a>
                     </div>
                 </div>
-                <div class="contenant">
+                <div id="date">
+                    <h3>Date et lieu :</h3>
                     <p>L'evenement aura lieu le {{ dico_event["event"].heureEvenement }} et se déroulera à </p>
                     <a href="{{ url_for('lieu', id_lieu=dico_event['lieu'].idLieu) }}">{{ dico_event["lieu"].nomLieu }}</a>
                 </div>
                 <div>
+                    <h3>Durée :</h3>
                     {% set hours = int(dico_event["event"].dureeEvenement) %}
                     {% set minutes = int((dico_event["event"].dureeEvenement - hours) * 60) %}
                     <p>Il durera {{ hours }}h{{ minutes }}min</p>
                 </div>
                 {% if admin %}
+                    <h3>Informations administrateur :</h3>
                     <div>
                         {% set hours = int(dico_event["event"].dureeMontageEvenement) %}
                         {% set minutes = int((dico_event["event"].dureeMontageEvenement - hours) * 60) %}
