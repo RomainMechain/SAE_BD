@@ -1,9 +1,7 @@
 from app import db
 from app.models import *
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy import asc, distinct, func, cast
-from unidecode import unidecode
-from pytz import timezone
+from sqlalchemy import func
 from datetime import datetime, timedelta
 from sqlalchemy.exc import SQLAlchemyError
 
@@ -623,3 +621,143 @@ def add_type_musique_groupe_db(id_groupe, id_type_musique) :
     session.commit()
     session.close()
     print("Type de musique ajouté au groupe")
+
+def get_all_hebergement() :
+    """Retourne tous les hébergements de la base de données
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    hebergements = session.query(HEBERGEMENT).all()
+    session.close()
+    return hebergements
+
+def get_groupe_by_id(id_groupe) :
+    """Retourne le groupe correspondant à l'id
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    groupe = session.query(GROUPE).filter(GROUPE.idGroupe==id_groupe).first()
+    session.close()
+    return groupe
+
+def create_dico_hebergement():
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    reservations = session.query(ARESERVE).all()
+    res = {}
+    for reservation in reservations:
+        if reservation.idGroupe not in res:
+            res[reservation.idGroupe] = []
+        res[reservation.idGroupe].append({
+            'nomHebergement': reservation.idHebergement, 
+            'dateAReserve': reservation.dateAReserve,
+            'dureeHebergement': reservation.dureeHebergement  
+        })
+
+    return res
+
+def create_liste_hebergement(id_groupe):
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    res = []
+    reservations = session.query(ARESERVE).filter(ARESERVE.idGroupe==id_groupe).all()
+    for reservation in reservations:
+        res.append({
+            'nomHebergement': session.query(HEBERGEMENT).filter(HEBERGEMENT.idHebergement==reservation.idHebergement).first().nomHebergement, 
+            'dateAReserve': reservation.dateAReserve,
+            'dureeHebergement': reservation.dureeHebergement  
+        })
+    return res
+
+def is_date_ok_for_hebergement_groupe(date, duree, id_groupe) :
+    """Retourne True si le groupe n'est pas déjà réservé à la date date pour une durée de duree jours
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    date_debut = date
+    date_fin = date + timedelta(days=duree)
+    reservations = session.query(ARESERVE).filter(ARESERVE.idGroupe==id_groupe).all()
+    for reservation in reservations :
+        if reservation.dateAReserve <= date_debut <= (reservation.dateAReserve + timedelta(days=reservation.dureeHebergement)) or reservation.dateAReserve <= date_fin <= (reservation.dateAReserve + timedelta(days=reservation.dureeHebergement)) :
+            return False
+    return True
+
+def add_hebergement_db(id_hebergement, date, duree, id_groupe) :
+    """Ajoute un hébergement pour le groupe id_groupe
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    areserve = ARESERVE(idHebergement=id_hebergement, idGroupe=id_groupe, dateAReserve=date, dureeHebergement=duree)
+    session.add(areserve)
+    session.commit()
+    session.close()
+
+def get_nb_artiste_by_groupe(id_groupe) :
+    """Retourne le nombre d'artistes du groupe id_groupe
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    nb_artiste = session.query(t_FAIT_PARTIE).filter(t_FAIT_PARTIE.c.idGroupe==id_groupe).count()
+    session.close()
+    return nb_artiste
+
+def get_groupe_areserver(id_hebergement,date) :
+    """Retourne les groupes qui ont reservé l'hebergement id_hebergement à la date date
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    groupes = []
+    reservations = session.query(ARESERVE).filter(ARESERVE.idHebergement==id_hebergement).filter(ARESERVE.dateAReserve==date).all()
+    for reservation in reservations :
+        groupes.append(session.query(GROUPE).filter(GROUPE.idGroupe==reservation.idGroupe).first())
+    session.close()
+    return groupes
+
+def is_ok_capacite_hebergement_date(date, id_hebergement, id_groupe) :
+    """Retourne True si l'hebergement id_hebergement a une capacité suffisante pour le groupe id_groupe
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    nb_artiste = get_nb_artiste_by_groupe(id_groupe)
+    hebergement = session.query(HEBERGEMENT).filter(HEBERGEMENT.idHebergement==id_hebergement).first()
+    nb_place = hebergement.capacite
+    reservations = session.query(ARESERVE).filter(ARESERVE.idHebergement==id_hebergement).filter(ARESERVE.dateAReserve==date).all()
+    for reservation in reservations :
+        nb_place -= get_nb_artiste_by_groupe(reservation.idGroupe)
+    session.close()
+    return nb_place >= nb_artiste
+
+def is_ok_capacite_hebergement(date, duree, idHebergement, id_groupe) :
+    """Retourne True si l'hebergement id_hebergement a une capacité suffisante pour le groupe id_groupe pendant la durée duree
+    """
+    for i in range(duree) :
+        if not is_ok_capacite_hebergement_date(date + timedelta(days=i), idHebergement, id_groupe) :
+            return False
+    return True
+
+def get_liste_billet(id_utilisateur) :
+    """Retourne la liste des billets de l'utilisateur id_utilisateur
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    res = []
+    inscriptions = session.query(ESTINSCRIT).filter(ESTINSCRIT.idUtilisateur==id_utilisateur).all()
+    for inscription in inscriptions :
+        res.append({
+            'nomBillet' : session.query(TYPEBILLET).filter(TYPEBILLET.idBillet==inscription.idBillet).first().nomBillet,
+            'dateInscription' : inscription.dateInscription,
+        })
+    session.close()
+    return res
+
+def delete_artiste_bd(id_artiste):
+    """supprime l'artise de la base de données
+    """
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    session.execute(t_FAIT_PARTIE.delete().where(t_FAIT_PARTIE.c.idArtiste==id_artiste))
+    artiste = session.query(ARTISTE).filter(ARTISTE.idArtiste == id_artiste).first()
+    if artiste:
+        session.delete(artiste)
+    session.commit()
+    session.close()

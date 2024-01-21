@@ -1,85 +1,35 @@
-
 body{
     margin:0;
     background-color: rgb(226, 218, 218)
 }
 
-#titre_evenement, .inscription, .preinscription, .contenant{
-    display: flex;
-}
-
-#titre_evenement{
-    align-items: center;
-    justify-content: center;
-    margin-top: 3rem;
-}
-
-main a{
-    text-decoration: none;
-    background-color: grey;
-    color: white;
-    border-radius: 0.9375em;
-    margin: 2rem;
-    padding: 1rem;
-    margin-left: 10vw; 
-    margin-top: -1vh;
-}
-
-.button{
-    appearance: none;
-    background-color: #ffffff ;
-    color: #2a2b38;
+h1{
     text-align: center;
-    font-size: 2vh;
-    box-sizing: border-box;
-    border-radius: 0.9375em;
-    border: none;
 }
 
-.button:disabled {
-    pointer-events: none;
+section {
+    margin-left: 3rem;
+    margin-top: 2rem;
 }
 
-.button:hover {
-  color: #2a2b38;
-  background-color: #70b5c9;
-  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
-  transform: translateY(-2px);
-}
-
-main p{
+section p, section a {
+    margin-left: 1rem;
     font-size: large;
 }
 
-.button:active {
-  box-shadow: none;
-  transform: translateY(0);
-}
-
-section{
-    margin: 3rem;
-}
-
-.inscription, .preinscription, .contenant{
+#date {
+    display: flex;
     flex-wrap: wrap;
 }
 
-.inscription{
-    width: 60vw;
-    justify-content: right;
-    align-items: right;
+#date h3 {
+    flex-basis: 100%;
 }
 
-.preinscription > h2, .inscription > form, .inscription > p{
-    margin-left: 2rem;
+#date a {
+    margin-top: 1rem;
 }
 
-main > div, section > div{
-    margin-top: 4rem;
-    margin-left: 3rem;
-}
-
-main a{
-    width: 8vw;
-    height: 3vh;
+section div {
+    margin: 0;
 }

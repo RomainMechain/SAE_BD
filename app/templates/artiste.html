@@ -9,6 +9,11 @@
         {% include 'components/header_home.html' %}
         <main>
             <h1>{{ artiste.nomArtiste }}</h1>
+            {% if admin %}
+                <a href="{{ url_for('delete_artiste', id_artiste=artiste.idArtiste) }}">
+                    <button class="button" id="supprimer">Supprimer l'artiste</button>
+                </a>
+            {% endif %}
             <div class="flex">
                 {% if artiste.photoArtiste %}
                     <object data="data:image/jpeg;base64,{{ artiste.photoArtiste.decode('utf-8') }}" type="image/jpeg" id="image_du_groupe"></object>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Gestion de l'hebergement</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='CSS/header_home.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='CSS/hebergement.css') }}">
+    </head>
+    <body>
+        {% include 'components/header_home.html' %}
+        <main>
+            <h1>Hebergement {{ groupe.nomGroupe }}</h1>
+            <p id="erreur">{{ erreur }}</p>
+            <section class="flex">
+                <section class="contenant">
+                    <div class="contenu">
+                        <form action="" method="post" enctype="multipart/form-data">
+                            {{ form.hidden_tag() }}
+                            <div>
+                                <p>Hebergement :</p>
+                                {{ form.hebergement }}
+                            </div>
+                            <div>
+                                <p>Date :</p>
+                                {{ form.date }}
+                            </div>
+                            <div>
+                                <p>Nombre de jours :</p>
+                                {{ form.nbJours }}
+                            </div>
+                            <div id="se_connecter">
+                                {{ form.submit }}
+                            </div>
+                        </form>
+                    </div>
+                </section>
+                <section id="droite">
+                    {% for dico in liste %}
+                        <div>
+                            <p> {{ dico['nomHebergement'] }}, </p>
+                            <p> {{ dico['dateAReserve'] }}, </p>
+                            <p> {{ dico['dureeHebergement'] }} jour(s)</p>
+                        </div>
+                    {% endfor %}
+                </section>
+            </section>
+        </main>
+    </body>
+</html>

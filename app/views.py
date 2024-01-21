@@ -1,17 +1,11 @@
-import os
 from app import app
-from flask import render_template, request, redirect, url_for, make_response, send_file, jsonify, Response
+from flask import render_template, request, redirect, url_for, jsonify
 from flask_login import login_required, login_user, logout_user, current_user
 from flask_bcrypt import generate_password_hash, check_password_hash
-from io import BytesIO
-from functools import wraps
-from unidecode import unidecode
-from werkzeug.utils import secure_filename
 from app.requests import *
 from app.forms import *
 from app import *
 import base64
-import collections
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -106,25 +100,25 @@ def event() :
 @login_required
 def groupe() :
     dico_groupe = create_dico_groupe(request.args.get('id_groupe'))
-    return render_template('groupe.html', dico_groupe=dico_groupe, int=int, est_favorie=groupe_is_favori(request.args.get('id_groupe'), current_user.idUtilisateur))
+    return render_template('groupe.html', dico_groupe=dico_groupe, admin=is_admin(current_user.idTypeUtilisateur),int=int, est_favorie=groupe_is_favori(request.args.get('id_groupe'), current_user.idUtilisateur))
 
 @app.route('/add_favori', methods=['GET', 'POST'])
 @login_required
 def add_favori() :
     add_favori_db(request.args.get('id_groupe'), current_user.idUtilisateur)
-    return redirect(url_for('groupe', id_groupe=request.args.get('id_groupe')))
+    return redirect(url_for('groupe', id_groupe=request.args.get('id_groupe'), admin = is_admin(current_user.idTypeUtilisateur)))
 
 @app.route('/remove_favori', methods=['GET', 'POST'])
 @login_required
 def remove_favori() :
     remove_favori_db(request.args.get('id_groupe'), current_user.idUtilisateur)
-    return redirect(url_for('groupe', id_groupe=request.args.get('id_groupe')))
+    return redirect(url_for('groupe', id_groupe=request.args.get('id_groupe'), admin = is_admin(current_user.idTypeUtilisateur)))
 
 @app.route('/artiste', methods=['GET', 'POST'])
 @login_required
 def artiste() :
     artiste = get_artiste_by_id(request.args.get('id_artiste'))
-    return render_template('artiste.html', artiste=artiste)
+    return render_template('artiste.html', artiste=artiste, admin=is_admin(current_user.idTypeUtilisateur))
 
 @app.route('/type_musique', methods=['GET', 'POST'])
 @login_required
@@ -201,7 +195,8 @@ def search_groupe() :
 @login_required
 def profil() :
     user = get_user_by_id(current_user.idUtilisateur)
-    return render_template('profil.html', user=user)
+    liste = get_liste_billet(current_user.idUtilisateur)
+    return render_template('profil.html', user=user, liste=liste)
 
 @app.route('/add_artiste', methods=['GET', 'POST'])
 @login_required
@@ -237,5 +232,29 @@ def add_groupe() :
     if form.validate_on_submit():
         encoded_photo = base64.b64encode(form.photo.data.read())
         id_groupe = add_groupe_db(form.nom.data, form.description.data, form.lienReseaux.data, form.lienVideo.data, encoded_photo, form.artistes.data, form.instruments.data, form.types_musique.data)
-        return redirect(url_for('groupe', id_groupe=id_groupe))
+        return redirect(url_for('groupe', id_groupe=id_groupe, admin = is_admin(current_user.idTypeUtilisateur)))
     return render_template('add_groupe.html', form=form)
+
+@app.route('/hebergement', methods=['GET', 'POST'])
+@login_required
+def hebergement() :
+    form = AddHebergement(get_all_hebergement(), get_unique_event_days())
+    id_groupe = request.args.get('id_groupe')
+    liste = create_liste_hebergement(id_groupe)
+    groupe = get_groupe_by_id(id_groupe)
+    if form.validate_on_submit():
+        date_object = datetime.strptime(form.date.data, "%Y-%m-%d")
+        if not is_date_ok_for_hebergement_groupe(date_object, int(form.nbJours.data), id_groupe) :
+            return render_template('hebergement.html', form=form, groupe=groupe, liste=liste, erreur="le groupe n'est pas disponible à cette date")
+        if not is_ok_capacite_hebergement(date_object, int(form.nbJours.data), form.hebergement.data, id_groupe) :
+            return render_template('hebergement.html', form=form, groupe=groupe, liste=liste, erreur="le lieu n'est pas disponible à cette date")
+        add_hebergement_db(form.hebergement.data, date_object, int(form.nbJours.data), id_groupe)
+        return redirect(url_for('hebergement', id_groupe=id_groupe))
+    return render_template('hebergement.html', form=form, groupe=groupe, liste=liste)
+
+@app.route('/delete_artiste', methods=['GET', 'POST'])
+@login_required
+def delete_artiste() :
+    id_artiste = request.args.get('id_artiste')
+    delete_artiste_bd(id_artiste)
+    return redirect(url_for('search_groupe'))

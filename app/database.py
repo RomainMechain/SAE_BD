@@ -5,7 +5,6 @@ from datetime import datetime
 from app.requests import add_user_type
 from flask_bcrypt import generate_password_hash
 import csv
-import sys
 
 @app.cli.command('init_database')
 def init_database():

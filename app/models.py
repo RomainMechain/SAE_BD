@@ -3,7 +3,7 @@ from typing import List, Optional
 
 from sqlalchemy import Column, Date, ForeignKeyConstraint, Index, Integer, String, Table, DateTime, Float
 from sqlalchemy.dialects.mysql import INTEGER, BLOB
-from sqlalchemy.orm import Mapped, declarative_base, mapped_column, relationship
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.orm.base import Mapped
 
 Base = db.Model

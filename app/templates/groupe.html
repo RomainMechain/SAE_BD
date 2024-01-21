@@ -17,6 +17,9 @@
                 {% else %}
                     <a href="{{ url_for('add_favori', id_groupe=dico_groupe['groupe'].idGroupe) }}" class="favoris">Ajouter aux favoris</a>
                 {% endif %}
+                {% if admin %}
+                    <a href="{{ url_for('hebergement', id_groupe=dico_groupe['groupe'].idGroupe) }}" class="favoris">Gestion de l'hebergement</a>
+                {% endif %}
             </div>
             <section class="flex">
                 {% if dico_groupe['groupe'].photoGroupe %}
